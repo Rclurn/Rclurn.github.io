@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Gits on Rclurn</title>
+    <link>https://www.rclurn.github.io/git/</link>
+    <description>Recent content in Gits on Rclurn</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <managingEditor>liu-huo@live.com (摸铁校尉🥉)</managingEditor>
+    <webMaster>liu-huo@live.com (摸铁校尉🥉)</webMaster>
+    <copyright>© 2021 &lt;a href=&#34;https://github.com/miiiku/hugo-theme-kagome&#34;&gt;kagome&lt;/a&gt;.</copyright><atom:link href="https://www.rclurn.github.io/git/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title></title>
+      <link>https://www.rclurn.github.io/git/%E5%88%9D%E8%AF%86git/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <author>liu-huo@live.com (摸铁校尉🥉)</author>
+      <guid>https://www.rclurn.github.io/git/%E5%88%9D%E8%AF%86git/</guid>
+      <description>Git最小配置 git config --global user.name &#39;your name&#39; # 每一次的变更会带上该项目的user name git config --global user.email &#39;your email&#39; # 如果评审人员发现有问题可以通过该email与你获取联系 参数 作用</description>
+    </item>
+    
+  </channel>
+</rss>

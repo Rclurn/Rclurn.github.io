@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>深度学习 on Rclurn</title>
+    <link>https://www.rclurn.github.io/nlp/</link>
+    <description>Recent content in 深度学习 on Rclurn</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <managingEditor>liu-huo@live.com (摸铁校尉🥉)</managingEditor>
+    <webMaster>liu-huo@live.com (摸铁校尉🥉)</webMaster>
+    <copyright>© 2021 &lt;a href=&#34;https://github.com/miiiku/hugo-theme-kagome&#34;&gt;kagome&lt;/a&gt;.</copyright>
+    <lastBuildDate>Tue, 09 May 2023 23:30:00 +0800</lastBuildDate><atom:link href="https://www.rclurn.github.io/nlp/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>影像学NLP</title>
+      <link>https://www.rclurn.github.io/nlp/%E5%BD%B1%E5%83%8F%E5%AD%A6nlp/</link>
+      <pubDate>Tue, 09 May 2023 23:30:00 +0800</pubDate>
+      <author>liu-huo@live.com (摸铁校尉🥉)</author>
+      <guid>https://www.rclurn.github.io/nlp/%E5%BD%B1%E5%83%8F%E5%AD%A6nlp/</guid>
+      <description>预训练实验记录 策略 机器 日期 n gram mask Dart(13320203422) 5月9日 n gram mask + 随机删除（3:2） 微调实验记录 策略 机器 日期 效果 预训练(n gram mask + token del) - R-Drop(batch_mean) 【2500】 rnake(13219741321) 5月9</description>
+    </item>
+    
+    <item>
+      <title>Global Pointer</title>
+      <link>https://www.rclurn.github.io/nlp/global_pointer%E8%AE%BA%E6%96%87/</link>
+      <pubDate>Thu, 08 Dec 2022 20:53:55 +0800</pubDate>
+      <author>liu-huo@live.com (摸铁校尉🥉)</author>
+      <guid>https://www.rclurn.github.io/nlp/global_pointer%E8%AE%BA%E6%96%87/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>小样本数据分类任务</title>
+      <link>https://www.rclurn.github.io/nlp/%E5%B0%8F%E6%A0%B7%E6%9C%AC%E6%95%B0%E6%8D%AE%E5%88%86%E7%B1%BB%E4%BB%BB%E5%8A%A1/</link>
+      <pubDate>Fri, 02 Sep 2022 20:48:48 +0800</pubDate>
+      <author>liu-huo@live.com (摸铁校尉🥉)</author>
+      <guid>https://www.rclurn.github.io/nlp/%E5%B0%8F%E6%A0%B7%E6%9C%AC%E6%95%B0%E6%8D%AE%E5%88%86%E7%B1%BB%E4%BB%BB%E5%8A%A1/</guid>
+      <description>赛题解读👉🏻小样本数据分类任务 1、赛题任务 根据比赛方提供的小样本数据设计一套多分类算法，完成测试集数据的分类任务。比赛方提供了一些针对小样本</description>
+    </item>
+    
+  </channel>
+</rss>

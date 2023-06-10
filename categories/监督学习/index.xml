@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>监督学习 on Rclurn</title>
+    <link>https://www.rclurn.github.io/categories/%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/</link>
+    <description>Recent content in 监督学习 on Rclurn</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <managingEditor>liu-huo@live.com (摸铁校尉🥉)</managingEditor>
+    <webMaster>liu-huo@live.com (摸铁校尉🥉)</webMaster>
+    <copyright>© 2021 &lt;a href=&#34;https://github.com/miiiku/hugo-theme-kagome&#34;&gt;kagome&lt;/a&gt;.</copyright>
+    <lastBuildDate>Tue, 04 Jan 2022 09:38:19 +0800</lastBuildDate><atom:link href="https://www.rclurn.github.io/categories/%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>决策树</title>
+      <link>https://www.rclurn.github.io/machine/%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/%E5%86%B3%E7%AD%96%E6%A0%91/</link>
+      <pubDate>Tue, 04 Jan 2022 09:38:19 +0800</pubDate>
+      <author>liu-huo@live.com (摸铁校尉🥉)</author>
+      <guid>https://www.rclurn.github.io/machine/%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/%E5%86%B3%E7%AD%96%E6%A0%91/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>K近临法</title>
+      <link>https://www.rclurn.github.io/machine/%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/k%E8%BF%91%E4%B8%B4%E6%B3%95/</link>
+      <pubDate>Mon, 03 Jan 2022 18:07:30 +0800</pubDate>
+      <author>liu-huo@live.com (摸铁校尉🥉)</author>
+      <guid>https://www.rclurn.github.io/machine/%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/k%E8%BF%91%E4%B8%B4%E6%B3%95/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>感知机</title>
+      <link>https://www.rclurn.github.io/machine/%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/%E6%84%9F%E7%9F%A5%E6%9C%BA/</link>
+      <pubDate>Mon, 03 Jan 2022 18:06:38 +0800</pubDate>
+      <author>liu-huo@live.com (摸铁校尉🥉)</author>
+      <guid>https://www.rclurn.github.io/machine/%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/%E6%84%9F%E7%9F%A5%E6%9C%BA/</guid>
+      <description>$$ x = \begin{cases} f(x) &amp;amp; x &amp;gt; 1 \ 0 &amp;amp; x=0 \ g(x) &amp;amp; x&amp;lt;0 \end{cases} $$</description>
+    </item>
+    
+  </channel>
+</rss>

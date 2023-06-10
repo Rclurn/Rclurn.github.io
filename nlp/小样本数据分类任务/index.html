@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html><head>
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+   
+    <meta name="author" content="摸铁校尉🥉">
+  
+
+   
+    
+    
+    
+    
+    
+    
+    <meta name="keywords" content="Machine Learning,kagome">
+  
+
+   
+    <meta name="description" content="记录生活点点点点点点点滴">
+  
+
+  <meta name="generator" content="Hugo 0.91.2" />
+  
+  
+  
+  
+  
+  
+  <title>小样本数据分类任务 🌟 Rclurn</title>
+
+  <meta property="og:title" content="小样本数据分类任务" />
+<meta property="og:description" content="记录生活点点点点点点点滴" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://www.rclurn.github.io/nlp/%E5%B0%8F%E6%A0%B7%E6%9C%AC%E6%95%B0%E6%8D%AE%E5%88%86%E7%B1%BB%E4%BB%BB%E5%8A%A1/" /><meta property="article:section" content="nlp" />
+<meta property="article:published_time" content="2022-09-02T20:48:48+08:00" />
+<meta property="article:modified_time" content="2022-09-02T20:48:48+08:00" />
+
+
+  <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="小样本数据分类任务"/>
+<meta name="twitter:description" content="记录生活点点点点点点点滴"/>
+
+
+  
+  
+  
+  
+  <link rel="stylesheet" href="https://www.rclurn.github.io/assets/css/style.min.699f46622e3574a7f9ecca4c5877067845fe89ffcd9c4335df2dff23ddae215e.css" integrity="sha256-aZ9GYi41dKf57MpMWHcGeEX&#43;if/NnEM13y3/I92uIV4=">
+
+  <script src="https://www.rclurn.github.io/assets/js/main.min.182da266209851bc7c828aa7377f98f914e1e76c8decdd53a6cbe9bffea92cde.js" integrity="sha256-GC2iZiCYUbx8goqnN3&#43;Y&#43;RTh52yN7N1Tpsvpv/6pLN4="></script>
+  
+  </head><body><header class="header-container layout-block layout-padding">
+  <div class="header-inner content-padding-large soft-size--large soft-style--box">
+    <div class="header-logo">
+      <a href="https://www.rclurn.github.io/"><h1>Rclurn</h1></a>
+    </div>
+    <nav class="header-nav">
+      <div class="header-nav--btn">
+        <div class="btn-item"></div>
+        <div class="btn-item"></div>
+        <div class="btn-item"></div>
+      </div>
+      <div class="header-nav--list">
+        <div>
+          
+          <a class="list-item soft-size--small soft-style--hover soft-style--active" href="/" title="">🏠Home</a>
+          
+          <a class="list-item soft-size--small soft-style--hover soft-style--active" href="/machine" title="">🤖Machine Learning</a>
+          
+          <a class="list-item soft-size--small soft-style--hover soft-style--active" href="/nlp" title="">👹Natural Language Processing</a>
+          
+          <a class="list-item soft-size--small soft-style--hover soft-style--active" href="/algorithm" title="">🧰Algorithm</a>
+          
+          <a class="list-item soft-size--small soft-style--hover soft-style--active" href="/about" title="">🤡About</a>
+          
+        </div>
+      </div>
+    </nav>
+  </div>
+</header><main id="content">
+    
+
+    <div class="single-container layout-block">
+      <div class="article-info">
+        <div class="article-header layout-padding">
+          <div class="article-cover card-container content-padding-large soft-size--large soft-style--box img">
+
+  <div class="card-cover">
+    
+      <img src="https://s3.bmp.ovh/imgs/2022/09/04/ed9151e86f3cf093.jpg" alt="https://s3.bmp.ovh/imgs/2022/09/04/ed9151e86f3cf093.jpg" />
+    
+  </div>
+
+  <div class="card-text">
+    <h1 class="card-text--title">小样本数据分类任务</h1>
+    
+      <p class="card-text--row">2022-09-02 20:48</p>
+      
+      
+      
+        <ul class="card-text--tag">
+          
+            <li><a href="https://www.rclurn.github.io/categories/%E8%87%AA%E7%84%B6%E8%AF%AD%E8%A8%80%E5%A4%84%E7%90%86%E6%AF%94%E8%B5%9B/">自然语言处理比赛</a></li></ul>
+      
+
+      
+      
+    
+  </div>
+
+</div>
+        </div>
+
+        <div class="article-content">
+          <div class="markdown-body content-padding-large soft-size--large soft-style--box">
+            <h2 id="赛题解读小样本数据分类任务httpswwwdatafountaincncompetitions582datasets">赛题解读👉🏻<a href="https://www.datafountain.cn/competitions/582/datasets" target="_blank" rel="noopener">小样本数据分类任务</a></h2>
+<h3 id="1赛题任务">1、赛题任务</h3>
+<p>根据比赛方提供的小样本数据设计一套多分类算法，完成测试集数据的分类任务。比赛方提供了一些针对小样本数据的可以尝试的方案：<strong>远程监督</strong>、<strong>数据增强</strong>、<strong>预训练模型</strong>、<strong>PET范式</strong></p>
+<p>⚠️：比赛对算法没有限制，可以通过集成学习提高精度，但所有模型压缩前占用的总存储空间不得超过2GB，否则复现成绩判定为0分。</p>
+<h3 id="2数据说明">2、数据说明</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">字段</th>
+<th style="text-align:center">说明</th>
+<th style="text-align:center">例子</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">id</td>
+<td style="text-align:center">序号</td>
+<td style="text-align:center">538f267d2e6fba48b1286fb7f1499fe7</td>
+</tr>
+<tr>
+<td style="text-align:center">title</td>
+<td style="text-align:center">专利名称</td>
+<td style="text-align:center">一种信号的发送方法及基站、用户设备</td>
+</tr>
+<tr>
+<td style="text-align:center">assignee</td>
+<td style="text-align:center">专利权人</td>
+<td style="text-align:center">华为技术有限公司</td>
+</tr>
+<tr>
+<td style="text-align:center">abstract</td>
+<td style="text-align:center">专利摘要</td>
+<td style="text-align:center">一种信号的发送方法及基站、用户设备。在一个子帧中为多个用户设备配置的&hellip;</td>
+</tr>
+<tr>
+<td style="text-align:center">label</td>
+<td style="text-align:center">分类标签</td>
+<td style="text-align:center">0</td>
+</tr>
+</tbody>
+</table>
+<h3 id="3评测标准">3、评测标准</h3>
+<p>评测采用macro F1指标，计算公式如下：</p>
+<p>$$
+F1=\frac{1}{n}\sum_{i}^{n}{F1_i} = \frac{1}{n}\sum_{i}^{n}{\frac{2\times P_i \times R_i}{P_i+R_i}}
+$$</p>
+<p>Pi是第i个类别的precition，Ri是第i个类别的Recall，n是类别总数。</p>
+<h2 id="数据分析">数据分析</h2>
+<h3 id="1读取数据">1、读取数据</h3>
+<p>本次竞赛提供的是json格式的数据，我们通过python自带的json库将数据读入并转换为DataFrame格式，方便观察数据。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">train_data, test_data <span style="color:#f92672">=</span> [], []
+<span style="color:#66d9ef">for</span> line <span style="color:#f92672">in</span> open(<span style="color:#e6db74">&#39;./小样本数据分类任务/train-147898.json&#39;</span>, <span style="color:#e6db74">&#39;r&#39;</span>, encoding<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;utf8&#39;</span>):
+    train_data<span style="color:#f92672">.</span>append(json<span style="color:#f92672">.</span>loads(line))
+<span style="color:#66d9ef">for</span> line <span style="color:#f92672">in</span> open(<span style="color:#e6db74">&#39;./小样本数据分类任务/testA-580439.json&#39;</span>, <span style="color:#e6db74">&#39;r&#39;</span>, encoding<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;utf8&#39;</span>):
+    test_data<span style="color:#f92672">.</span>append(json<span style="color:#f92672">.</span>loads(line))
+train_data, test_data <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>DataFrame(train_data), pd<span style="color:#f92672">.</span>DataFrame(test_data)
+train_data<span style="color:#f92672">.</span>head()
+</code></pre></div><p>
+  <p><img src="https://s3.bmp.ovh/imgs/2022/09/03/fbcc8d08a2970b90.png" alt="" loading="lazy" /></p>
+</p>
+<h3 id="2分析数据">2、分析数据</h3>
+<h4 id="查看训练集与测试集数据分布">查看训练集与测试集数据分布</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">sns<span style="color:#f92672">.</span>displot(data<span style="color:#f92672">=</span>train_data, x<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;title_len&#39;</span>, kind<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;kde&#39;</span>)
+sns<span style="color:#f92672">.</span>kdeplot(data<span style="color:#f92672">=</span>test_data, x<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;title_len&#39;</span>, color<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;r&#39;</span>)
+sns<span style="color:#f92672">.</span>displot(data<span style="color:#f92672">=</span>train_data, x<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;assignee_len&#39;</span>, kind<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;kde&#39;</span>)
+sns<span style="color:#f92672">.</span>kdeplot(data<span style="color:#f92672">=</span>test_data, x<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;assignee_len&#39;</span>, color<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;r&#39;</span>)
+sns<span style="color:#f92672">.</span>displot(x<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;abstract_len&#39;</span>, data<span style="color:#f92672">=</span>train_data, kind<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;kde&#39;</span>, color<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;r&#39;</span>)
+sns<span style="color:#f92672">.</span>kdeplot(x<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;abstract_len&#39;</span>, data<span style="color:#f92672">=</span>test_data, color<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;g&#39;</span>)
+</code></pre></div><p>
+  <p><img src="https://s3.bmp.ovh/imgs/2022/09/03/b88fc526fafac2c6.png" alt="" loading="lazy" /></p>
+</p>
+<p>从可视化图中可以看出“标题”、“专利摘要”分布基本一致，“专利权人”存在轻微的抖动，不过专利权人一般是公司或者大学名字，对于文本的理解影响相对不是很大。</p>
+<h4 id="类别标签占比可视化">类别标签占比可视化</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">sns<span style="color:#f92672">.</span>displot(train_data, x<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;label_id&#39;</span>, shrink<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>, bins<span style="color:#f92672">=</span><span style="color:#ae81ff">35</span>)
+</code></pre></div><p>
+  <p><img src="https://s3.bmp.ovh/imgs/2022/09/03/5ad34ad40ba47836.png" alt="" loading="lazy" /></p>
+</p>
+<p>在分类问题中一个不可避免的问题就是类别不均衡问题，在本赛题中同样存在这样的问题。从可视化图中可以清晰的看到除了类别不均衡问题外，有的类别数量特别少，只有个位数，这些类别是否要单独进行处理？</p>
+<h4 id="观察数据">观察数据</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">train_data[train_data[<span style="color:#e6db74">&#39;label_id&#39;</span>]<span style="color:#f92672">==</span>i][[<span style="color:#e6db74">&#39;title&#39;</span>, <span style="color:#e6db74">&#39;assignee&#39;</span>, <span style="color:#e6db74">&#39;abstract&#39;</span>]] <span style="color:#75715e"># i从0-35变化</span>
+</code></pre></div><p>
+  <p><img src="https://s3.bmp.ovh/imgs/2022/09/03/e7ec75b6a13a4594.png" alt="" loading="lazy" /></p>
+</p>
+<p>可以看见大部分的“title”都会出现在“abstract”中。</p>
+<h2 id="baseline">Baseline👉🏻</h2>
+<h3 id="模型选择">模型选择</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">备选模型</th>
+<th>理由</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">bert</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:center">bert+cnn</td>
+<td>bert输出作为文档向量的研究和应用尚不多见，fastText可以做文档向量</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:center"></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>等待更新&hellip;</p>
+<h2 id="赛题突破点仅供参考">赛题突破点(仅供参考)</h2>
+<h3 id="1多分类样本不均衡">1、多分类样本不均衡</h3>
+<h4 id="过采样">过采样</h4>
+<p>从少样本类别中反复抽取样本，直至该类别样本数与多样本类别基本持平。这样势必会在原来少样本的类别中产生大量的重复样本，如果其中有数据标签错误或者存在噪音，那么这个错误将被成倍的放大，所以过采样最大的缺点就是对少样本类别过拟合。</p>
+<h4 id="欠采样">欠采样</h4>
+<p>抛弃大量的多样本类别样本，从多样本类别中随机抽取一部分样本来与少样本类别数量基本持平。首先，数据十分珍贵，而且这是一个小样本任务，抛弃数据的做法不可取；其次，抛弃了大部分数据，弱化了多样本类别的影响，可能造成数据偏差较大。</p>
+<h4 id="改造损失函数focal-loss">改造损失函数👉🏻<a href="">Focal Loss</a></h4>
+<p>Focal Loss的核心功能是解决难样本问题，其核心参数有两个<code>alpha</code>与<code>gamma</code>。<code>alpha</code>是一个与类别相关的参数，如果仅使用这个参数，应该给予数量少的类别较大的权重，数量多的类别较小的权重，但是在与<code>gamma</code>参数共用时，根据该论文实验表明，<code>alpha</code>的取值应该是给予数量少的类别较小的权重，数量多的类别较大的权重，具体的解释参考苏剑林大神的解释：本来样本少的类别“难以匹敌”样本多的类别，但是经过<code>alpha</code>和<code>gamma</code>的优化后，形式逆转了，所以需要对样本多的类别降权。不过我认为<code>alpha</code>这个参数的引入，对于每个类别应该使用什么样的权重需要多多尝试(这里使用的是用样本数最多的样本数量依次除以每个类别的样本数)，如果在实验是发现<code>alpha</code>的加入对于整体的提升不是很大的话，可以尝试只引入<code>gamma</code>参数进行快速调参。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">MultiFocalLoss</span>(nn<span style="color:#f92672">.</span>Module):
+    <span style="color:#66d9ef">def</span> __init__(self, class_num, alpha<span style="color:#f92672">=</span><span style="color:#66d9ef">None</span>, gamma<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>, logits<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>, reduce<span style="color:#f92672">=</span><span style="color:#66d9ef">None</span>):
+        super(MultiFocalLoss, self)<span style="color:#f92672">.</span>__init__()
+        self<span style="color:#f92672">.</span>alpha <span style="color:#f92672">=</span> alpha
+        self<span style="color:#f92672">.</span>alpha <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>alpha<span style="color:#f92672">.</span>cuda()
+        self<span style="color:#f92672">.</span>gamma <span style="color:#f92672">=</span> gamma
+        self<span style="color:#f92672">.</span>class_num <span style="color:#f92672">=</span> class_num
+        self<span style="color:#f92672">.</span>reduce <span style="color:#f92672">=</span> reduce
+
+    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">forward</span>(self, inputs, targets):
+        pt <span style="color:#f92672">=</span> F<span style="color:#f92672">.</span>softmax(inputs, dim<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)  <span style="color:#75715e"># softmmax获取预测概率</span>
+        class_mask <span style="color:#f92672">=</span> F<span style="color:#f92672">.</span>one_hot(targets, self<span style="color:#f92672">.</span>class_num)  <span style="color:#75715e"># 获取target的one hot编码</span>
+        ids <span style="color:#f92672">=</span> targets<span style="color:#f92672">.</span>view(<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>)
+        alpha <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>alpha[ids<span style="color:#f92672">.</span>data<span style="color:#f92672">.</span>view(<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>)]<span style="color:#f92672">.</span>view(<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>)  <span style="color:#75715e"># 注意，这里的alpha是给定的一个list(tensor</span>
+        <span style="color:#75715e"># ),里面的元素分别是每一个类的权重因子</span>
+        alpha<span style="color:#f92672">.</span>requires_grad <span style="color:#f92672">=</span> <span style="color:#66d9ef">True</span>
+        probs <span style="color:#f92672">=</span> (pt <span style="color:#f92672">*</span> class_mask)<span style="color:#f92672">.</span>sum(<span style="color:#ae81ff">1</span>)<span style="color:#f92672">.</span>view(<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>)  <span style="color:#75715e"># 利用onehot作为mask，提取对应的pt</span>
+        log_p <span style="color:#f92672">=</span> probs<span style="color:#f92672">.</span>log()
+        <span style="color:#75715e"># 同样，原始ce上增加一个动态权重衰减因子</span>
+        <span style="color:#66d9ef">if</span> self<span style="color:#f92672">.</span>alpha <span style="color:#f92672">is</span> <span style="color:#f92672">not</span> <span style="color:#66d9ef">None</span>:
+            loss <span style="color:#f92672">=</span> <span style="color:#f92672">-</span>alpha <span style="color:#f92672">*</span> (torch<span style="color:#f92672">.</span>pow((<span style="color:#ae81ff">1</span> <span style="color:#f92672">-</span> probs), self<span style="color:#f92672">.</span>gamma)) <span style="color:#f92672">*</span> log_p
+        <span style="color:#66d9ef">else</span>:
+            loss <span style="color:#f92672">=</span> <span style="color:#f92672">-</span> (torch<span style="color:#f92672">.</span>pow((<span style="color:#ae81ff">1</span> <span style="color:#f92672">-</span> probs), self<span style="color:#f92672">.</span>gamma)) <span style="color:#f92672">*</span> log_p
+        <span style="color:#66d9ef">if</span> self<span style="color:#f92672">.</span>reduce <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;mean&#39;</span>:
+            loss <span style="color:#f92672">=</span> loss<span style="color:#f92672">.</span>mean()
+        <span style="color:#66d9ef">elif</span> self<span style="color:#f92672">.</span>reduce <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;sum&#39;</span>:
+            loss <span style="color:#f92672">=</span> loss<span style="color:#f92672">.</span>sum()
+        <span style="color:#66d9ef">return</span> loss
+</code></pre></div><p>初步测试：加入<code>alpha</code>后的效果好于不加<code>alpha</code>的效果。</p>
+<h3 id="2标注数据太少">2、标注数据太少</h3>
+<h4 id="数据增强">数据增强</h4>
+<p>句子层面:回译、更换句子顺序、找长文本将其切分为两段变为两个样本</p>
+<p>词层面:同义词替换、随机删除</p>
+<p>通用EDA：</p>
+<table>
+<thead>
+<tr>
+<th>同义词替换</th>
+<th>从句子中随机选择非停用词，然后用这些选中词对应的同义5664词来替换它们</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>随机插入</td>
+<td>随机的找出句中某个非停用词，随后使用其同义词插入句中的一个随机位置。这个操作可以重复n次</td>
+</tr>
+<tr>
+<td>随机交换</td>
+<td>随机的选择句子中的两个词语，然后交换这两个词语的位置。这个操作可以重复n次</td>
+</tr>
+<tr>
+<td>随机删除</td>
+<td>以固定概率随机删除句子中的词语</td>
+</tr>
+<tr>
+<td>基于TF-IDF的非核心词替换</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>预测结果出来后，看一下预测结果的分布，好初步确定模型的好坏</p>
+<h4 id="半监督学习">半监督学习</h4>
+<h3 id="3线下线上gap较大">3、线下线上Gap较大</h3>
+<h3 id="4继续预训练">4、继续预训练</h3>
+<h2 id="记录">记录</h2>
+<h3 id="原始数据">原始数据</h3>
+<h4 id="1cross_entropy_loss--valid_rate01">1、cross_entropy_loss + valid_rate(0.1)</h4>
+<p>
+  <p><img src="/Users/rnake/Library/Application%20Support/marktext/images/2022-09-20-09-50-05-image.png" alt="" loading="lazy" /></p>
+</p>
+<table>
+<thead>
+<tr>
+<th>线下</th>
+<th>0.564</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>线上</td>
+<td>0.506</td>
+</tr>
+</tbody>
+</table>
+<h4 id="2focal_loss小样本小权重-bert1e-5-max_epoch15-warmup96----warmup和max_epoch需要微调">2、focal_loss(小样本小权重) bert(1e-5) max_epoch(15) warmup(96) &mdash;&gt;warmup和max_epoch需要微调</h4>
+<p>
+  <p><img src="/Users/rnake/Library/Application%20Support/marktext/images/2022-09-20-10-44-13-image.png" alt="" loading="lazy" /></p>
+</p>
+<table>
+<thead>
+<tr>
+<th>线下</th>
+<th>0.573</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>线上</td>
+<td>0.607</td>
+</tr>
+</tbody>
+</table>
+
+          </div>
+        </div>
+                 
+      
+  
+  
+
+  
+
+  <div class="article-paging">
+    
+      <section class="post-paging--item card-container content-padding-primary soft-size--primary soft-style--box">
+  <div class="card-cover" background-image-lazy data-img="https://s3.uuu.ovh/imgs/2022/11/14/2bd68dfce42b5855.jpg"></div>
+  <div class="card-text">
+    <a href="/nlp/global_pointer%E8%AE%BA%E6%96%87/"><h4 class="card-text--title text-ellipsis">Global Pointer</h4></a>
+    <p class="card-text--row">2022-12-08 20:53</p>
+  </div>
+</section>
+    
+    
+  </div>
+</div>
+  <aside class="widget-info">
+    
+<section class="aside-widget widget-author content-padding-large soft-size--large soft-style--box">
+  <div class="widget-body">
+    <div class="author-box avatar">
+      
+      <img class="author-avatar soft-size--round soft-style--box" src="https://s.gravatar.com/avatar/7b5a0b07a98895278cfa862b1f32ae8f?s=200&amp;r=g&amp;d=retro" alt="摸铁校尉🥉">
+      
+      <h2 class="author-name text-ellipsis">摸铁校尉🥉</h2>
+      
+      <p class="author-desc text-ellipsis">闭上眼睛，开始穿越!</p>
+      
+    </div>
+  </div>
+</section>
+
+
+    
+
+<section class="aside-widget widget-toc content-padding-large soft-size--large soft-style--box">
+  <h2 class="widget-header">
+    <div class="title">
+      <span>Toc</span>
+    </div>
+  </h2>
+  <div class="widget-body">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#赛题解读小样本数据分类任务httpswwwdatafountaincncompetitions582datasets">赛题解读👉🏻<a href="https://www.datafountain.cn/competitions/582/datasets">小样本数据分类任务</a></a>
+      <ul>
+        <li><a href="#1赛题任务">1、赛题任务</a></li>
+        <li><a href="#2数据说明">2、数据说明</a></li>
+        <li><a href="#3评测标准">3、评测标准</a></li>
+      </ul>
+    </li>
+    <li><a href="#数据分析">数据分析</a>
+      <ul>
+        <li><a href="#1读取数据">1、读取数据</a></li>
+        <li><a href="#2分析数据">2、分析数据</a></li>
+      </ul>
+    </li>
+    <li><a href="#baseline">Baseline👉🏻</a>
+      <ul>
+        <li><a href="#模型选择">模型选择</a></li>
+      </ul>
+    </li>
+    <li><a href="#赛题突破点仅供参考">赛题突破点(仅供参考)</a>
+      <ul>
+        <li><a href="#1多分类样本不均衡">1、多分类样本不均衡</a></li>
+        <li><a href="#2标注数据太少">2、标注数据太少</a></li>
+        <li><a href="#3线下线上gap较大">3、线下线上Gap较大</a></li>
+        <li><a href="#4继续预训练">4、继续预训练</a></li>
+      </ul>
+    </li>
+    <li><a href="#记录">记录</a>
+      <ul>
+        <li><a href="#原始数据">原始数据</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</section>
+
+
+    
+
+
+
+
+
+
+
+
+
+
+<section class="aside-widget widget-articles content-padding-large soft-size--large soft-style--box">
+  <h2 class="widget-header">
+    <div class="title">
+      <span>Related Posts</span>
+    </div>
+  </h2>
+  <div class="widget-body">
+    <ul class="post-list">
+      
+      
+        <li class="post-item"><a href="/nlp/%E5%BD%B1%E5%83%8F%E5%AD%A6nlp/">影像学NLP</a></li>
+      
+        <li class="post-item"><a href="/swift/swiftui%E5%9F%BA%E7%A1%80%E7%BB%84%E4%BB%B6/">SwiftUI基础组件</a></li>
+      
+        <li class="post-item"><a href="/swift/swift%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86/">Swift错误处理</a></li>
+      
+        <li class="post-item"><a href="/swift/progressview/">ProgressView</a></li>
+      
+        <li class="post-item"><a href="/swift/propertywrapper/">PropertyWrapper</a></li>
+      
+        <li class="post-item"><a href="/swift/keypath/">KeyPath</a></li>
+      
+    </ul>
+  </div>
+</section>
+
+
+    
+
+
+
+
+<section class="aside-widget widget-categories content-padding-large soft-size--large soft-style--box">
+  <h2 class="widget-header">
+    <div class="title">
+      <span>Categories</span>
+    </div>
+  </h2>
+  <div class="widget-body">
+    <ul class="categories-list">
+      
+        <li>
+          <a href="https://www.rclurn.github.io/categories/development/">Development</a>
+          <span>8</span>
+        </li>
+      
+        <li>
+          <a href="https://www.rclurn.github.io/categories/%E5%B7%A5%E5%85%B7%E7%AE%B1/">工具箱</a>
+          <span>3</span>
+        </li>
+      
+        <li>
+          <a href="https://www.rclurn.github.io/categories/%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/">监督学习</a>
+          <span>3</span>
+        </li>
+      
+        <li>
+          <a href="https://www.rclurn.github.io/categories/%E4%B8%8A%E5%88%86%E6%9D%80%E5%99%A8/">上分杀器</a>
+          <span>2</span>
+        </li>
+      
+        <li>
+          <a href="https://www.rclurn.github.io/categories/swiftui/">SwiftUI</a>
+          <span>1</span>
+        </li>
+      
+        <li>
+          <a href="https://www.rclurn.github.io/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%AF%94%E8%B5%9B/">机器学习比赛</a>
+          <span>1</span>
+        </li>
+      
+    </ul>
+  </div>
+
+  
+    
+    <div class="widget-footer">
+      <a href="https://www.rclurn.github.io/categories/" class="more-link">
+        show all
+        <svg class="icon icon-more" width="16" height="16" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+          <path d="M60.928 247.808c-13.824-13.824-36.352-13.824-50.688 0-13.824 13.824-13.824 36.352 0 50.688L224.256 512 10.24 725.504c-13.824 13.824-13.824 36.352 0 50.688 7.168 7.168 15.872 10.24 25.088 10.24s18.432-3.584 25.088-10.24l239.104-239.104c13.824-13.824 13.824-36.352 0-50.688L60.928 247.808zM417.792 247.808c-13.824-13.824-36.352-13.824-50.688 0-13.824 13.824-13.824 36.352 0 50.688l213.504 213.504-213.504 213.504c-13.824 13.824-13.824 36.352 0 50.688 7.168 7.168 15.872 10.24 25.088 10.24s18.432-3.584 25.088-10.24l239.104-239.104c13.824-13.824 13.824-36.352 0-50.688L417.792 247.808zM1013.76 486.912l-239.104-239.104c-13.824-13.824-36.352-13.824-50.688 0-13.824 13.824-13.824 36.352 0 50.688l213.504 213.504-213.504 213.504c-13.824 13.824-13.824 36.352 0 50.688 7.168 7.168 15.872 10.24 25.088 10.24s18.432-3.584 25.088-10.24l239.104-239.104c14.336-13.824 14.336-36.352 0.512-50.176z"></path>
+        </svg>
+      </a>
+    </div>
+  
+</section>
+
+
+    
+
+
+
+
+  </aside>
+</div>
+  </main><footer class="footer-container layout-block">
+  
+  <div class="social-icons">
+    
+      <a class="soft-size--primary soft-style--box" href="https://github.com/rnaker" target="_blank" rel="noopener noreferrer">
+          
+        <svg class="icon icon-github" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+          <path d="M64.6 512c0 195.6 125.4 361.9 300.1 422.9 23.5 5.9 19.9-10.8 19.9-22.2v-77.6c-135.8 15.9-141.3-74-150.5-89-18.5-31.5-61.9-39.5-49-54.5 31-15.9 62.5 4 98.9 58 26.4 39.1 77.9 32.5 104.1 26 5.7-23.5 17.9-44.5 34.7-60.9-140.7-25.2-199.4-111.1-199.4-213.3 0-49.5 16.4-95.1 48.4-131.8-20.4-60.6 1.9-112.4 4.9-120.1 58.2-5.2 118.5 41.6 123.3 45.3 33.1-8.9 70.8-13.7 112.9-13.7 42.4 0 80.3 4.9 113.5 13.9 11.3-8.6 67.3-48.8 121.4-43.9 2.9 7.7 24.7 58.3 5.5 118.1 32.5 36.8 49 82.8 49 132.4 0 102.3-59 188.3-200.2 213.2 23.5 23.3 38.1 55.5 38.1 91.1v112.7c0.8 9 0 17.9 15.1 17.9C832.7 877 960.4 709.4 960.4 512.1c0-247.5-200.6-447.9-447.9-447.9C265 64.1 64.6 264.5 64.6 512z"></path>
+        </svg>
+        
+
+        
+
+        
+
+        
+
+        
+      </a>
+    
+      <a class="soft-size--primary soft-style--box" href="https://weibo.com/u/5561168966" target="_blank" rel="noopener noreferrer">
+        
+
+        
+
+        
+
+          
+        <svg class="icon icon-weibo" viewBox="0 0 1025 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+          <path d="M385.682429 733.696q11.995429-19.456 6.290286-39.424t-25.746286-28.598857q-19.456-7.972571-41.691429-0.585143t-34.304 26.258286q-12.580571 19.456-7.460571 39.131429t24.576 28.891429 42.569143 1.462857 35.693714-27.136zM439.442429 664.576q4.534857-7.460571 1.974857-15.140571t-10.020571-10.605714q-7.972571-2.852571-16.310857 0.292571t-12.288 10.605714q-9.728 17.700571 7.460571 25.746286 7.972571 2.852571 16.603429-0.292571t12.580571-10.605714zM538.843572 725.723429q-25.746286 58.294857-90.258286 85.723429t-128 6.875429q-61.147429-19.456-84.260571-72.265143t3.730286-107.154286q26.843429-53.174857 86.601143-79.433143t120.32-10.825143q63.414857 16.603429 90.550857 68.315429t1.462857 108.836571zM717.165858 634.294857q-5.12-54.857143-50.834286-97.133714t-119.149714-62.317714-156.891429-11.995429q-127.414857 13.165714-211.163429 80.822857t-75.702857 151.113143q5.12 54.857143 50.834286 97.133714t119.149714 62.317714 156.891429 11.995429q127.414857-13.165714 211.163429-80.822857t75.702857-151.113143zM893.147572 636.562286q0 38.838857-21.138286 79.725714t-62.317714 78.262857-96.256 67.145143-129.170286 47.396571-154.550857 17.700571-157.110857-19.163429-137.435429-53.174857-98.011429-86.308571-37.156571-114.029714q0-65.682286 39.716571-139.995429t112.859429-147.456q96.548571-96.548571 195.145143-134.875429t140.873143 4.022857q37.156571 36.571429 11.410286 119.442286-2.267429 7.972571-0.585143 11.410286t5.705143 4.022857 8.265143-0.292571 7.68-1.974857l3.437714-1.170286q79.433143-33.718857 140.580571-33.718857t87.405714 34.889143q25.746286 35.986286 0 101.741714-1.170286 7.460571-2.56 11.410286t2.56 7.168 6.875429 4.315429 9.728 3.437714q32.548571 10.313143 58.88 26.843429t45.714286 46.592 19.456 66.56zM850.871001 279.990857q23.990857 26.843429 31.158857 62.025143t-3.730286 67.145143q-4.534857 13.165714-16.822857 19.456t-25.453714 2.267429q-13.165714-4.534857-19.456-16.822857t-2.267429-25.453714q11.410286-35.986286-13.677714-63.414857t-61.147429-19.968q-13.677714 2.852571-25.746286-4.534857t-14.262857-21.138286q-2.852571-13.677714 4.534857-25.453714t21.138286-14.555429q34.304-7.460571 68.022857 3.145143t57.709714 37.449143zM954.295001 186.88q49.737143 54.857143 64.292571 127.122286t-7.68 138.020571q-5.12 15.433143-19.456 22.820571t-29.696 2.267429-22.820571-19.456-2.852571-29.696q16.018286-46.884571 5.705143-98.304t-45.714286-90.258286q-35.401143-39.424-84.553143-54.564571t-98.889143-4.827429q-16.018286 3.437714-29.696-5.412571t-17.115429-24.868571 5.412571-29.403429 24.868571-16.822857q70.290286-14.848 139.410286 6.582857t118.857143 76.873143z"></path>
+        </svg>
+        
+
+        
+      </a>
+    
+      <a class="soft-size--primary soft-style--box" href="https://www.zhihu.com/people/miku-84" target="_blank" rel="noopener noreferrer">
+        
+
+        
+
+        
+
+        
+
+          
+        <svg class="icon icon-zhihu" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+          <path d="M544.949 561.422s0-71.387-34.779-75.050c-34.779-3.663-142.775 0-142.775 0v-219.654h161.078s-1.83-73.219-32.949-73.219h-261.755l43.93-117.148s-65.897 3.663-89.692 45.761-98.844 252.604-98.844 252.604 25.627 10.983 67.726-20.134c42.101-31.116 56.743-86.033 56.743-86.033l76.879-3.663 1.83 223.316s-133.621-1.83-161.078 0c-27.457 1.83-42.101 75.050-42.101 75.050h203.182s-18.307 124.47-69.557 214.164c-53.085 89.692-151.929 161.078-151.929 161.078s71.387 29.287 140.947-10.983c69.557-42.101 120.811-223.316 120.811-223.316l162.912 203.182s14.643-97.013-1.83-124.47c-18.307-27.457-113.49-137.283-113.49-137.283l-42.101 36.607 29.287-120.811h177.552zM587.050 188.010l-1.83 660.793h65.897l23.795 82.37 115.321-82.37h162.912v-660.793h-366.091zM879.92 775.584h-76.879l-97.013 75.050-21.965-75.050h-20.134v-512.527h215.991v512.527z"></path>
+        </svg>
+        
+      </a>
+    
+  </div>
+  
+
+  <div class="colour-bar"></div>
+  
+  
+  <p>© 2021 <a href="https://github.com/miiiku/hugo-theme-kagome">kagome</a>.</p>
+  
+
+  
+
+  <p>
+    Powered by
+    <a href="https://gohugo.io/" target="_blank" rel="noopener noreferrer">Hugo</a>
+    Theme - 
+    <a href="https://github.com/miiiku/hugo-theme-kagome" target="_blank" rel="noopener noreferrer author">kagome</a>
+  </p>
+
+  <p>
+    <a href="javascript:;" id="theme-light">🌞 light</a>
+    <a href="javascript:;" id="theme-dark">🌛 dark</a>
+    <a href="javascript:;" id="theme-auto">🤖️ auto</a>
+  </p>
+</footer>
+
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+
+
+</body>
+
+</html>

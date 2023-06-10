@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Categories on Rclurn</title>
+    <link>https://www.rclurn.github.io/categories/</link>
+    <description>Recent content in Categories on Rclurn</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <managingEditor>liu-huo@live.com (摸铁校尉🥉)</managingEditor>
+    <webMaster>liu-huo@live.com (摸铁校尉🥉)</webMaster>
+    <copyright>© 2021 &lt;a href=&#34;https://github.com/miiiku/hugo-theme-kagome&#34;&gt;kagome&lt;/a&gt;.</copyright>
+    <lastBuildDate>Tue, 09 May 2023 23:30:00 +0800</lastBuildDate><atom:link href="https://www.rclurn.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Development</title>
+      <link>https://www.rclurn.github.io/categories/development/</link>
+      <pubDate>Tue, 09 May 2023 23:30:00 +0800</pubDate>
+      <author>liu-huo@live.com (摸铁校尉🥉)</author>
+      <guid>https://www.rclurn.github.io/categories/development/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>SwiftUI</title>
+      <link>https://www.rclurn.github.io/categories/swiftui/</link>
+      <pubDate>Wed, 03 May 2023 14:50:02 +0800</pubDate>
+      <author>liu-huo@live.com (摸铁校尉🥉)</author>
+      <guid>https://www.rclurn.github.io/categories/swiftui/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>知识图谱</title>
+      <link>https://www.rclurn.github.io/categories/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1/</link>
+      <pubDate>Thu, 08 Dec 2022 20:53:55 +0800</pubDate>
+      <author>liu-huo@live.com (摸铁校尉🥉)</author>
+      <guid>https://www.rclurn.github.io/categories/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>工具箱</title>
+      <link>https://www.rclurn.github.io/categories/%E5%B7%A5%E5%85%B7%E7%AE%B1/</link>
+      <pubDate>Sun, 04 Sep 2022 15:53:13 +0800</pubDate>
+      <author>liu-huo@live.com (摸铁校尉🥉)</author>
+      <guid>https://www.rclurn.github.io/categories/%E5%B7%A5%E5%85%B7%E7%AE%B1/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>自然语言处理比赛</title>
+      <link>https://www.rclurn.github.io/categories/%E8%87%AA%E7%84%B6%E8%AF%AD%E8%A8%80%E5%A4%84%E7%90%86%E6%AF%94%E8%B5%9B/</link>
+      <pubDate>Fri, 02 Sep 2022 20:48:48 +0800</pubDate>
+      <author>liu-huo@live.com (摸铁校尉🥉)</author>
+      <guid>https://www.rclurn.github.io/categories/%E8%87%AA%E7%84%B6%E8%AF%AD%E8%A8%80%E5%A4%84%E7%90%86%E6%AF%94%E8%B5%9B/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>上分杀器</title>
+      <link>https://www.rclurn.github.io/categories/%E4%B8%8A%E5%88%86%E6%9D%80%E5%99%A8/</link>
+      <pubDate>Fri, 12 Aug 2022 12:48:09 +0800</pubDate>
+      <author>liu-huo@live.com (摸铁校尉🥉)</author>
+      <guid>https://www.rclurn.github.io/categories/%E4%B8%8A%E5%88%86%E6%9D%80%E5%99%A8/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>机器学习比赛</title>
+      <link>https://www.rclurn.github.io/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%AF%94%E8%B5%9B/</link>
+      <pubDate>Tue, 28 Jun 2022 16:27:53 +0800</pubDate>
+      <author>liu-huo@live.com (摸铁校尉🥉)</author>
+      <guid>https://www.rclurn.github.io/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%AF%94%E8%B5%9B/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>监督学习</title>
+      <link>https://www.rclurn.github.io/categories/%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/</link>
+      <pubDate>Tue, 04 Jan 2022 09:38:19 +0800</pubDate>
+      <author>liu-huo@live.com (摸铁校尉🥉)</author>
+      <guid>https://www.rclurn.github.io/categories/%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

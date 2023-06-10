@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>SwiftUI on Rclurn</title>
+    <link>https://www.rclurn.github.io/categories/swiftui/</link>
+    <description>Recent content in SwiftUI on Rclurn</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <managingEditor>liu-huo@live.com (摸铁校尉🥉)</managingEditor>
+    <webMaster>liu-huo@live.com (摸铁校尉🥉)</webMaster>
+    <copyright>© 2021 &lt;a href=&#34;https://github.com/miiiku/hugo-theme-kagome&#34;&gt;kagome&lt;/a&gt;.</copyright>
+    <lastBuildDate>Wed, 03 May 2023 14:50:02 +0800</lastBuildDate><atom:link href="https://www.rclurn.github.io/categories/swiftui/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>SwiftUI基础组件</title>
+      <link>https://www.rclurn.github.io/swift/swiftui%E5%9F%BA%E7%A1%80%E7%BB%84%E4%BB%B6/</link>
+      <pubDate>Wed, 03 May 2023 14:50:02 +0800</pubDate>
+      <author>liu-huo@live.com (摸铁校尉🥉)</author>
+      <guid>https://www.rclurn.github.io/swift/swiftui%E5%9F%BA%E7%A1%80%E7%BB%84%E4%BB%B6/</guid>
+      <description>Text组件 TextField组件 Button组件 Form组件 Form是一个文本、图像等静态控件的滚动列表，其中也可以包含text field</description>
+    </item>
+    
+  </channel>
+</rss>
