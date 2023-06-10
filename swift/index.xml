@@ -2,74 +2,74 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Algorithm on Rclurn</title>
-    <link>https://www.rclurn.github.io/swift/</link>
+    <link>https://rclurn.github.io/swift/</link>
     <description>Recent content in Algorithm on Rclurn</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <managingEditor>liu-huo@live.com (摸铁校尉🥉)</managingEditor>
     <webMaster>liu-huo@live.com (摸铁校尉🥉)</webMaster>
     <copyright>© 2021 &lt;a href=&#34;https://github.com/miiiku/hugo-theme-kagome&#34;&gt;kagome&lt;/a&gt;.</copyright>
-    <lastBuildDate>Wed, 03 May 2023 14:50:02 +0800</lastBuildDate><atom:link href="https://www.rclurn.github.io/swift/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 03 May 2023 14:50:02 +0800</lastBuildDate><atom:link href="https://rclurn.github.io/swift/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>SwiftUI基础组件</title>
-      <link>https://www.rclurn.github.io/swift/swiftui%E5%9F%BA%E7%A1%80%E7%BB%84%E4%BB%B6/</link>
+      <link>https://rclurn.github.io/swift/swiftui%E5%9F%BA%E7%A1%80%E7%BB%84%E4%BB%B6/</link>
       <pubDate>Wed, 03 May 2023 14:50:02 +0800</pubDate>
       <author>liu-huo@live.com (摸铁校尉🥉)</author>
-      <guid>https://www.rclurn.github.io/swift/swiftui%E5%9F%BA%E7%A1%80%E7%BB%84%E4%BB%B6/</guid>
+      <guid>https://rclurn.github.io/swift/swiftui%E5%9F%BA%E7%A1%80%E7%BB%84%E4%BB%B6/</guid>
       <description>Text组件 TextField组件 Button组件 Form组件 Form是一个文本、图像等静态控件的滚动列表，其中也可以包含text field</description>
     </item>
     
     <item>
       <title>Swift错误处理</title>
-      <link>https://www.rclurn.github.io/swift/swift%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86/</link>
+      <link>https://rclurn.github.io/swift/swift%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86/</link>
       <pubDate>Sun, 30 Apr 2023 23:00:55 +0800</pubDate>
       <author>liu-huo@live.com (摸铁校尉🥉)</author>
-      <guid>https://www.rclurn.github.io/swift/swift%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86/</guid>
+      <guid>https://rclurn.github.io/swift/swift%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86/</guid>
       <description>错误处理 错误处理（Error handling） 是响应错误以及从错误中让程序恢复运行的一种方式。Swift 在运行时提供了抛出、捕获、传递和处理</description>
     </item>
     
     <item>
       <title>ProgressView</title>
-      <link>https://www.rclurn.github.io/swift/progressview/</link>
+      <link>https://rclurn.github.io/swift/progressview/</link>
       <pubDate>Wed, 29 Mar 2023 20:58:44 +0800</pubDate>
       <author>liu-huo@live.com (摸铁校尉🥉)</author>
-      <guid>https://www.rclurn.github.io/swift/progressview/</guid>
+      <guid>https://rclurn.github.io/swift/progressview/</guid>
       <description>Declaration struct ProgressView&amp;lt;Label, CurrentValueLabel&amp;gt; where Label: View, CurrentValueLabel: View 概述 ProgressView通常用于展示一个未完成的任务的完成进度，它同时支持显示具体百分比和非具体类型的进度。创建一个有</description>
     </item>
     
     <item>
       <title>PropertyWrapper</title>
-      <link>https://www.rclurn.github.io/swift/propertywrapper/</link>
+      <link>https://rclurn.github.io/swift/propertywrapper/</link>
       <pubDate>Wed, 15 Mar 2023 20:20:18 +0800</pubDate>
       <author>liu-huo@live.com (摸铁校尉🥉)</author>
-      <guid>https://www.rclurn.github.io/swift/propertywrapper/</guid>
+      <guid>https://rclurn.github.io/swift/propertywrapper/</guid>
       <description>限制 被装饰的属性不能是计算属性 被装饰的属性不能是全局属性 被装饰的属性不能是lazy、weak、unowned的 PropertyWrapper</description>
     </item>
     
     <item>
       <title>KeyPath</title>
-      <link>https://www.rclurn.github.io/swift/keypath/</link>
+      <link>https://rclurn.github.io/swift/keypath/</link>
       <pubDate>Tue, 14 Mar 2023 09:44:01 +0800</pubDate>
       <author>liu-huo@live.com (摸铁校尉🥉)</author>
-      <guid>https://www.rclurn.github.io/swift/keypath/</guid>
+      <guid>https://rclurn.github.io/swift/keypath/</guid>
       <description></description>
     </item>
     
     <item>
       <title>SwiftUI的布局</title>
-      <link>https://www.rclurn.github.io/swift/swiftui%E7%9A%84%E5%B8%83%E5%B1%80/</link>
+      <link>https://rclurn.github.io/swift/swiftui%E7%9A%84%E5%B8%83%E5%B1%80/</link>
       <pubDate>Mon, 06 Feb 2023 10:16:32 +0800</pubDate>
       <author>liu-huo@live.com (摸铁校尉🥉)</author>
-      <guid>https://www.rclurn.github.io/swift/swiftui%E7%9A%84%E5%B8%83%E5%B1%80/</guid>
+      <guid>https://rclurn.github.io/swift/swiftui%E7%9A%84%E5%B8%83%E5%B1%80/</guid>
       <description>View的大小类型 View X轴 Y轴 Text Hugging Hugging Button Neutral Neutral VStack Neutral Neutral Image Hugging Hugging Image.resizeable() Expanding Expanding Color Expanding Expanding View的排版过程 父View告诉子View自己有多少空间，并询问子View需</description>
     </item>
     
     <item>
       <title>CS193p_lecture_5</title>
-      <link>https://www.rclurn.github.io/swift/cs193p_lecture_5/</link>
+      <link>https://rclurn.github.io/swift/cs193p_lecture_5/</link>
       <pubDate>Thu, 19 Jan 2023 15:45:33 +0800</pubDate>
       <author>liu-huo@live.com (摸铁校尉🥉)</author>
-      <guid>https://www.rclurn.github.io/swift/cs193p_lecture_5/</guid>
+      <guid>https://rclurn.github.io/swift/cs193p_lecture_5/</guid>
       <description>@State 概述 SwiftUI将管理申明为State的属性的存储，当该属性的值更改时，SwiftUI会更新视图层次结构中依赖于该值的部分。被State</description>
     </item>
     
