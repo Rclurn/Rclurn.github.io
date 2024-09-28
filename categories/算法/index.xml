@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>算法 on Rclurn</title>
+    <link>https://rclurn.github.io/categories/%E7%AE%97%E6%B3%95/</link>
+    <description>Recent content in 算法 on Rclurn</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <managingEditor>liu-huo@live.com (摸铁校尉🥉)</managingEditor>
+    <webMaster>liu-huo@live.com (摸铁校尉🥉)</webMaster>
+    <copyright>© 2021 &lt;a href=&#34;https://github.com/miiiku/hugo-theme-kagome&#34;&gt;kagome&lt;/a&gt;.</copyright>
+    <lastBuildDate>Sat, 06 Jan 2024 19:35:52 +0800</lastBuildDate><atom:link href="https://rclurn.github.io/categories/%E7%AE%97%E6%B3%95/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>基础算法</title>
+      <link>https://rclurn.github.io/algorithm/%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95/</link>
+      <pubDate>Sat, 06 Jan 2024 19:35:52 +0800</pubDate>
+      <author>liu-huo@live.com (摸铁校尉🥉)</author>
+      <guid>https://rclurn.github.io/algorithm/%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95/</guid>
+      <description>求取最大公约数 int gcd(int a, int b) { return b ? gcd(b, a % b), a; } 快速排序 // 这里的partition有一个性质，执行一次partition我们就可以确定数组中的某</description>
+    </item>
+    
+  </channel>
+</rss>

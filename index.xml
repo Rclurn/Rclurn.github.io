@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Rclurn</title>
+    <link>https://rclurn.github.io/</link>
+    <description>Recent content on Rclurn</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <managingEditor>liu-huo@live.com (摸铁校尉🥉)</managingEditor>
+    <webMaster>liu-huo@live.com (摸铁校尉🥉)</webMaster>
+    <copyright>© 2021 &lt;a href=&#34;https://github.com/miiiku/hugo-theme-kagome&#34;&gt;kagome&lt;/a&gt;.</copyright>
+    <lastBuildDate>Wed, 25 Sep 2024 18:07:35 +0800</lastBuildDate><atom:link href="https://rclurn.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>DeepSeek V2</title>
+      <link>https://rclurn.github.io/algorithm/deepseek-v2/</link>
+      <pubDate>Wed, 25 Sep 2024 18:07:35 +0800</pubDate>
+      <author>liu-huo@live.com (摸铁校尉🥉)</author>
+      <guid>https://rclurn.github.io/algorithm/deepseek-v2/</guid>
+      <description>DeepSeek-V2: A Strong, Economical, and Efficient Mixture-of-Experts Language Model 🚀</description>
+    </item>
+    
+    <item>
+      <title>Baichuan 2</title>
+      <link>https://rclurn.github.io/algorithm/baichuan-2/</link>
+      <pubDate>Wed, 25 Sep 2024 18:07:16 +0800</pubDate>
+      <author>liu-huo@live.com (摸铁校尉🥉)</author>
+      <guid>https://rclurn.github.io/algorithm/baichuan-2/</guid>
+      <description>Baichuan 2: Open Large-scale Language Models 🚀</description>
+    </item>
+    
+    <item>
+      <title>Speculative Decoding</title>
+      <link>https://rclurn.github.io/algorithm/speculative-decoding/</link>
+      <pubDate>Wed, 25 Sep 2024 17:55:09 +0800</pubDate>
+      <author>liu-huo@live.com (摸铁校尉🥉)</author>
+      <guid>https://rclurn.github.io/algorithm/speculative-decoding/</guid>
+      <description>Fast Inference from Transformers via Speculative Decoding 🚀</description>
+    </item>
+    
+    <item>
+      <title>Transformer</title>
+      <link>https://rclurn.github.io/algorithm/transformer/</link>
+      <pubDate>Wed, 25 Sep 2024 13:23:41 +0800</pubDate>
+      <author>liu-huo@live.com (摸铁校尉🥉)</author>
+      <guid>https://rclurn.github.io/algorithm/transformer/</guid>
+      <description>Tokenizer Embedding 三角位置编码 class PositionEmbedding(nn.Module): def __init__(self, dim, base=10000, max_seq_len=512): super().__init__() self.dim = dim pe = torch.zeros(max_seq_len, dim) for pos in range(max_seq_len): for i in range(0, dim, 2): pe[pos][i] = math.sin(pos / (base ** (2 * i / self.dim))) pe[pos][i + 1] = math.cos(pos / (base ** (2 * (i + 1) / self.dim))) pe = pe.unsqueeze(dim=0) self.register_buffer(&amp;#39;pe&amp;#39;, pe) def forward(self, x): x = x</description>
+    </item>
+    
+    <item>
+      <title>BAAI General Embeddings</title>
+      <link>https://rclurn.github.io/algorithm/baai-general-embeddings/</link>
+      <pubDate>Tue, 24 Sep 2024 22:03:28 +0800</pubDate>
+      <author>liu-huo@live.com (摸铁校尉🥉)</author>
+      <guid>https://rclurn.github.io/algorithm/baai-general-embeddings/</guid>
+      <description>第一阶段：RetroMAE预训练 Navie版 模型架构为encoder-decoder架构，在encoder端，对sentence进行15%～</description>
+    </item>
+    
+    <item>
+      <title>Direct Preference Optimization</title>
+      <link>https://rclurn.github.io/algorithm/direct-preference-optimization/</link>
+      <pubDate>Mon, 23 Sep 2024 14:01:16 +0800</pubDate>
+      <author>liu-huo@live.com (摸铁校尉🥉)</author>
+      <guid>https://rclurn.github.io/algorithm/direct-preference-optimization/</guid>
+      <description>DPO的优势 相较于PPO，需要的资源更少，不用单独训练Reward模型，也不需要Critic模型； 训练过程中不需要采样 DPO算法 DPO算法的</description>
+    </item>
+    
+    <item>
+      <title>Proximal Policy Optimization</title>
+      <link>https://rclurn.github.io/algorithm/proximal-policy-optimization/</link>
+      <pubDate>Mon, 23 Sep 2024 13:57:47 +0800</pubDate>
+      <author>liu-huo@live.com (摸铁校尉🥉)</author>
+      <guid>https://rclurn.github.io/algorithm/proximal-policy-optimization/</guid>
+      <description>概述 在PPO中主要存在四个模型：Actor、Ref、Reward和Critic。Actor和Ref来源于同一个模型，一般用SFT后的模型进行</description>
+    </item>
+    
+    <item>
+      <title>公式理解</title>
+      <link>https://rclurn.github.io/algorithm/%E5%85%AC%E5%BC%8F%E7%90%86%E8%A7%A3/</link>
+      <pubDate>Mon, 23 Sep 2024 10:55:00 +0800</pubDate>
+      <author>liu-huo@live.com (摸铁校尉🥉)</author>
+      <guid>https://rclurn.github.io/algorithm/%E5%85%AC%E5%BC%8F%E7%90%86%E8%A7%A3/</guid>
+      <description>Softmax softmax是一个常用于多分类任务中的激活函数，其核心为规范化概率输出，并保证总和为1，同时能够让模型保持可导，作为神经网络输出层的一部</description>
+    </item>
+    
+    <item>
+      <title>Parameter Efficient Fine Tuning</title>
+      <link>https://rclurn.github.io/algorithm/parameter-efficient-fine-tuning/</link>
+      <pubDate>Sat, 21 Sep 2024 16:37:17 +0800</pubDate>
+      <author>liu-huo@live.com (摸铁校尉🥉)</author>
+      <guid>https://rclurn.github.io/algorithm/parameter-efficient-fine-tuning/</guid>
+      <description>大模型高效微调技术 总览 Prefix Tuning 🚀 人工设计的prompt模版可能并不是最优的，自动化搜索模版成本也比较高； 传统微调范式对每个任务都需要存储一份微调</description>
+    </item>
+    
+    <item>
+      <title>LlamaCpp</title>
+      <link>https://rclurn.github.io/projects/llamacpp/</link>
+      <pubDate>Thu, 15 Aug 2024 00:14:52 +0800</pubDate>
+      <author>liu-huo@live.com (摸铁校尉🥉)</author>
+      <guid>https://rclurn.github.io/projects/llamacpp/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>SQL基础</title>
+      <link>https://rclurn.github.io/others/sql%E5%9F%BA%E7%A1%80/</link>
+      <pubDate>Tue, 09 Apr 2024 23:14:00 +0800</pubDate>
+      <author>liu-huo@live.com (摸铁校尉🥉)</author>
+      <guid>https://rclurn.github.io/others/sql%E5%9F%BA%E7%A1%80/</guid>
+      <description>SQL语句及其种类 SQL根据功能不同可以分为三类，其中使用最多的是 DML。 DDL数据定义语言 CREATE: 创建数据库和表等对象 DROP : 删除数据库和表等对象 ALTER</description>
+    </item>
+    
+    <item>
+      <title>分词方式</title>
+      <link>https://rclurn.github.io/algorithm/%E5%88%86%E8%AF%8D%E6%96%B9%E5%BC%8F/</link>
+      <pubDate>Fri, 01 Mar 2024 11:09:56 +0800</pubDate>
+      <author>liu-huo@live.com (摸铁校尉🥉)</author>
+      <guid>https://rclurn.github.io/algorithm/%E5%88%86%E8%AF%8D%E6%96%B9%E5%BC%8F/</guid>
+      <description>BPE算法的简单实现 from collections import defaultdict corpus = [ &amp;#34;This is the Hugging Face Course.&amp;#34;, &amp;#34;This chapter is about tokenization.&amp;#34;, &amp;#34;This section shows several tokenizer algorithms.&amp;#34;, &amp;#34;Hopefully, you will be able to understand how they are trained and generate tokens.&amp;#34; ] word_freqs = difaultdict(int) for text in corpus: for word in text.split(): word_freqs[word] += 1 vocab = [] for word in word_freqs.keys():</description>
+    </item>
+    
+    <item>
+      <title>基础算法</title>
+      <link>https://rclurn.github.io/algorithm/%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95/</link>
+      <pubDate>Sat, 06 Jan 2024 19:35:52 +0800</pubDate>
+      <author>liu-huo@live.com (摸铁校尉🥉)</author>
+      <guid>https://rclurn.github.io/algorithm/%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95/</guid>
+      <description>求取最大公约数 int gcd(int a, int b) { return b ? gcd(b, a % b), a; } 快速排序 // 这里的partition有一个性质，执行一次partition我们就可以确定数组中的某</description>
+    </item>
+    
+    <item>
+      <title>2022大数据挑战赛</title>
+      <link>https://rclurn.github.io/competition/2022%E5%A4%A7%E6%95%B0%E6%8D%AE%E6%8C%91%E6%88%98%E8%B5%9B/</link>
+      <pubDate>Sat, 30 Dec 2023 00:30:10 +0800</pubDate>
+      <author>liu-huo@live.com (摸铁校尉🥉)</author>
+      <guid>https://rclurn.github.io/competition/2022%E5%A4%A7%E6%95%B0%E6%8D%AE%E6%8C%91%E6%88%98%E8%B5%9B/</guid>
+      <description>任务解读 基于微信短视频号的短视频数据，利用短视频中常有的三种模态信息（文本、视频、音频）以及对应的分类标签信息，采用合理的机器学习算法对短视</description>
+    </item>
+    
+    <item>
+      <title>常见损失函数及其优化</title>
+      <link>https://rclurn.github.io/tools/%E5%B8%B8%E8%A7%81%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0%E5%8F%8A%E5%85%B6%E4%BC%98%E5%8C%96/</link>
+      <pubDate>Sun, 04 Sep 2022 15:53:13 +0800</pubDate>
+      <author>liu-huo@live.com (摸铁校尉🥉)</author>
+      <guid>https://rclurn.github.io/tools/%E5%B8%B8%E8%A7%81%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0%E5%8F%8A%E5%85%B6%E4%BC%98%E5%8C%96/</guid>
+      <description>BCELoss(二分类交叉熵损失) Pytorch 中通过torch.nn.BCELoss类实现，也可以直接调用torch.nn.functional.bi</description>
+    </item>
+    
+    <item>
+      <title>核心武器库</title>
+      <link>https://rclurn.github.io/tools/%E6%A0%B8%E5%BF%83%E6%AD%A6%E5%99%A8%E5%BA%93/</link>
+      <pubDate>Fri, 12 Aug 2022 12:48:09 +0800</pubDate>
+      <author>liu-huo@live.com (摸铁校尉🥉)</author>
+      <guid>https://rclurn.github.io/tools/%E6%A0%B8%E5%BF%83%E6%AD%A6%E5%99%A8%E5%BA%93/</guid>
+      <description>稳定Tricks 1、模型融合 分类任务中软投票与硬投票. 2、对抗训练</description>
+    </item>
+    
+    <item>
+      <title>基础工具</title>
+      <link>https://rclurn.github.io/tools/%E5%9F%BA%E7%A1%80%E5%B7%A5%E5%85%B7/</link>
+      <pubDate>Mon, 18 Jul 2022 13:57:30 +0800</pubDate>
+      <author>liu-huo@live.com (摸铁校尉🥉)</author>
+      <guid>https://rclurn.github.io/tools/%E5%9F%BA%E7%A1%80%E5%B7%A5%E5%85%B7/</guid>
+      <description>argparse的应用 在机器学习或者深度学习中，参数调优是一个永远避不开的话题，将所有的超参数整合到一起，无论是对于开发者本人还是团队合作都</description>
+    </item>
+    
+    <item>
+      <title>TensorRT加速推理</title>
+      <link>https://rclurn.github.io/tools/tensorrt%E5%8A%A0%E9%80%9F%E6%8E%A8%E7%90%86/</link>
+      <pubDate>Sat, 09 Jul 2022 15:24:49 +0800</pubDate>
+      <author>liu-huo@live.com (摸铁校尉🥉)</author>
+      <guid>https://rclurn.github.io/tools/tensorrt%E5%8A%A0%E9%80%9F%E6%8E%A8%E7%90%86/</guid>
+      <description>简介 在微信大数据挑战赛中，复赛要求QPS&amp;gt;=70(即平均每秒钟至少预测70个视频)，对于我们的多模态模型，如果不对模型进行推理加速，后</description>
+    </item>
+    
+    <item>
+      <title>对抗训练:Fast Gradient Method详解</title>
+      <link>https://rclurn.github.io/tools/%E5%AF%B9%E6%8A%97%E8%AE%AD%E7%BB%83%E4%B9%8Bfgm/</link>
+      <pubDate>Sat, 04 Jun 2022 10:58:07 +0800</pubDate>
+      <author>liu-huo@live.com (摸铁校尉🥉)</author>
+      <guid>https://rclurn.github.io/tools/%E5%AF%B9%E6%8A%97%E8%AE%AD%E7%BB%83%E4%B9%8Bfgm/</guid>
+      <description>import torch class FGM(object): def __init__(self, model): self.model = model self.backup = {} def attack(self, epsilon=1., emb_name=&amp;#39;emb&amp;#39;): # emb_name这个参数要换成你模型中embedding的参数名 for name, param in self.model.named_parameters(): if param.requires_grad and emb_name in name: self.backup[name] = param.data.clone() norm = torch.norm(param.grad) # 默认</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>https://rclurn.github.io/git/%E5%88%9D%E8%AF%86git/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <author>liu-huo@live.com (摸铁校尉🥉)</author>
+      <guid>https://rclurn.github.io/git/%E5%88%9D%E8%AF%86git/</guid>
+      <description>Git最小配置 ![image-20240317145041215](/Users/rnake/Library/Application Support/typora-user-images/image-20240317145041215.png) git config --global user.name &amp;#39;your name&amp;#39; # 每一次的变更会带上该项目的user name git config --global user.email &amp;#39;your email&amp;#39; # 如果评审人员发现有问题可以通过该email与你获取联系 参数</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Others on Rclurn</title>
+    <link>https://rclurn.github.io/others/</link>
+    <description>Recent content in Others on Rclurn</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <managingEditor>liu-huo@live.com (摸铁校尉🥉)</managingEditor>
+    <webMaster>liu-huo@live.com (摸铁校尉🥉)</webMaster>
+    <copyright>© 2021 &lt;a href=&#34;https://github.com/miiiku/hugo-theme-kagome&#34;&gt;kagome&lt;/a&gt;.</copyright>
+    <lastBuildDate>Tue, 09 Apr 2024 23:14:00 +0800</lastBuildDate><atom:link href="https://rclurn.github.io/others/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>SQL基础</title>
+      <link>https://rclurn.github.io/others/sql%E5%9F%BA%E7%A1%80/</link>
+      <pubDate>Tue, 09 Apr 2024 23:14:00 +0800</pubDate>
+      <author>liu-huo@live.com (摸铁校尉🥉)</author>
+      <guid>https://rclurn.github.io/others/sql%E5%9F%BA%E7%A1%80/</guid>
+      <description>SQL语句及其种类 SQL根据功能不同可以分为三类，其中使用最多的是 DML。 DDL数据定义语言 CREATE: 创建数据库和表等对象 DROP : 删除数据库和表等对象 ALTER</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Development on Rclurn</title>
+    <link>https://rclurn.github.io/categories/development/</link>
+    <description>Recent content in Development on Rclurn</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <managingEditor>liu-huo@live.com (摸铁校尉🥉)</managingEditor>
+    <webMaster>liu-huo@live.com (摸铁校尉🥉)</webMaster>
+    <copyright>© 2021 &lt;a href=&#34;https://github.com/miiiku/hugo-theme-kagome&#34;&gt;kagome&lt;/a&gt;.</copyright>
+    <lastBuildDate>Wed, 25 Sep 2024 18:07:35 +0800</lastBuildDate><atom:link href="https://rclurn.github.io/categories/development/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>DeepSeek V2</title>
+      <link>https://rclurn.github.io/algorithm/deepseek-v2/</link>
+      <pubDate>Wed, 25 Sep 2024 18:07:35 +0800</pubDate>
+      <author>liu-huo@live.com (摸铁校尉🥉)</author>
+      <guid>https://rclurn.github.io/algorithm/deepseek-v2/</guid>
+      <description>DeepSeek-V2: A Strong, Economical, and Efficient Mixture-of-Experts Language Model 🚀</description>
+    </item>
+    
+    <item>
+      <title>Baichuan 2</title>
+      <link>https://rclurn.github.io/algorithm/baichuan-2/</link>
+      <pubDate>Wed, 25 Sep 2024 18:07:16 +0800</pubDate>
+      <author>liu-huo@live.com (摸铁校尉🥉)</author>
+      <guid>https://rclurn.github.io/algorithm/baichuan-2/</guid>
+      <description>Baichuan 2: Open Large-scale Language Models 🚀</description>
+    </item>
+    
+    <item>
+      <title>Speculative Decoding</title>
+      <link>https://rclurn.github.io/algorithm/speculative-decoding/</link>
+      <pubDate>Wed, 25 Sep 2024 17:55:09 +0800</pubDate>
+      <author>liu-huo@live.com (摸铁校尉🥉)</author>
+      <guid>https://rclurn.github.io/algorithm/speculative-decoding/</guid>
+      <description>Fast Inference from Transformers via Speculative Decoding 🚀</description>
+    </item>
+    
+    <item>
+      <title>Transformer</title>
+      <link>https://rclurn.github.io/algorithm/transformer/</link>
+      <pubDate>Wed, 25 Sep 2024 13:23:41 +0800</pubDate>
+      <author>liu-huo@live.com (摸铁校尉🥉)</author>
+      <guid>https://rclurn.github.io/algorithm/transformer/</guid>
+      <description>Tokenizer Embedding 三角位置编码 class PositionEmbedding(nn.Module): def __init__(self, dim, base=10000, max_seq_len=512): super().__init__() self.dim = dim pe = torch.zeros(max_seq_len, dim) for pos in range(max_seq_len): for i in range(0, dim, 2): pe[pos][i] = math.sin(pos / (base ** (2 * i / self.dim))) pe[pos][i + 1] = math.cos(pos / (base ** (2 * (i + 1) / self.dim))) pe = pe.unsqueeze(dim=0) self.register_buffer(&amp;#39;pe&amp;#39;, pe) def forward(self, x): x = x</description>
+    </item>
+    
+    <item>
+      <title>BAAI General Embeddings</title>
+      <link>https://rclurn.github.io/algorithm/baai-general-embeddings/</link>
+      <pubDate>Tue, 24 Sep 2024 22:03:28 +0800</pubDate>
+      <author>liu-huo@live.com (摸铁校尉🥉)</author>
+      <guid>https://rclurn.github.io/algorithm/baai-general-embeddings/</guid>
+      <description>第一阶段：RetroMAE预训练 Navie版 模型架构为encoder-decoder架构，在encoder端，对sentence进行15%～</description>
+    </item>
+    
+    <item>
+      <title>Direct Preference Optimization</title>
+      <link>https://rclurn.github.io/algorithm/direct-preference-optimization/</link>
+      <pubDate>Mon, 23 Sep 2024 14:01:16 +0800</pubDate>
+      <author>liu-huo@live.com (摸铁校尉🥉)</author>
+      <guid>https://rclurn.github.io/algorithm/direct-preference-optimization/</guid>
+      <description>DPO的优势 相较于PPO，需要的资源更少，不用单独训练Reward模型，也不需要Critic模型； 训练过程中不需要采样 DPO算法 DPO算法的</description>
+    </item>
+    
+    <item>
+      <title>Proximal Policy Optimization</title>
+      <link>https://rclurn.github.io/algorithm/proximal-policy-optimization/</link>
+      <pubDate>Mon, 23 Sep 2024 13:57:47 +0800</pubDate>
+      <author>liu-huo@live.com (摸铁校尉🥉)</author>
+      <guid>https://rclurn.github.io/algorithm/proximal-policy-optimization/</guid>
+      <description>概述 在PPO中主要存在四个模型：Actor、Ref、Reward和Critic。Actor和Ref来源于同一个模型，一般用SFT后的模型进行</description>
+    </item>
+    
+    <item>
+      <title>公式理解</title>
+      <link>https://rclurn.github.io/algorithm/%E5%85%AC%E5%BC%8F%E7%90%86%E8%A7%A3/</link>
+      <pubDate>Mon, 23 Sep 2024 10:55:00 +0800</pubDate>
+      <author>liu-huo@live.com (摸铁校尉🥉)</author>
+      <guid>https://rclurn.github.io/algorithm/%E5%85%AC%E5%BC%8F%E7%90%86%E8%A7%A3/</guid>
+      <description>Softmax softmax是一个常用于多分类任务中的激活函数，其核心为规范化概率输出，并保证总和为1，同时能够让模型保持可导，作为神经网络输出层的一部</description>
+    </item>
+    
+    <item>
+      <title>Parameter Efficient Fine Tuning</title>
+      <link>https://rclurn.github.io/algorithm/parameter-efficient-fine-tuning/</link>
+      <pubDate>Sat, 21 Sep 2024 16:37:17 +0800</pubDate>
+      <author>liu-huo@live.com (摸铁校尉🥉)</author>
+      <guid>https://rclurn.github.io/algorithm/parameter-efficient-fine-tuning/</guid>
+      <description>大模型高效微调技术 总览 Prefix Tuning 🚀 人工设计的prompt模版可能并不是最优的，自动化搜索模版成本也比较高； 传统微调范式对每个任务都需要存储一份微调</description>
+    </item>
+    
+    <item>
+      <title>LlamaCpp</title>
+      <link>https://rclurn.github.io/projects/llamacpp/</link>
+      <pubDate>Thu, 15 Aug 2024 00:14:52 +0800</pubDate>
+      <author>liu-huo@live.com (摸铁校尉🥉)</author>
+      <guid>https://rclurn.github.io/projects/llamacpp/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>SQL基础</title>
+      <link>https://rclurn.github.io/others/sql%E5%9F%BA%E7%A1%80/</link>
+      <pubDate>Tue, 09 Apr 2024 23:14:00 +0800</pubDate>
+      <author>liu-huo@live.com (摸铁校尉🥉)</author>
+      <guid>https://rclurn.github.io/others/sql%E5%9F%BA%E7%A1%80/</guid>
+      <description>SQL语句及其种类 SQL根据功能不同可以分为三类，其中使用最多的是 DML。 DDL数据定义语言 CREATE: 创建数据库和表等对象 DROP : 删除数据库和表等对象 ALTER</description>
+    </item>
+    
+  </channel>
+</rss>

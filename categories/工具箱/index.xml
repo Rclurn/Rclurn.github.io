@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>工具箱 on Rclurn</title>
+    <link>https://rclurn.github.io/categories/%E5%B7%A5%E5%85%B7%E7%AE%B1/</link>
+    <description>Recent content in 工具箱 on Rclurn</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <managingEditor>liu-huo@live.com (摸铁校尉🥉)</managingEditor>
+    <webMaster>liu-huo@live.com (摸铁校尉🥉)</webMaster>
+    <copyright>© 2021 &lt;a href=&#34;https://github.com/miiiku/hugo-theme-kagome&#34;&gt;kagome&lt;/a&gt;.</copyright>
+    <lastBuildDate>Sun, 04 Sep 2022 15:53:13 +0800</lastBuildDate><atom:link href="https://rclurn.github.io/categories/%E5%B7%A5%E5%85%B7%E7%AE%B1/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>常见损失函数及其优化</title>
+      <link>https://rclurn.github.io/tools/%E5%B8%B8%E8%A7%81%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0%E5%8F%8A%E5%85%B6%E4%BC%98%E5%8C%96/</link>
+      <pubDate>Sun, 04 Sep 2022 15:53:13 +0800</pubDate>
+      <author>liu-huo@live.com (摸铁校尉🥉)</author>
+      <guid>https://rclurn.github.io/tools/%E5%B8%B8%E8%A7%81%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0%E5%8F%8A%E5%85%B6%E4%BC%98%E5%8C%96/</guid>
+      <description>BCELoss(二分类交叉熵损失) Pytorch 中通过torch.nn.BCELoss类实现，也可以直接调用torch.nn.functional.bi</description>
+    </item>
+    
+    <item>
+      <title>基础工具</title>
+      <link>https://rclurn.github.io/tools/%E5%9F%BA%E7%A1%80%E5%B7%A5%E5%85%B7/</link>
+      <pubDate>Mon, 18 Jul 2022 13:57:30 +0800</pubDate>
+      <author>liu-huo@live.com (摸铁校尉🥉)</author>
+      <guid>https://rclurn.github.io/tools/%E5%9F%BA%E7%A1%80%E5%B7%A5%E5%85%B7/</guid>
+      <description>argparse的应用 在机器学习或者深度学习中，参数调优是一个永远避不开的话题，将所有的超参数整合到一起，无论是对于开发者本人还是团队合作都</description>
+    </item>
+    
+    <item>
+      <title>TensorRT加速推理</title>
+      <link>https://rclurn.github.io/tools/tensorrt%E5%8A%A0%E9%80%9F%E6%8E%A8%E7%90%86/</link>
+      <pubDate>Sat, 09 Jul 2022 15:24:49 +0800</pubDate>
+      <author>liu-huo@live.com (摸铁校尉🥉)</author>
+      <guid>https://rclurn.github.io/tools/tensorrt%E5%8A%A0%E9%80%9F%E6%8E%A8%E7%90%86/</guid>
+      <description>简介 在微信大数据挑战赛中，复赛要求QPS&amp;gt;=70(即平均每秒钟至少预测70个视频)，对于我们的多模态模型，如果不对模型进行推理加速，后</description>
+    </item>
+    
+  </channel>
+</rss>

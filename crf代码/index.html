@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html><head>
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+   
+    <meta name="author" content="摸铁校尉🥉">
+  
+
+   
+    
+    
+    
+    
+    
+    
+    <meta name="keywords" content="Machine Learning,kagome">
+  
+
+  
+
+  <meta name="generator" content="Hugo 0.105.0">
+  
+  
+  
+  
+  <title>Rclurn</title>
+
+  <meta property="og:title" content="" />
+<meta property="og:description" content="# 计算真实路径得分 def score_target_sentence(self, emit_matrixs, tags, attention_mask): seq_len, batch_size, tag_size = emit_matrixs.size() scores = emit_matrixs.new_zeros(batch_size) # [batch_size] # cat([1, batch_size], [seq_len, batch_size]) -&gt; [seq_len &#43; 1, batch_size] # 在标注序列的前面加上START_TAG标注，并将其得分设置为0 tags = torch.cat([tags.new_full((1, batch_size), fill_value=tags2label[&#39;START_TAG&#39;]), tags], 0) # 在时间序列维度上遍历发射矩阵 for i, emit_score in enumerate(emit_matrixs): # 获得当前时间步的batch中每个字的发射矩阵得分 emit_score = torch.stack([f[next_tag] for f, next_tag in zip(emit_score, tags[i &#43; 1])]) # 获得当前时间步到下一个时间步的转移矩阵得分 transition_score = torch.stack([self.transition[tags[i &#43; 1, b], tags[i, b]] for b in range(batch_size)]) # 将当前时间步的发射矩阵得分与从上一个时间步的标注转移到当前时间步的标注的转移矩阵得分相加 scores &#43;= (emit_score &#43; transition_score) * attention_mask[i] transition_to_end = torch." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://rclurn.github.io/crf%E4%BB%A3%E7%A0%81/" /><meta property="article:section" content="" />
+
+
+
+
+  <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content=""/>
+<meta name="twitter:description" content="# 计算真实路径得分 def score_target_sentence(self, emit_matrixs, tags, attention_mask): seq_len, batch_size, tag_size = emit_matrixs.size() scores = emit_matrixs.new_zeros(batch_size) # [batch_size] # cat([1, batch_size], [seq_len, batch_size]) -&gt; [seq_len &#43; 1, batch_size] # 在标注序列的前面加上START_TAG标注，并将其得分设置为0 tags = torch.cat([tags.new_full((1, batch_size), fill_value=tags2label[&#39;START_TAG&#39;]), tags], 0) # 在时间序列维度上遍历发射矩阵 for i, emit_score in enumerate(emit_matrixs): # 获得当前时间步的batch中每个字的发射矩阵得分 emit_score = torch.stack([f[next_tag] for f, next_tag in zip(emit_score, tags[i &#43; 1])]) # 获得当前时间步到下一个时间步的转移矩阵得分 transition_score = torch.stack([self.transition[tags[i &#43; 1, b], tags[i, b]] for b in range(batch_size)]) # 将当前时间步的发射矩阵得分与从上一个时间步的标注转移到当前时间步的标注的转移矩阵得分相加 scores &#43;= (emit_score &#43; transition_score) * attention_mask[i] transition_to_end = torch."/>
+
+
+  
+  
+  
+  
+  <link rel="stylesheet" href="https://rclurn.github.io/assets/css/style.min.699f46622e3574a7f9ecca4c5877067845fe89ffcd9c4335df2dff23ddae215e.css" integrity="sha256-aZ9GYi41dKf57MpMWHcGeEX&#43;if/NnEM13y3/I92uIV4=">
+
+  <script src="https://rclurn.github.io/assets/js/main.min.182da266209851bc7c828aa7377f98f914e1e76c8decdd53a6cbe9bffea92cde.js" integrity="sha256-GC2iZiCYUbx8goqnN3&#43;Y&#43;RTh52yN7N1Tpsvpv/6pLN4="></script>
+  
+  </head><body><header class="header-container layout-block layout-padding">
+  <div class="header-inner content-padding-large soft-size--large soft-style--box">
+    <div class="header-logo">
+      <a href="https://rclurn.github.io/"><h1>Rclurn</h1></a>
+    </div>
+    <nav class="header-nav">
+      <div class="header-nav--btn">
+        <div class="btn-item"></div>
+        <div class="btn-item"></div>
+        <div class="btn-item"></div>
+      </div>
+      <div class="header-nav--list">
+        <div>
+          
+          <a class="list-item soft-size--small soft-style--hover soft-style--active" href="/" title="">🏠Home</a>
+          
+          <a class="list-item soft-size--small soft-style--hover soft-style--active" href="/projects" title="">🤖Projects</a>
+          
+          <a class="list-item soft-size--small soft-style--hover soft-style--active" href="/paper" title="">📝Paper with code</a>
+          
+          <a class="list-item soft-size--small soft-style--hover soft-style--active" href="/algorithm" title="">👹Algorithm</a>
+          
+          <a class="list-item soft-size--small soft-style--hover soft-style--active" href="/about" title="">🤡About</a>
+          
+        </div>
+      </div>
+    </nav>
+  </div>
+</header><main id="content">
+    
+
+    <div class="single-container layout-block">
+      <div class="article-info">
+        <div class="article-header layout-padding">
+          <div class="article-cover card-container content-padding-large soft-size--large soft-style--box ">
+
+  <div class="card-cover">
+    
+  </div>
+
+  <div class="card-text">
+    <h1 class="card-text--title"></h1>
+    
+      
+    
+  </div>
+
+</div>
+        </div>
+
+        <div class="article-content">
+          <div class="markdown-body content-padding-large soft-size--large soft-style--box">
+            <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># 计算真实路径得分</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">score_target_sentence</span>(self, emit_matrixs, tags, attention_mask):
+</span></span><span style="display:flex;"><span>    seq_len, batch_size, tag_size <span style="color:#f92672">=</span> emit_matrixs<span style="color:#f92672">.</span>size()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    scores <span style="color:#f92672">=</span> emit_matrixs<span style="color:#f92672">.</span>new_zeros(batch_size) <span style="color:#75715e"># [batch_size]</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># cat([1, batch_size], [seq_len, batch_size]) -&gt; [seq_len + 1, batch_size]</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># 在标注序列的前面加上START_TAG标注，并将其得分设置为0</span>
+</span></span><span style="display:flex;"><span>    tags <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>cat([tags<span style="color:#f92672">.</span>new_full((<span style="color:#ae81ff">1</span>, batch_size), fill_value<span style="color:#f92672">=</span>tags2label[<span style="color:#e6db74">&#39;START_TAG&#39;</span>]), tags], <span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># 在时间序列维度上遍历发射矩阵</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> i, emit_score <span style="color:#f92672">in</span> enumerate(emit_matrixs):
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># 获得当前时间步的batch中每个字的发射矩阵得分</span>
+</span></span><span style="display:flex;"><span>        emit_score <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>stack([f[next_tag] <span style="color:#66d9ef">for</span> f, next_tag <span style="color:#f92672">in</span> zip(emit_score, tags[i <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>])])
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># 获得当前时间步到下一个时间步的转移矩阵得分</span>
+</span></span><span style="display:flex;"><span>        transition_score <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>stack([self<span style="color:#f92672">.</span>transition[tags[i <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>, b], tags[i, b]] <span style="color:#66d9ef">for</span> b <span style="color:#f92672">in</span> range(batch_size)])
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># 将当前时间步的发射矩阵得分与从上一个时间步的标注转移到当前时间步的标注的转移矩阵得分相加</span>
+</span></span><span style="display:flex;"><span>        scores <span style="color:#f92672">+=</span> (emit_score <span style="color:#f92672">+</span> transition_score) <span style="color:#f92672">*</span> attention_mask[i]
+</span></span><span style="display:flex;"><span>        transition_to_end <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>stack([self<span style="color:#f92672">.</span>transition[tags2label[<span style="color:#e6db74">&#39;END_TAG&#39;</span>], 
+</span></span><span style="display:flex;"><span>                                                         tag[attention_mask[:, b]<span style="color:#f92672">.</span>sum()<span style="color:#f92672">.</span>long()]] <span style="color:#66d9ef">for</span> b, tag <span style="color:#f92672">in</span> enumerate(tags<span style="color:#f92672">.</span>transpose(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>))])
+</span></span><span style="display:flex;"><span>        scores <span style="color:#f92672">+=</span> transition_to_end
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> scores
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">log_sum_exp</span>(tensor: torch<span style="color:#f92672">.</span>Tensor, dim: int <span style="color:#f92672">=</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>, keepdim: bool <span style="color:#f92672">=</span> <span style="color:#66d9ef">False</span>) <span style="color:#f92672">-&gt;</span> torch<span style="color:#f92672">.</span>Tensor:
+</span></span><span style="display:flex;"><span>    max_score, _ <span style="color:#f92672">=</span> tensor<span style="color:#f92672">.</span>max(dim, keepdim<span style="color:#f92672">=</span>keepdim)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> keepdim:
+</span></span><span style="display:flex;"><span>        stable_vec <span style="color:#f92672">=</span> tensor <span style="color:#f92672">-</span> max_score
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">else</span>:
+</span></span><span style="display:flex;"><span>        stable_vec <span style="color:#f92672">=</span> tensor <span style="color:#f92672">-</span> max_score<span style="color:#f92672">.</span>unsqueeze(dim)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> max_score <span style="color:#f92672">+</span> (stable_vec<span style="color:#f92672">.</span>exp()<span style="color:#f92672">.</span>sum(dim, keepdim<span style="color:#f92672">=</span>keepdim))<span style="color:#f92672">.</span>log()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">score_all_sentence</span>(self, emit_matrixs, attention_mask):
+</span></span><span style="display:flex;"><span>    seq_len, batch_size, tag_size <span style="color:#f92672">=</span> emit_matrixs<span style="color:#f92672">.</span>size()
+</span></span><span style="display:flex;"><span>    alpha <span style="color:#f92672">=</span> emit_matrixs<span style="color:#f92672">.</span>new_full((batch_size, tag_size), fill_value<span style="color:#f92672">=-</span><span style="color:#ae81ff">10000</span>) <span style="color:#75715e"># [batch_size, tag_size]</span>
+</span></span><span style="display:flex;"><span>    alpha[:, tags2label[<span style="color:#e6db74">&#39;START_TAG&#39;</span>]] <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>        <span style="color:#75715e"># 在原始矩阵之前添加一列START_TAG标记</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># 在文本长度维度上进行循环</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> i, emit_score <span style="color:#f92672">in</span> enumerate(emit_matrixs):
+</span></span><span style="display:flex;"><span>        emit_score <span style="color:#f92672">=</span> emit_score<span style="color:#f92672">.</span>unsqueeze(<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>)                       <span style="color:#75715e"># [batch_size, tag_size, 1]</span>
+</span></span><span style="display:flex;"><span>        transition_score <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>transition<span style="color:#f92672">.</span>unsqueeze(<span style="color:#ae81ff">0</span>)             <span style="color:#75715e"># [1, tag_size, tag_size]</span>
+</span></span><span style="display:flex;"><span>        alpha_score <span style="color:#f92672">=</span> alpha<span style="color:#f92672">.</span>unsqueeze(<span style="color:#ae81ff">1</span>)                            <span style="color:#75715e"># [batch_size, 1, tag_size]</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># 这里使用了pytoch中Tensor相加的广播特性，必须思考清楚是如何广播的，以及广播的数据是如何复制的</span>
+</span></span><span style="display:flex;"><span>        alpha_score <span style="color:#f92672">=</span> alpha_score <span style="color:#f92672">+</span> transition_score <span style="color:#f92672">+</span> emit_score   <span style="color:#75715e"># [batch_size, tag_size, tag_size]</span>
+</span></span><span style="display:flex;"><span>        mask_i <span style="color:#f92672">=</span> attention_mask[i]<span style="color:#f92672">.</span>unsqueeze(<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>)                    <span style="color:#75715e"># [batch_size, 1] </span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># 通过mask来解决同一个batch_size中不同文本长度的计算问题      </span>
+</span></span><span style="display:flex;"><span>        alpha <span style="color:#f92672">=</span> log_sum_exp(alpha_score, <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>) <span style="color:#f92672">*</span> mask_i <span style="color:#f92672">+</span> alpha <span style="color:#f92672">*</span> (<span style="color:#ae81ff">1</span> <span style="color:#f92672">-</span> mask_i) <span style="color:#75715e"># [batch_size, tag_size]</span>
+</span></span><span style="display:flex;"><span>    alpha <span style="color:#f92672">=</span> alpha <span style="color:#f92672">+</span> self<span style="color:#f92672">.</span>transition[tags2label[<span style="color:#e6db74">&#39;END_TAG&#39;</span>]]<span style="color:#f92672">.</span>unsqueeze(<span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> log_sum_exp(alpha, <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>)
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># 解码预测路径</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">viterbi_decode</span>(self, emit_matrixs, attention_mask):
+</span></span><span style="display:flex;"><span>    seq_len, batch_size, tag_size <span style="color:#f92672">=</span> emit_matrixs<span style="color:#f92672">.</span>size()
+</span></span><span style="display:flex;"><span>    scores <span style="color:#f92672">=</span> emit_matrixs<span style="color:#f92672">.</span>new_full((batch_size, tag_size), fill_value<span style="color:#f92672">=-</span><span style="color:#ae81ff">10000</span>)
+</span></span><span style="display:flex;"><span>    scores[:, tags2label[<span style="color:#e6db74">&#39;START_TAG&#39;</span>]] <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>    pointers <span style="color:#f92672">=</span> []
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> i, emit_score <span style="color:#f92672">in</span> enumerate(emit_matrixs):
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># 广播机制</span>
+</span></span><span style="display:flex;"><span>        scores_t <span style="color:#f92672">=</span> scores<span style="color:#f92672">.</span>unsqueeze(<span style="color:#ae81ff">1</span>) <span style="color:#f92672">+</span> self<span style="color:#f92672">.</span>transition<span style="color:#f92672">.</span>unsqueeze(<span style="color:#ae81ff">0</span>)  <span style="color:#75715e"># (batch_size, tag_size, tag_size)</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># max along current_tag to obtain: next_tag score, current_tag pointer</span>
+</span></span><span style="display:flex;"><span>        scores_t, pointer <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>max(scores_t, <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>)  <span style="color:#75715e"># (batch_size, tag_size), (batch_size, tag_size)</span>
+</span></span><span style="display:flex;"><span>        scores_t <span style="color:#f92672">+=</span> emit_score
+</span></span><span style="display:flex;"><span>        pointers<span style="color:#f92672">.</span>append(pointer)
+</span></span><span style="display:flex;"><span>        mask_t <span style="color:#f92672">=</span> attention_mask[i]<span style="color:#f92672">.</span>unsqueeze(<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>)  <span style="color:#75715e"># (batch_size, 1)</span>
+</span></span><span style="display:flex;"><span>        scores <span style="color:#f92672">=</span> scores_t <span style="color:#f92672">*</span> mask_t <span style="color:#f92672">+</span> scores <span style="color:#f92672">*</span> (<span style="color:#ae81ff">1</span> <span style="color:#f92672">-</span> mask_t)
+</span></span><span style="display:flex;"><span>        pointers <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>stack(pointers, <span style="color:#ae81ff">0</span>) <span style="color:#75715e"># (seq_len, batch_size, tag_size)</span>
+</span></span><span style="display:flex;"><span>        scores <span style="color:#f92672">+=</span> self<span style="color:#f92672">.</span>transition[tags2label[<span style="color:#e6db74">&#39;END_TAG&#39;</span>]]<span style="color:#f92672">.</span>unsqueeze(<span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>        best_score, best_tag <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>max(scores, <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>)  <span style="color:#75715e"># (batch_size, ), (batch_size, )</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># 回退</span>
+</span></span><span style="display:flex;"><span>        best_path <span style="color:#f92672">=</span> best_tag<span style="color:#f92672">.</span>unsqueeze(<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>)<span style="color:#f92672">.</span>tolist() <span style="color:#75715e"># list shape (batch_size, 1)</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(batch_size):
+</span></span><span style="display:flex;"><span>            best_tag_i <span style="color:#f92672">=</span> best_tag[i]
+</span></span><span style="display:flex;"><span>            seq_len_i <span style="color:#f92672">=</span> int(attention_mask[:, i]<span style="color:#f92672">.</span>sum())
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">for</span> ptr_t <span style="color:#f92672">in</span> reversed(pointers[:seq_len_i, i]):
+</span></span><span style="display:flex;"><span>                <span style="color:#75715e"># ptr_t shape (tag_size, )</span>
+</span></span><span style="display:flex;"><span>                best_tag_i <span style="color:#f92672">=</span> ptr_t[best_tag_i]<span style="color:#f92672">.</span>item()
+</span></span><span style="display:flex;"><span>                best_path[i]<span style="color:#f92672">.</span>append(best_tag_i)
+</span></span><span style="display:flex;"><span>                <span style="color:#75715e"># pop first tag</span>
+</span></span><span style="display:flex;"><span>                best_path[i]<span style="color:#f92672">.</span>pop()
+</span></span><span style="display:flex;"><span>                <span style="color:#75715e"># reverse order</span>
+</span></span><span style="display:flex;"><span>                best_path[i]<span style="color:#f92672">.</span>reverse()
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">return</span> best_path
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">prepare_data</span>(path):
+</span></span><span style="display:flex;"><span>    data_dict <span style="color:#f92672">=</span> {<span style="color:#e6db74">&#39;text&#39;</span>: [], <span style="color:#e6db74">&#39;spo&#39;</span>: [], <span style="color:#e6db74">&#39;label&#39;</span>: []}
+</span></span><span style="display:flex;"><span>    real_num_dict <span style="color:#f92672">=</span> {<span style="color:#e6db74">&#39;部件故障&#39;</span>: <span style="color:#ae81ff">0</span>, <span style="color:#e6db74">&#39;性能故障&#39;</span>: <span style="color:#ae81ff">0</span>, <span style="color:#e6db74">&#39;检测工具&#39;</span>: <span style="color:#ae81ff">0</span>, <span style="color:#e6db74">&#39;组成&#39;</span>: <span style="color:#ae81ff">0</span>, <span style="color:#e6db74">&#39;无&#39;</span>: <span style="color:#ae81ff">0</span>}
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">with</span> open(path, <span style="color:#e6db74">&#39;r&#39;</span>, encoding<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;utf-8&#39;</span>) <span style="color:#66d9ef">as</span> f:
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> line <span style="color:#f92672">in</span> f:
+</span></span><span style="display:flex;"><span>            line <span style="color:#f92672">=</span> json<span style="color:#f92672">.</span>loads(line) <span style="color:#75715e"># 按行处理文件</span>
+</span></span><span style="display:flex;"><span>            entities, real_pair <span style="color:#f92672">=</span> [], []
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">for</span> spo <span style="color:#f92672">in</span> line[<span style="color:#e6db74">&#39;spo_list&#39;</span>]: <span style="color:#75715e"># 获取原始文件中的spo三元组</span>
+</span></span><span style="display:flex;"><span>                data_dict[<span style="color:#e6db74">&#39;text&#39;</span>]<span style="color:#f92672">.</span>append(line[<span style="color:#e6db74">&#39;text&#39;</span>])
+</span></span><span style="display:flex;"><span>                sub_name, sub_type <span style="color:#f92672">=</span> spo[<span style="color:#e6db74">&#39;h&#39;</span>][<span style="color:#e6db74">&#39;name&#39;</span>], relation2type[spo[<span style="color:#e6db74">&#39;relation&#39;</span>]][<span style="color:#ae81ff">0</span>]
+</span></span><span style="display:flex;"><span>                obj_name, obj_type <span style="color:#f92672">=</span> spo[<span style="color:#e6db74">&#39;t&#39;</span>][<span style="color:#e6db74">&#39;name&#39;</span>], relation2type[spo[<span style="color:#e6db74">&#39;relation&#39;</span>]][<span style="color:#ae81ff">1</span>]
+</span></span><span style="display:flex;"><span>                entities<span style="color:#f92672">.</span>append((sub_name, sub_type, spo[<span style="color:#e6db74">&#39;h&#39;</span>][<span style="color:#e6db74">&#39;pos&#39;</span>]))
+</span></span><span style="display:flex;"><span>                entities<span style="color:#f92672">.</span>append((obj_name, obj_type, spo[<span style="color:#e6db74">&#39;t&#39;</span>][<span style="color:#e6db74">&#39;pos&#39;</span>]))
+</span></span><span style="display:flex;"><span>                data_dict[<span style="color:#e6db74">&#39;spo&#39;</span>]<span style="color:#f92672">.</span>append((sub_name, sub_type, obj_name, obj_type, spo[<span style="color:#e6db74">&#39;h&#39;</span>][<span style="color:#e6db74">&#39;pos&#39;</span>], spo[<span style="color:#e6db74">&#39;t&#39;</span>][<span style="color:#e6db74">&#39;pos&#39;</span>]))
+</span></span><span style="display:flex;"><span>                data_dict[<span style="color:#e6db74">&#39;label&#39;</span>]<span style="color:#f92672">.</span>append(relation2label[spo[<span style="color:#e6db74">&#39;relation&#39;</span>]])
+</span></span><span style="display:flex;"><span>                real_num_dict[spo[<span style="color:#e6db74">&#39;relation&#39;</span>]] <span style="color:#f92672">+=</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>                real_pair<span style="color:#f92672">.</span>append((sub_name, sub_type, obj_name, obj_type, spo[<span style="color:#e6db74">&#39;h&#39;</span>][<span style="color:#e6db74">&#39;pos&#39;</span>], spo[<span style="color:#e6db74">&#39;t&#39;</span>][<span style="color:#e6db74">&#39;pos&#39;</span>]))
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e"># itertools.combinations()函数:返回entities中所有的2元组合</span>
+</span></span><span style="display:flex;"><span>            all_pairings <span style="color:#f92672">=</span> list(itertools<span style="color:#f92672">.</span>combinations(reversed(entities), <span style="color:#ae81ff">2</span>)) <span style="color:#f92672">+</span> list(itertools<span style="color:#f92672">.</span>combinations(entities, <span style="color:#ae81ff">2</span>))
+</span></span><span style="display:flex;"><span>           	<span style="color:#75715e"># 只要每条样本的前20个实体对中构造负样本 </span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">for</span> pair <span style="color:#f92672">in</span> all_pairings[: <span style="color:#ae81ff">20</span>]:
+</span></span><span style="display:flex;"><span>                <span style="color:#75715e"># 判断 当前选择的样本是否为正样本、是否已经被选过</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">if</span> (pair[<span style="color:#ae81ff">0</span>][<span style="color:#ae81ff">0</span>], pair[<span style="color:#ae81ff">0</span>][<span style="color:#ae81ff">1</span>], pair[<span style="color:#ae81ff">1</span>][<span style="color:#ae81ff">0</span>], pair[<span style="color:#ae81ff">1</span>][<span style="color:#ae81ff">1</span>], pair[<span style="color:#ae81ff">0</span>][<span style="color:#ae81ff">2</span>], pair[<span style="color:#ae81ff">1</span>][<span style="color:#ae81ff">2</span>]) <span style="color:#f92672">in</span> real_pair: <span style="color:#66d9ef">continue</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#75715e"># 如果两个实体的类别不能组成关系集合中的结果，也不作为负样本</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">if</span> [pair[<span style="color:#ae81ff">0</span>][<span style="color:#ae81ff">1</span>], pair[<span style="color:#ae81ff">1</span>][<span style="color:#ae81ff">1</span>]] <span style="color:#f92672">not</span> <span style="color:#f92672">in</span> relation2type<span style="color:#f92672">.</span>values(): <span style="color:#66d9ef">continue</span>
+</span></span><span style="display:flex;"><span>                data_dict[<span style="color:#e6db74">&#39;text&#39;</span>]<span style="color:#f92672">.</span>append(line[<span style="color:#e6db74">&#39;text&#39;</span>])
+</span></span><span style="display:flex;"><span>                data_dict[<span style="color:#e6db74">&#39;spo&#39;</span>]<span style="color:#f92672">.</span>append((pair[<span style="color:#ae81ff">0</span>][<span style="color:#ae81ff">0</span>], pair[<span style="color:#ae81ff">0</span>][<span style="color:#ae81ff">1</span>], pair[<span style="color:#ae81ff">1</span>][<span style="color:#ae81ff">0</span>], pair[<span style="color:#ae81ff">1</span>][<span style="color:#ae81ff">1</span>], pair[<span style="color:#ae81ff">0</span>][<span style="color:#ae81ff">2</span>], pair[<span style="color:#ae81ff">1</span>][<span style="color:#ae81ff">2</span>]))
+</span></span><span style="display:flex;"><span>                data_dict[<span style="color:#e6db74">&#39;label&#39;</span>]<span style="color:#f92672">.</span>append(relation2label[<span style="color:#e6db74">&#39;无&#39;</span>])
+</span></span><span style="display:flex;"><span>                real_num_dict[<span style="color:#e6db74">&#39;无&#39;</span>] <span style="color:#f92672">+=</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>                real_pair<span style="color:#f92672">.</span>append((pair[<span style="color:#ae81ff">0</span>][<span style="color:#ae81ff">0</span>], pair[<span style="color:#ae81ff">0</span>][<span style="color:#ae81ff">1</span>], pair[<span style="color:#ae81ff">1</span>][<span style="color:#ae81ff">0</span>], pair[<span style="color:#ae81ff">1</span>][<span style="color:#ae81ff">1</span>], pair[<span style="color:#ae81ff">0</span>][<span style="color:#ae81ff">2</span>], pair[<span style="color:#ae81ff">1</span>][<span style="color:#ae81ff">2</span>]))
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> pd<span style="color:#f92672">.</span>DataFrame(data_dict)
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>tags2label <span style="color:#f92672">=</span> {<span style="color:#e6db74">&#39;START_TAG&#39;</span>: <span style="color:#ae81ff">0</span>, <span style="color:#e6db74">&#39;END_TAG&#39;</span>: <span style="color:#ae81ff">1</span>, <span style="color:#e6db74">&#39;B-部件单元&#39;</span>: <span style="color:#ae81ff">2</span>, <span style="color:#e6db74">&#39;I-部件单元&#39;</span>: <span style="color:#ae81ff">3</span>, <span style="color:#e6db74">&#39;B-性能表征&#39;</span>: <span style="color:#ae81ff">4</span>, <span style="color:#e6db74">&#39;I-性能表征&#39;</span>: <span style="color:#ae81ff">5</span>, <span style="color:#e6db74">&#39;B-故障状态&#39;</span>: <span style="color:#ae81ff">6</span>, <span style="color:#e6db74">&#39;I-故障状态&#39;</span>: <span style="color:#ae81ff">7</span>, <span style="color:#e6db74">&#39;B-检测工具&#39;</span>: <span style="color:#ae81ff">8</span>, <span style="color:#e6db74">&#39;I-检测工具&#39;</span>: <span style="color:#ae81ff">9</span>, <span style="color:#e6db74">&#39;O&#39;</span>: <span style="color:#ae81ff">10</span>}
+</span></span><span style="display:flex;"><span>relation2type <span style="color:#f92672">=</span> {<span style="color:#e6db74">&#39;部件故障&#39;</span>: [<span style="color:#e6db74">&#39;部件单元&#39;</span>, <span style="color:#e6db74">&#39;故障状态&#39;</span>], <span style="color:#e6db74">&#39;性能故障&#39;</span>: [<span style="color:#e6db74">&#39;性能表征&#39;</span>, <span style="color:#e6db74">&#39;故障状态&#39;</span>], <span style="color:#e6db74">&#39;检测工具&#39;</span>: [<span style="color:#e6db74">&#39;检测工具&#39;</span>, <span style="color:#e6db74">&#39;性能表征&#39;</span>], <span style="color:#e6db74">&#39;组成&#39;</span>: [<span style="color:#e6db74">&#39;部件单元&#39;</span>, <span style="color:#e6db74">&#39;部件单元&#39;</span>]}
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> __getitem__(self, index):
+</span></span><span style="display:flex;"><span>    ID <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>data<span style="color:#f92672">.</span>loc[index, <span style="color:#e6db74">&#39;ID&#39;</span>] 
+</span></span><span style="display:flex;"><span>    text <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>data<span style="color:#f92672">.</span>loc[index, <span style="color:#e6db74">&#39;text&#39;</span>]
+</span></span><span style="display:flex;"><span>    token <span style="color:#f92672">=</span> [word <span style="color:#66d9ef">for</span> word <span style="color:#f92672">in</span> text]
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># 这里没有进行特殊处理，直接在文本的510处进行截断</span>
+</span></span><span style="display:flex;"><span>    input_ids <span style="color:#f92672">=</span> [<span style="color:#ae81ff">101</span>] <span style="color:#f92672">+</span> self<span style="color:#f92672">.</span>tokenizer<span style="color:#f92672">.</span>convert_tokens_to_ids(token)[:<span style="color:#ae81ff">510</span>] <span style="color:#f92672">+</span> [<span style="color:#ae81ff">102</span>] 
+</span></span><span style="display:flex;"><span>    attention_mask <span style="color:#f92672">=</span> [<span style="color:#ae81ff">1</span>] <span style="color:#f92672">*</span> len(input_ids) <span style="color:#75715e"># 构造attention mask</span>
+</span></span><span style="display:flex;"><span>    tag_label <span style="color:#f92672">=</span> [tags2label[<span style="color:#e6db74">&#39;O&#39;</span>] <span style="color:#66d9ef">for</span> _ <span style="color:#f92672">in</span> text] <span style="color:#75715e"># 初始设置所有文本的标签均为“O”</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> self<span style="color:#f92672">.</span>task <span style="color:#f92672">!=</span> <span style="color:#e6db74">&#39;test&#39;</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># 遍历每一个三元组</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> spo_dict <span style="color:#f92672">in</span> self<span style="color:#f92672">.</span>data<span style="color:#f92672">.</span>loc[index, <span style="color:#e6db74">&#39;spo_list&#39;</span>]:
+</span></span><span style="display:flex;"><span>            relation_type <span style="color:#f92672">=</span> spo_dict[<span style="color:#e6db74">&#39;relation&#39;</span>]
+</span></span><span style="display:flex;"><span>            sub_name, sub_pos <span style="color:#f92672">=</span> spo_dict[<span style="color:#e6db74">&#39;h&#39;</span>][<span style="color:#e6db74">&#39;name&#39;</span>], spo_dict[<span style="color:#e6db74">&#39;h&#39;</span>][<span style="color:#e6db74">&#39;pos&#39;</span>][<span style="color:#ae81ff">0</span>]
+</span></span><span style="display:flex;"><span>            obj_name, obj_pos <span style="color:#f92672">=</span> spo_dict[<span style="color:#e6db74">&#39;t&#39;</span>][<span style="color:#e6db74">&#39;name&#39;</span>], spo_dict[<span style="color:#e6db74">&#39;t&#39;</span>][<span style="color:#e6db74">&#39;pos&#39;</span>][<span style="color:#ae81ff">0</span>]
+</span></span><span style="display:flex;"><span>            sub_type, obj_type <span style="color:#f92672">=</span> relation2type[relation_type][<span style="color:#ae81ff">0</span>], relation2type[relation_type][<span style="color:#ae81ff">1</span>]
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e"># 判断当前三元组是否已经被标记，如果已经被标记，则不进行标记（BIO难以处理嵌套实体）</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> tag_label[sub_pos] <span style="color:#f92672">==</span> tags2label[<span style="color:#e6db74">&#39;O&#39;</span>] <span style="color:#f92672">and</span> tag_label[obj_pos] <span style="color:#f92672">==</span> tags2label[<span style="color:#e6db74">&#39;O&#39;</span>]:
+</span></span><span style="display:flex;"><span>                tag_label[sub_pos] <span style="color:#f92672">=</span> tags2label[<span style="color:#e6db74">f</span><span style="color:#e6db74">&#39;B-</span><span style="color:#e6db74">{</span>sub_type<span style="color:#e6db74">}</span><span style="color:#e6db74">&#39;</span>]
+</span></span><span style="display:flex;"><span>                tag_label[sub_pos <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>: sub_pos <span style="color:#f92672">+</span> len(sub_name)] <span style="color:#f92672">=</span> [
+</span></span><span style="display:flex;"><span>                    tags2label[<span style="color:#e6db74">f</span><span style="color:#e6db74">&#39;I-</span><span style="color:#e6db74">{</span>sub_type<span style="color:#e6db74">}</span><span style="color:#e6db74">&#39;</span>] <span style="color:#66d9ef">for</span> _ <span style="color:#f92672">in</span> range(len(sub_name) <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>                ]
+</span></span><span style="display:flex;"><span>                tag_label[obj_pos] <span style="color:#f92672">=</span> tags2label[<span style="color:#e6db74">f</span><span style="color:#e6db74">&#39;B-</span><span style="color:#e6db74">{</span>obj_type<span style="color:#e6db74">}</span><span style="color:#e6db74">&#39;</span>]
+</span></span><span style="display:flex;"><span>                tag_label[obj_pos <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>: obj_pos <span style="color:#f92672">+</span> len(obj_name)] <span style="color:#f92672">=</span> [
+</span></span><span style="display:flex;"><span>                    tags2label[<span style="color:#e6db74">f</span><span style="color:#e6db74">&#39;I-</span><span style="color:#e6db74">{</span>obj_type<span style="color:#e6db74">}</span><span style="color:#e6db74">&#39;</span>] <span style="color:#66d9ef">for</span> _ <span style="color:#f92672">in</span> range(len(obj_name) <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>                ]
+</span></span><span style="display:flex;"><span>     <span style="color:#66d9ef">return</span> ID, input_ids, attention_mask, tag_label, text
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> __getitem__(self, index):
+</span></span><span style="display:flex;"><span>    ID <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;&#39;</span>
+</span></span><span style="display:flex;"><span>    text, spo <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>data<span style="color:#f92672">.</span>loc[index, <span style="color:#e6db74">&#39;text&#39;</span>], self<span style="color:#f92672">.</span>data<span style="color:#f92672">.</span>loc[index, <span style="color:#e6db74">&#39;spo&#39;</span>]
+</span></span><span style="display:flex;"><span>    entity_list, label <span style="color:#f92672">=</span> [], <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> self<span style="color:#f92672">.</span>task <span style="color:#f92672">!=</span> <span style="color:#e6db74">&#39;test&#39;</span>: <span style="color:#75715e"># 如果不是测试集，则获取对应的标签</span>
+</span></span><span style="display:flex;"><span>        label <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>data<span style="color:#f92672">.</span>loc[index, <span style="color:#e6db74">&#39;label&#39;</span>]
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> self<span style="color:#f92672">.</span>task <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;test&#39;</span>: 
+</span></span><span style="display:flex;"><span>        ID <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>data<span style="color:#f92672">.</span>loc[index, <span style="color:#e6db74">&#39;ID&#39;</span>]
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> len(spo) <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">0</span>:
+</span></span><span style="display:flex;"><span>        input_text <span style="color:#f92672">=</span> spo[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">+</span> <span style="color:#e6db74">&#39;#&#39;</span> <span style="color:#f92672">+</span> spo[<span style="color:#ae81ff">2</span>] <span style="color:#f92672">+</span> <span style="color:#e6db74">&#39;[SEP]&#39;</span> <span style="color:#f92672">+</span> text <span style="color:#75715e"># 将提及对按照subject#object[SEP]text的方式进行拼接</span>
+</span></span><span style="display:flex;"><span>        entity_list <span style="color:#f92672">=</span> [spo[<span style="color:#ae81ff">0</span>], spo[<span style="color:#ae81ff">1</span>], spo[<span style="color:#ae81ff">2</span>], spo[<span style="color:#ae81ff">3</span>], spo[<span style="color:#ae81ff">4</span>], spo[<span style="color:#ae81ff">5</span>]]
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">else</span>:
+</span></span><span style="display:flex;"><span>        input_text <span style="color:#f92672">=</span> text
+</span></span><span style="display:flex;"><span>        entity_list <span style="color:#f92672">=</span> []
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># 将文本转换为对应的输入</span>
+</span></span><span style="display:flex;"><span>        inputs <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>tokenizer(input_text, max_length<span style="color:#f92672">=</span><span style="color:#ae81ff">512</span>, truncation<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>, padding<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;max_length&#39;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> ID, text, inputs[<span style="color:#e6db74">&#39;input_ids&#39;</span>], inputs[<span style="color:#e6db74">&#39;attention_mask&#39;</span>], label, entity_list
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">BertRE</span>(nn<span style="color:#f92672">.</span>Module):
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> __init__(self, args):
+</span></span><span style="display:flex;"><span>        super()<span style="color:#f92672">.</span>__init__()
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>args <span style="color:#f92672">=</span> args
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>bert <span style="color:#f92672">=</span> AutoModel<span style="color:#f92672">.</span>from_pretrained(args<span style="color:#f92672">.</span>pretrain_path)
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>dropout <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Dropout(<span style="color:#ae81ff">0.3</span>)
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>fc <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Linear(args<span style="color:#f92672">.</span>hidden_size, len(relation2label))
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>criterion <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>CrossEntropyLoss()
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">forward</span>(self, input_ids, attention_mask, target<span style="color:#f92672">=</span><span style="color:#66d9ef">None</span>):
+</span></span><span style="display:flex;"><span>        pooler_output <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>bert(input_ids, attention_mask, return_dict<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)[<span style="color:#e6db74">&#39;pooler_output&#39;</span>]
+</span></span><span style="display:flex;"><span>        pred <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>fc(pooler_output)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> target <span style="color:#f92672">is</span> <span style="color:#f92672">not</span> <span style="color:#66d9ef">None</span>:
+</span></span><span style="display:flex;"><span>            loss <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>criterion(pred, target)
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> loss
+</span></span><span style="display:flex;"><span>        pred <span style="color:#f92672">=</span> F<span style="color:#f92672">.</span>softmax(pred, dim<span style="color:#f92672">=-</span><span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> pred<span style="color:#f92672">.</span>argmax(dim<span style="color:#f92672">=-</span><span style="color:#ae81ff">1</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">BertCRF</span>(nn<span style="color:#f92672">.</span>Module):
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> __init__(self, args):
+</span></span><span style="display:flex;"><span>        super()<span style="color:#f92672">.</span>__init__()
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>args <span style="color:#f92672">=</span> args
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>bert <span style="color:#f92672">=</span> AutoModel<span style="color:#f92672">.</span>from_pretrained(args<span style="color:#f92672">.</span>pretrain_path)
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>dropout <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Dropout(<span style="color:#ae81ff">0.3</span>)
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>fc <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Linear(args<span style="color:#f92672">.</span>hidden_size, len(tags2label))
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>crf <span style="color:#f92672">=</span> CRFLayer(args)
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>score <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">forward</span>(self, input_ids, attention_mask, tags):
+</span></span><span style="display:flex;"><span>        embedding <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>bert(input_ids, attention_mask, return_dict<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)[<span style="color:#e6db74">&#39;last_hidden_state&#39;</span>]
+</span></span><span style="display:flex;"><span>        emit_matrixs <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>fc(self<span style="color:#f92672">.</span>dropout(embedding[:, <span style="color:#ae81ff">1</span>: <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>, :]))<span style="color:#f92672">.</span>transpose(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>        attention_mask <span style="color:#f92672">=</span> attention_mask<span style="color:#f92672">.</span>transpose(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>)[<span style="color:#ae81ff">1</span>: <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>, :]
+</span></span><span style="display:flex;"><span>        pred_score <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>crf(emit_matrixs, attention_mask)
+</span></span><span style="display:flex;"><span>        gold_score <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>crf<span style="color:#f92672">.</span>score_sentence(emit_matrixs, tags<span style="color:#f92672">.</span>transpose(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>), attention_mask)
+</span></span><span style="display:flex;"><span>        loss <span style="color:#f92672">=</span> (pred_score <span style="color:#f92672">-</span> gold_score)<span style="color:#f92672">.</span>sum()
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> loss
+</span></span></code></pre></div>
+          </div>
+        </div></div>
+  <aside class="widget-info">
+    
+<section class="aside-widget widget-author content-padding-large soft-size--large soft-style--box">
+  <div class="widget-body">
+    <div class="author-box avatar">
+      
+      <img class="author-avatar soft-size--round soft-style--box" src="https://s.gravatar.com/avatar/7b5a0b07a98895278cfa862b1f32ae8f?s=200&amp;r=g&amp;d=retro" alt="摸铁校尉🥉">
+      
+      <h2 class="author-name text-ellipsis">摸铁校尉🥉</h2>
+      
+      <p class="author-desc text-ellipsis">闭上眼睛，开始穿越!</p>
+      
+    </div>
+  </div>
+</section>
+
+    
+    
+
+
+
+
+<section class="aside-widget widget-categories content-padding-large soft-size--large soft-style--box">
+  <h2 class="widget-header">
+    <div class="title">
+      <span>Categories</span>
+    </div>
+  </h2>
+  <div class="widget-body">
+    <ul class="categories-list">
+      
+        <li>
+          <a href="https://rclurn.github.io/categories/development/">Development</a>
+          <span>11</span>
+        </li>
+      
+        <li>
+          <a href="https://rclurn.github.io/categories/%E5%B7%A5%E5%85%B7%E7%AE%B1/">工具箱</a>
+          <span>3</span>
+        </li>
+      
+        <li>
+          <a href="https://rclurn.github.io/categories/%E4%B8%8A%E5%88%86%E6%9D%80%E5%99%A8/">上分杀器</a>
+          <span>2</span>
+        </li>
+      
+        <li>
+          <a href="https://rclurn.github.io/categories/%E7%AB%9E%E8%B5%9B/">竞赛</a>
+          <span>1</span>
+        </li>
+      
+        <li>
+          <a href="https://rclurn.github.io/categories/%E7%AE%97%E6%B3%95/">算法</a>
+          <span>1</span>
+        </li>
+      
+        <li>
+          <a href="https://rclurn.github.io/categories/%E9%9D%A2%E8%AF%95/">面试</a>
+          <span>1</span>
+        </li>
+      
+    </ul>
+  </div>
+
+  
+</section>
+
+
+    
+
+
+
+
+  </aside>
+</div>
+  </main><footer class="footer-container layout-block">
+  
+  <div class="social-icons">
+    
+      <a class="soft-size--primary soft-style--box" href="https://github.com/rnaker" target="_blank" rel="noopener noreferrer">
+          
+        <svg class="icon icon-github" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+          <path d="M64.6 512c0 195.6 125.4 361.9 300.1 422.9 23.5 5.9 19.9-10.8 19.9-22.2v-77.6c-135.8 15.9-141.3-74-150.5-89-18.5-31.5-61.9-39.5-49-54.5 31-15.9 62.5 4 98.9 58 26.4 39.1 77.9 32.5 104.1 26 5.7-23.5 17.9-44.5 34.7-60.9-140.7-25.2-199.4-111.1-199.4-213.3 0-49.5 16.4-95.1 48.4-131.8-20.4-60.6 1.9-112.4 4.9-120.1 58.2-5.2 118.5 41.6 123.3 45.3 33.1-8.9 70.8-13.7 112.9-13.7 42.4 0 80.3 4.9 113.5 13.9 11.3-8.6 67.3-48.8 121.4-43.9 2.9 7.7 24.7 58.3 5.5 118.1 32.5 36.8 49 82.8 49 132.4 0 102.3-59 188.3-200.2 213.2 23.5 23.3 38.1 55.5 38.1 91.1v112.7c0.8 9 0 17.9 15.1 17.9C832.7 877 960.4 709.4 960.4 512.1c0-247.5-200.6-447.9-447.9-447.9C265 64.1 64.6 264.5 64.6 512z"></path>
+        </svg>
+        
+
+        
+
+        
+
+        
+
+        
+      </a>
+    
+      <a class="soft-size--primary soft-style--box" href="https://weibo.com/u/5561168966" target="_blank" rel="noopener noreferrer">
+        
+
+        
+
+        
+
+          
+        <svg class="icon icon-weibo" viewBox="0 0 1025 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+          <path d="M385.682429 733.696q11.995429-19.456 6.290286-39.424t-25.746286-28.598857q-19.456-7.972571-41.691429-0.585143t-34.304 26.258286q-12.580571 19.456-7.460571 39.131429t24.576 28.891429 42.569143 1.462857 35.693714-27.136zM439.442429 664.576q4.534857-7.460571 1.974857-15.140571t-10.020571-10.605714q-7.972571-2.852571-16.310857 0.292571t-12.288 10.605714q-9.728 17.700571 7.460571 25.746286 7.972571 2.852571 16.603429-0.292571t12.580571-10.605714zM538.843572 725.723429q-25.746286 58.294857-90.258286 85.723429t-128 6.875429q-61.147429-19.456-84.260571-72.265143t3.730286-107.154286q26.843429-53.174857 86.601143-79.433143t120.32-10.825143q63.414857 16.603429 90.550857 68.315429t1.462857 108.836571zM717.165858 634.294857q-5.12-54.857143-50.834286-97.133714t-119.149714-62.317714-156.891429-11.995429q-127.414857 13.165714-211.163429 80.822857t-75.702857 151.113143q5.12 54.857143 50.834286 97.133714t119.149714 62.317714 156.891429 11.995429q127.414857-13.165714 211.163429-80.822857t75.702857-151.113143zM893.147572 636.562286q0 38.838857-21.138286 79.725714t-62.317714 78.262857-96.256 67.145143-129.170286 47.396571-154.550857 17.700571-157.110857-19.163429-137.435429-53.174857-98.011429-86.308571-37.156571-114.029714q0-65.682286 39.716571-139.995429t112.859429-147.456q96.548571-96.548571 195.145143-134.875429t140.873143 4.022857q37.156571 36.571429 11.410286 119.442286-2.267429 7.972571-0.585143 11.410286t5.705143 4.022857 8.265143-0.292571 7.68-1.974857l3.437714-1.170286q79.433143-33.718857 140.580571-33.718857t87.405714 34.889143q25.746286 35.986286 0 101.741714-1.170286 7.460571-2.56 11.410286t2.56 7.168 6.875429 4.315429 9.728 3.437714q32.548571 10.313143 58.88 26.843429t45.714286 46.592 19.456 66.56zM850.871001 279.990857q23.990857 26.843429 31.158857 62.025143t-3.730286 67.145143q-4.534857 13.165714-16.822857 19.456t-25.453714 2.267429q-13.165714-4.534857-19.456-16.822857t-2.267429-25.453714q11.410286-35.986286-13.677714-63.414857t-61.147429-19.968q-13.677714 2.852571-25.746286-4.534857t-14.262857-21.138286q-2.852571-13.677714 4.534857-25.453714t21.138286-14.555429q34.304-7.460571 68.022857 3.145143t57.709714 37.449143zM954.295001 186.88q49.737143 54.857143 64.292571 127.122286t-7.68 138.020571q-5.12 15.433143-19.456 22.820571t-29.696 2.267429-22.820571-19.456-2.852571-29.696q16.018286-46.884571 5.705143-98.304t-45.714286-90.258286q-35.401143-39.424-84.553143-54.564571t-98.889143-4.827429q-16.018286 3.437714-29.696-5.412571t-17.115429-24.868571 5.412571-29.403429 24.868571-16.822857q70.290286-14.848 139.410286 6.582857t118.857143 76.873143z"></path>
+        </svg>
+        
+
+        
+      </a>
+    
+      <a class="soft-size--primary soft-style--box" href="https://www.zhihu.com/people/miku-84" target="_blank" rel="noopener noreferrer">
+        
+
+        
+
+        
+
+        
+
+          
+        <svg class="icon icon-zhihu" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+          <path d="M544.949 561.422s0-71.387-34.779-75.050c-34.779-3.663-142.775 0-142.775 0v-219.654h161.078s-1.83-73.219-32.949-73.219h-261.755l43.93-117.148s-65.897 3.663-89.692 45.761-98.844 252.604-98.844 252.604 25.627 10.983 67.726-20.134c42.101-31.116 56.743-86.033 56.743-86.033l76.879-3.663 1.83 223.316s-133.621-1.83-161.078 0c-27.457 1.83-42.101 75.050-42.101 75.050h203.182s-18.307 124.47-69.557 214.164c-53.085 89.692-151.929 161.078-151.929 161.078s71.387 29.287 140.947-10.983c69.557-42.101 120.811-223.316 120.811-223.316l162.912 203.182s14.643-97.013-1.83-124.47c-18.307-27.457-113.49-137.283-113.49-137.283l-42.101 36.607 29.287-120.811h177.552zM587.050 188.010l-1.83 660.793h65.897l23.795 82.37 115.321-82.37h162.912v-660.793h-366.091zM879.92 775.584h-76.879l-97.013 75.050-21.965-75.050h-20.134v-512.527h215.991v512.527z"></path>
+        </svg>
+        
+      </a>
+    
+  </div>
+  
+
+  <div class="colour-bar"></div>
+  
+  
+  <p>© 2021 <a href="https://github.com/miiiku/hugo-theme-kagome">kagome</a>.</p>
+  
+
+  
+
+  <p>
+    Powered by
+    <a href="https://gohugo.io/" target="_blank" rel="noopener noreferrer">Hugo</a>
+    Theme - 
+    <a href="https://github.com/miiiku/hugo-theme-kagome" target="_blank" rel="noopener noreferrer author">kagome</a>
+  </p>
+
+  <p>
+    <a href="javascript:;" id="theme-light">🌞 light</a>
+    <a href="javascript:;" id="theme-dark">🌛 dark</a>
+    <a href="javascript:;" id="theme-auto">🤖️ auto</a>
+  </p>
+</footer>
+
+
+
+
+
+
+
+</body>
+
+</html>
