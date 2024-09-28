@@ -2,20 +2,20 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>面试 on Rclurn</title>
-    <link>https://rclurn.github.io/categories/%E9%9D%A2%E8%AF%95/</link>
+    <link>https://Rclurn.github.io/categories/%E9%9D%A2%E8%AF%95/</link>
     <description>Recent content in 面试 on Rclurn</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <managingEditor>liu-huo@live.com (摸铁校尉🥉)</managingEditor>
     <webMaster>liu-huo@live.com (摸铁校尉🥉)</webMaster>
     <copyright>© 2021 &lt;a href=&#34;https://github.com/miiiku/hugo-theme-kagome&#34;&gt;kagome&lt;/a&gt;.</copyright>
-    <lastBuildDate>Fri, 01 Mar 2024 11:09:56 +0800</lastBuildDate><atom:link href="https://rclurn.github.io/categories/%E9%9D%A2%E8%AF%95/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 01 Mar 2024 11:09:56 +0800</lastBuildDate><atom:link href="https://Rclurn.github.io/categories/%E9%9D%A2%E8%AF%95/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>分词方式</title>
-      <link>https://rclurn.github.io/algorithm/%E5%88%86%E8%AF%8D%E6%96%B9%E5%BC%8F/</link>
+      <link>https://Rclurn.github.io/algorithm/%E5%88%86%E8%AF%8D%E6%96%B9%E5%BC%8F/</link>
       <pubDate>Fri, 01 Mar 2024 11:09:56 +0800</pubDate>
       <author>liu-huo@live.com (摸铁校尉🥉)</author>
-      <guid>https://rclurn.github.io/algorithm/%E5%88%86%E8%AF%8D%E6%96%B9%E5%BC%8F/</guid>
+      <guid>https://Rclurn.github.io/algorithm/%E5%88%86%E8%AF%8D%E6%96%B9%E5%BC%8F/</guid>
       <description>BPE算法的简单实现 from collections import defaultdict corpus = [ &amp;#34;This is the Hugging Face Course.&amp;#34;, &amp;#34;This chapter is about tokenization.&amp;#34;, &amp;#34;This section shows several tokenizer algorithms.&amp;#34;, &amp;#34;Hopefully, you will be able to understand how they are trained and generate tokens.&amp;#34; ] word_freqs = difaultdict(int) for text in corpus: for word in text.split(): word_freqs[word] += 1 vocab = [] for word in word_freqs.keys():</description>
     </item>
     

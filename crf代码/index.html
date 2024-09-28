@@ -30,7 +30,7 @@
   <meta property="og:title" content="" />
 <meta property="og:description" content="# 计算真实路径得分 def score_target_sentence(self, emit_matrixs, tags, attention_mask): seq_len, batch_size, tag_size = emit_matrixs.size() scores = emit_matrixs.new_zeros(batch_size) # [batch_size] # cat([1, batch_size], [seq_len, batch_size]) -&gt; [seq_len &#43; 1, batch_size] # 在标注序列的前面加上START_TAG标注，并将其得分设置为0 tags = torch.cat([tags.new_full((1, batch_size), fill_value=tags2label[&#39;START_TAG&#39;]), tags], 0) # 在时间序列维度上遍历发射矩阵 for i, emit_score in enumerate(emit_matrixs): # 获得当前时间步的batch中每个字的发射矩阵得分 emit_score = torch.stack([f[next_tag] for f, next_tag in zip(emit_score, tags[i &#43; 1])]) # 获得当前时间步到下一个时间步的转移矩阵得分 transition_score = torch.stack([self.transition[tags[i &#43; 1, b], tags[i, b]] for b in range(batch_size)]) # 将当前时间步的发射矩阵得分与从上一个时间步的标注转移到当前时间步的标注的转移矩阵得分相加 scores &#43;= (emit_score &#43; transition_score) * attention_mask[i] transition_to_end = torch." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://rclurn.github.io/crf%E4%BB%A3%E7%A0%81/" /><meta property="article:section" content="" />
+<meta property="og:url" content="https://Rclurn.github.io/crf%E4%BB%A3%E7%A0%81/" /><meta property="article:section" content="" />
 
 
 
@@ -44,14 +44,14 @@
   
   
   
-  <link rel="stylesheet" href="https://rclurn.github.io/assets/css/style.min.699f46622e3574a7f9ecca4c5877067845fe89ffcd9c4335df2dff23ddae215e.css" integrity="sha256-aZ9GYi41dKf57MpMWHcGeEX&#43;if/NnEM13y3/I92uIV4=">
+  <link rel="stylesheet" href="https://Rclurn.github.io/assets/css/style.min.699f46622e3574a7f9ecca4c5877067845fe89ffcd9c4335df2dff23ddae215e.css" integrity="sha256-aZ9GYi41dKf57MpMWHcGeEX&#43;if/NnEM13y3/I92uIV4=">
 
-  <script src="https://rclurn.github.io/assets/js/main.min.182da266209851bc7c828aa7377f98f914e1e76c8decdd53a6cbe9bffea92cde.js" integrity="sha256-GC2iZiCYUbx8goqnN3&#43;Y&#43;RTh52yN7N1Tpsvpv/6pLN4="></script>
+  <script src="https://Rclurn.github.io/assets/js/main.min.182da266209851bc7c828aa7377f98f914e1e76c8decdd53a6cbe9bffea92cde.js" integrity="sha256-GC2iZiCYUbx8goqnN3&#43;Y&#43;RTh52yN7N1Tpsvpv/6pLN4="></script>
   
   </head><body><header class="header-container layout-block layout-padding">
   <div class="header-inner content-padding-large soft-size--large soft-style--box">
     <div class="header-logo">
-      <a href="https://rclurn.github.io/"><h1>Rclurn</h1></a>
+      <a href="https://Rclurn.github.io/"><h1>Rclurn</h1></a>
     </div>
     <nav class="header-nav">
       <div class="header-nav--btn">
@@ -324,32 +324,32 @@
     <ul class="categories-list">
       
         <li>
-          <a href="https://rclurn.github.io/categories/development/">Development</a>
+          <a href="https://Rclurn.github.io/categories/development/">Development</a>
           <span>11</span>
         </li>
       
         <li>
-          <a href="https://rclurn.github.io/categories/%E5%B7%A5%E5%85%B7%E7%AE%B1/">工具箱</a>
+          <a href="https://Rclurn.github.io/categories/%E5%B7%A5%E5%85%B7%E7%AE%B1/">工具箱</a>
           <span>3</span>
         </li>
       
         <li>
-          <a href="https://rclurn.github.io/categories/%E4%B8%8A%E5%88%86%E6%9D%80%E5%99%A8/">上分杀器</a>
+          <a href="https://Rclurn.github.io/categories/%E4%B8%8A%E5%88%86%E6%9D%80%E5%99%A8/">上分杀器</a>
           <span>2</span>
         </li>
       
         <li>
-          <a href="https://rclurn.github.io/categories/%E7%AB%9E%E8%B5%9B/">竞赛</a>
+          <a href="https://Rclurn.github.io/categories/%E7%AB%9E%E8%B5%9B/">竞赛</a>
           <span>1</span>
         </li>
       
         <li>
-          <a href="https://rclurn.github.io/categories/%E7%AE%97%E6%B3%95/">算法</a>
+          <a href="https://Rclurn.github.io/categories/%E7%AE%97%E6%B3%95/">算法</a>
           <span>1</span>
         </li>
       
         <li>
-          <a href="https://rclurn.github.io/categories/%E9%9D%A2%E8%AF%95/">面试</a>
+          <a href="https://Rclurn.github.io/categories/%E9%9D%A2%E8%AF%95/">面试</a>
           <span>1</span>
         </li>
       

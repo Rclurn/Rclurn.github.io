@@ -2,20 +2,20 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Competition on Rclurn</title>
-    <link>https://rclurn.github.io/projects/</link>
+    <link>https://Rclurn.github.io/projects/</link>
     <description>Recent content in Competition on Rclurn</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <managingEditor>liu-huo@live.com (摸铁校尉🥉)</managingEditor>
     <webMaster>liu-huo@live.com (摸铁校尉🥉)</webMaster>
     <copyright>© 2021 &lt;a href=&#34;https://github.com/miiiku/hugo-theme-kagome&#34;&gt;kagome&lt;/a&gt;.</copyright>
-    <lastBuildDate>Thu, 15 Aug 2024 00:14:52 +0800</lastBuildDate><atom:link href="https://rclurn.github.io/projects/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 15 Aug 2024 00:14:52 +0800</lastBuildDate><atom:link href="https://Rclurn.github.io/projects/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>LlamaCpp</title>
-      <link>https://rclurn.github.io/projects/llamacpp/</link>
+      <link>https://Rclurn.github.io/projects/llamacpp/</link>
       <pubDate>Thu, 15 Aug 2024 00:14:52 +0800</pubDate>
       <author>liu-huo@live.com (摸铁校尉🥉)</author>
-      <guid>https://rclurn.github.io/projects/llamacpp/</guid>
+      <guid>https://Rclurn.github.io/projects/llamacpp/</guid>
       <description></description>
     </item>
     

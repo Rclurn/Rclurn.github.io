@@ -2,20 +2,20 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Competition on Rclurn</title>
-    <link>https://rclurn.github.io/competition/</link>
+    <link>https://Rclurn.github.io/competition/</link>
     <description>Recent content in Competition on Rclurn</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <managingEditor>liu-huo@live.com (摸铁校尉🥉)</managingEditor>
     <webMaster>liu-huo@live.com (摸铁校尉🥉)</webMaster>
     <copyright>© 2021 &lt;a href=&#34;https://github.com/miiiku/hugo-theme-kagome&#34;&gt;kagome&lt;/a&gt;.</copyright>
-    <lastBuildDate>Sat, 30 Dec 2023 00:30:10 +0800</lastBuildDate><atom:link href="https://rclurn.github.io/competition/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 30 Dec 2023 00:30:10 +0800</lastBuildDate><atom:link href="https://Rclurn.github.io/competition/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>2022大数据挑战赛</title>
-      <link>https://rclurn.github.io/competition/2022%E5%A4%A7%E6%95%B0%E6%8D%AE%E6%8C%91%E6%88%98%E8%B5%9B/</link>
+      <link>https://Rclurn.github.io/competition/2022%E5%A4%A7%E6%95%B0%E6%8D%AE%E6%8C%91%E6%88%98%E8%B5%9B/</link>
       <pubDate>Sat, 30 Dec 2023 00:30:10 +0800</pubDate>
       <author>liu-huo@live.com (摸铁校尉🥉)</author>
-      <guid>https://rclurn.github.io/competition/2022%E5%A4%A7%E6%95%B0%E6%8D%AE%E6%8C%91%E6%88%98%E8%B5%9B/</guid>
+      <guid>https://Rclurn.github.io/competition/2022%E5%A4%A7%E6%95%B0%E6%8D%AE%E6%8C%91%E6%88%98%E8%B5%9B/</guid>
       <description>任务解读 基于微信短视频号的短视频数据，利用短视频中常有的三种模态信息（文本、视频、音频）以及对应的分类标签信息，采用合理的机器学习算法对短视</description>
     </item>
     
