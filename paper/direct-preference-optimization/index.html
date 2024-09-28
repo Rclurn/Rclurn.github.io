@@ -29,18 +29,18 @@
   
   
   
-  <title>核心武器库 🌟 Rclurn</title>
+  <title>Direct Preference Optimization 🌟 Rclurn</title>
 
-  <meta property="og:title" content="核心武器库" />
+  <meta property="og:title" content="Direct Preference Optimization" />
 <meta property="og:description" content="记录生活点点点点点点点滴" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://Rclurn.github.io/tools/%E6%A0%B8%E5%BF%83%E6%AD%A6%E5%99%A8%E5%BA%93/" /><meta property="article:section" content="tools" />
-<meta property="article:published_time" content="2022-08-12T12:48:09+08:00" />
-<meta property="article:modified_time" content="2022-08-12T12:48:09+08:00" />
+<meta property="og:url" content="https://Rclurn.github.io/paper/direct-preference-optimization/" /><meta property="article:section" content="paper" />
+<meta property="article:published_time" content="2024-09-23T14:01:16+08:00" />
+<meta property="article:modified_time" content="2024-09-23T14:01:16+08:00" />
 
 
   <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="核心武器库"/>
+<meta name="twitter:title" content="Direct Preference Optimization"/>
 <meta name="twitter:description" content="记录生活点点点点点点点滴"/>
 
 
@@ -90,20 +90,20 @@
 
   <div class="card-cover">
     
-      <img src="https://s3.bmp.ovh/imgs/2022/09/04/79b1a2e62a465f0d.jpg" alt="https://s3.bmp.ovh/imgs/2022/09/04/79b1a2e62a465f0d.jpg" />
+      <img src="https://s2.loli.net/2024/09/28/Mt4hw67eo5FSbH1.jpg" alt="https://s2.loli.net/2024/09/28/Mt4hw67eo5FSbH1.jpg" />
     
   </div>
 
   <div class="card-text">
-    <h1 class="card-text--title">核心武器库</h1>
+    <h1 class="card-text--title">Direct Preference Optimization</h1>
     
-      <p class="card-text--row">2022-08-12 12:48</p>
+      <p class="card-text--row">2024-09-23 14:01</p>
       
       
       
         <ul class="card-text--tag">
           
-            <li><a href="https://Rclurn.github.io/categories/%E4%B8%8A%E5%88%86%E6%9D%80%E5%99%A8/">上分杀器</a></li></ul>
+            <li><a href="https://Rclurn.github.io/categories/paper/">Paper</a></li></ul>
       
 
       
@@ -116,10 +116,27 @@
 
         <div class="article-content">
           <div class="markdown-body content-padding-large soft-size--large soft-style--box">
-            <h2 id="稳定tricks">稳定Tricks</h2>
-<h3 id="1模型融合">1、模型融合</h3>
-<p>分类任务中软投票与硬投票.</p>
-<h3 id="2对抗训练">2、对抗训练</h3>
+            <p>
+  <p><img src="https://s2.loli.net/2024/09/23/QvioD1sMY4W5STl.png" alt="" loading="lazy" /></p>
+</p>
+<h2 id="dpo的优势">DPO的优势</h2>
+<ol>
+<li>
+<p>相较于PPO，需要的资源更少，不用单独训练Reward模型，也不需要Critic模型；</p>
+</li>
+<li>
+<p>训练过程中不需要采样</p>
+</li>
+</ol>
+<h2 id="dpo算法">DPO算法</h2>
+<p>DPO算法的目的是最大化奖励模型（此处奖励模型为训练的策略），使得模型对chosen和rejected数据的差值最大，进而学到人类偏好。Reward模型的loss为：</p>
+<p>
+  <p><img src="https://s2.loli.net/2024/09/25/zR8i3NKW2UHJEDv.png" alt="" loading="lazy" /></p>
+</p>
+<p>DPO的损失函数为：</p>
+<p>
+  <p><img src="https://s2.loli.net/2024/09/25/T1xQyL8PmJWMaDp.png" alt="" loading="lazy" /></p>
+</p>
 
           </div>
         </div>
@@ -133,19 +150,19 @@
   <div class="article-paging">
     
       <section class="post-paging--item card-container content-padding-primary soft-size--primary soft-style--box">
-  <div class="card-cover" background-image-lazy data-img="https://s3.bmp.ovh/imgs/2022/09/04/47b4d4848085cbdd.jpg"></div>
+  <div class="card-cover" background-image-lazy data-img="https://s2.loli.net/2024/09/28/2xDIjEGY5PXZFeK.jpg"></div>
   <div class="card-text">
-    <a href="/tools/%E5%B8%B8%E8%A7%81%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0%E5%8F%8A%E5%85%B6%E4%BC%98%E5%8C%96/"><h4 class="card-text--title text-ellipsis">常见损失函数及其优化</h4></a>
-    <p class="card-text--row">2022-09-04 15:53</p>
+    <a href="/paper/baai-general-embeddings/"><h4 class="card-text--title text-ellipsis">BAAI General Embeddings</h4></a>
+    <p class="card-text--row">2024-09-24 22:03</p>
   </div>
 </section>
     
     
       <section class="post-paging--item card-container content-padding-primary soft-size--primary soft-style--box">
-  <div class="card-cover" background-image-lazy data-img="https://s3.bmp.ovh/imgs/2022/09/04/d4869bcfe84befb2.jpg"></div>
+  <div class="card-cover" background-image-lazy data-img="https://s2.loli.net/2024/09/28/IXbQJq5zS8UyMHC.jpg"></div>
   <div class="card-text">
-    <a href="/tools/%E5%9F%BA%E7%A1%80%E5%B7%A5%E5%85%B7/"><h4 class="card-text--title text-ellipsis">基础工具</h4></a>
-    <p class="card-text--row">2022-07-18 13:57</p>
+    <a href="/paper/proximal-policy-optimization/"><h4 class="card-text--title text-ellipsis">Proximal Policy Optimization</h4></a>
+    <p class="card-text--row">2024-09-23 13:57</p>
   </div>
 </section>
     
@@ -188,7 +205,15 @@
     <ul class="post-list">
       
       
-        <li class="post-item"><a href="/tools/%E5%AF%B9%E6%8A%97%E8%AE%AD%E7%BB%83%E4%B9%8Bfgm/">对抗训练:Fast Gradient Method详解</a></li>
+        <li class="post-item"><a href="/paper/deepseek-v2/">DeepSeek V2</a></li>
+      
+        <li class="post-item"><a href="/paper/baichuan-2/">Baichuan 2</a></li>
+      
+        <li class="post-item"><a href="/paper/speculative-decoding/">Speculative Decoding</a></li>
+      
+        <li class="post-item"><a href="/paper/baai-general-embeddings/">BAAI General Embeddings</a></li>
+      
+        <li class="post-item"><a href="/paper/proximal-policy-optimization/">Proximal Policy Optimization</a></li>
       
     </ul>
   </div>

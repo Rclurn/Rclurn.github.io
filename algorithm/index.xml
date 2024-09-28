@@ -9,34 +9,7 @@
     <managingEditor>liu-huo@live.com (摸铁校尉🥉)</managingEditor>
     <webMaster>liu-huo@live.com (摸铁校尉🥉)</webMaster>
     <copyright>© 2021 &lt;a href=&#34;https://github.com/miiiku/hugo-theme-kagome&#34;&gt;kagome&lt;/a&gt;.</copyright>
-    <lastBuildDate>Wed, 25 Sep 2024 18:07:35 +0800</lastBuildDate><atom:link href="https://Rclurn.github.io/algorithm/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>DeepSeek V2</title>
-      <link>https://Rclurn.github.io/algorithm/deepseek-v2/</link>
-      <pubDate>Wed, 25 Sep 2024 18:07:35 +0800</pubDate>
-      <author>liu-huo@live.com (摸铁校尉🥉)</author>
-      <guid>https://Rclurn.github.io/algorithm/deepseek-v2/</guid>
-      <description>DeepSeek-V2: A Strong, Economical, and Efficient Mixture-of-Experts Language Model 🚀</description>
-    </item>
-    
-    <item>
-      <title>Baichuan 2</title>
-      <link>https://Rclurn.github.io/algorithm/baichuan-2/</link>
-      <pubDate>Wed, 25 Sep 2024 18:07:16 +0800</pubDate>
-      <author>liu-huo@live.com (摸铁校尉🥉)</author>
-      <guid>https://Rclurn.github.io/algorithm/baichuan-2/</guid>
-      <description>Baichuan 2: Open Large-scale Language Models 🚀</description>
-    </item>
-    
-    <item>
-      <title>Speculative Decoding</title>
-      <link>https://Rclurn.github.io/algorithm/speculative-decoding/</link>
-      <pubDate>Wed, 25 Sep 2024 17:55:09 +0800</pubDate>
-      <author>liu-huo@live.com (摸铁校尉🥉)</author>
-      <guid>https://Rclurn.github.io/algorithm/speculative-decoding/</guid>
-      <description>Fast Inference from Transformers via Speculative Decoding 🚀</description>
-    </item>
-    
+    <lastBuildDate>Wed, 25 Sep 2024 13:23:41 +0800</lastBuildDate><atom:link href="https://Rclurn.github.io/algorithm/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Transformer</title>
       <link>https://Rclurn.github.io/algorithm/transformer/</link>
@@ -44,33 +17,6 @@
       <author>liu-huo@live.com (摸铁校尉🥉)</author>
       <guid>https://Rclurn.github.io/algorithm/transformer/</guid>
       <description>Tokenizer Embedding 三角位置编码 class PositionEmbedding(nn.Module): def __init__(self, dim, base=10000, max_seq_len=512): super().__init__() self.dim = dim pe = torch.zeros(max_seq_len, dim) for pos in range(max_seq_len): for i in range(0, dim, 2): pe[pos][i] = math.sin(pos / (base ** (2 * i / self.dim))) pe[pos][i + 1] = math.cos(pos / (base ** (2 * (i + 1) / self.dim))) pe = pe.unsqueeze(dim=0) self.register_buffer(&amp;#39;pe&amp;#39;, pe) def forward(self, x): x = x</description>
-    </item>
-    
-    <item>
-      <title>BAAI General Embeddings</title>
-      <link>https://Rclurn.github.io/algorithm/baai-general-embeddings/</link>
-      <pubDate>Tue, 24 Sep 2024 22:03:28 +0800</pubDate>
-      <author>liu-huo@live.com (摸铁校尉🥉)</author>
-      <guid>https://Rclurn.github.io/algorithm/baai-general-embeddings/</guid>
-      <description>第一阶段：RetroMAE预训练 Navie版 模型架构为encoder-decoder架构，在encoder端，对sentence进行15%～</description>
-    </item>
-    
-    <item>
-      <title>Direct Preference Optimization</title>
-      <link>https://Rclurn.github.io/algorithm/direct-preference-optimization/</link>
-      <pubDate>Mon, 23 Sep 2024 14:01:16 +0800</pubDate>
-      <author>liu-huo@live.com (摸铁校尉🥉)</author>
-      <guid>https://Rclurn.github.io/algorithm/direct-preference-optimization/</guid>
-      <description>DPO的优势 相较于PPO，需要的资源更少，不用单独训练Reward模型，也不需要Critic模型； 训练过程中不需要采样 DPO算法 DPO算法的</description>
-    </item>
-    
-    <item>
-      <title>Proximal Policy Optimization</title>
-      <link>https://Rclurn.github.io/algorithm/proximal-policy-optimization/</link>
-      <pubDate>Mon, 23 Sep 2024 13:57:47 +0800</pubDate>
-      <author>liu-huo@live.com (摸铁校尉🥉)</author>
-      <guid>https://Rclurn.github.io/algorithm/proximal-policy-optimization/</guid>
-      <description>概述 在PPO中主要存在四个模型：Actor、Ref、Reward和Critic。Actor和Ref来源于同一个模型，一般用SFT后的模型进行</description>
     </item>
     
     <item>
@@ -98,15 +44,6 @@
       <author>liu-huo@live.com (摸铁校尉🥉)</author>
       <guid>https://Rclurn.github.io/algorithm/%E5%88%86%E8%AF%8D%E6%96%B9%E5%BC%8F/</guid>
       <description>BPE算法的简单实现 from collections import defaultdict corpus = [ &amp;#34;This is the Hugging Face Course.&amp;#34;, &amp;#34;This chapter is about tokenization.&amp;#34;, &amp;#34;This section shows several tokenizer algorithms.&amp;#34;, &amp;#34;Hopefully, you will be able to understand how they are trained and generate tokens.&amp;#34; ] word_freqs = difaultdict(int) for text in corpus: for word in text.split(): word_freqs[word] += 1 vocab = [] for word in word_freqs.keys():</description>
-    </item>
-    
-    <item>
-      <title>基础算法</title>
-      <link>https://Rclurn.github.io/algorithm/%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95/</link>
-      <pubDate>Sat, 06 Jan 2024 19:35:52 +0800</pubDate>
-      <author>liu-huo@live.com (摸铁校尉🥉)</author>
-      <guid>https://Rclurn.github.io/algorithm/%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95/</guid>
-      <description>求取最大公约数 int gcd(int a, int b) { return b ? gcd(b, a % b), a; } 快速排序 // 这里的partition有一个性质，执行一次partition我们就可以确定数组中的某</description>
     </item>
     
   </channel>

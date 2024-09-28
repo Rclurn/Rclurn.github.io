@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Test on Rclurn</title>
+    <link>https://Rclurn.github.io/categories/test/</link>
+    <description>Recent content in Test on Rclurn</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <managingEditor>liu-huo@live.com (摸铁校尉🥉)</managingEditor>
+    <webMaster>liu-huo@live.com (摸铁校尉🥉)</webMaster>
+    <copyright>© 2021 &lt;a href=&#34;https://github.com/miiiku/hugo-theme-kagome&#34;&gt;kagome&lt;/a&gt;.</copyright>
+    <lastBuildDate>Wed, 25 Sep 2024 13:23:41 +0800</lastBuildDate><atom:link href="https://Rclurn.github.io/categories/test/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Transformer</title>
+      <link>https://Rclurn.github.io/algorithm/transformer/</link>
+      <pubDate>Wed, 25 Sep 2024 13:23:41 +0800</pubDate>
+      <author>liu-huo@live.com (摸铁校尉🥉)</author>
+      <guid>https://Rclurn.github.io/algorithm/transformer/</guid>
+      <description>Tokenizer Embedding 三角位置编码 class PositionEmbedding(nn.Module): def __init__(self, dim, base=10000, max_seq_len=512): super().__init__() self.dim = dim pe = torch.zeros(max_seq_len, dim) for pos in range(max_seq_len): for i in range(0, dim, 2): pe[pos][i] = math.sin(pos / (base ** (2 * i / self.dim))) pe[pos][i + 1] = math.cos(pos / (base ** (2 * (i + 1) / self.dim))) pe = pe.unsqueeze(dim=0) self.register_buffer(&amp;#39;pe&amp;#39;, pe) def forward(self, x): x = x</description>
+    </item>
+    
+  </channel>
+</rss>

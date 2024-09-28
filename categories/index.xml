@@ -11,9 +11,27 @@
     <copyright>© 2021 &lt;a href=&#34;https://github.com/miiiku/hugo-theme-kagome&#34;&gt;kagome&lt;/a&gt;.</copyright>
     <lastBuildDate>Wed, 25 Sep 2024 18:07:35 +0800</lastBuildDate><atom:link href="https://Rclurn.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
     <item>
+      <title>Paper</title>
+      <link>https://Rclurn.github.io/categories/paper/</link>
+      <pubDate>Wed, 25 Sep 2024 18:07:35 +0800</pubDate>
+      <author>liu-huo@live.com (摸铁校尉🥉)</author>
+      <guid>https://Rclurn.github.io/categories/paper/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Test</title>
+      <link>https://Rclurn.github.io/categories/test/</link>
+      <pubDate>Wed, 25 Sep 2024 13:23:41 +0800</pubDate>
+      <author>liu-huo@live.com (摸铁校尉🥉)</author>
+      <guid>https://Rclurn.github.io/categories/test/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>Development</title>
       <link>https://Rclurn.github.io/categories/development/</link>
-      <pubDate>Wed, 25 Sep 2024 18:07:35 +0800</pubDate>
+      <pubDate>Mon, 23 Sep 2024 10:55:00 +0800</pubDate>
       <author>liu-huo@live.com (摸铁校尉🥉)</author>
       <guid>https://Rclurn.github.io/categories/development/</guid>
       <description></description>
@@ -25,15 +43,6 @@
       <pubDate>Fri, 01 Mar 2024 11:09:56 +0800</pubDate>
       <author>liu-huo@live.com (摸铁校尉🥉)</author>
       <guid>https://Rclurn.github.io/categories/%E9%9D%A2%E8%AF%95/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>算法</title>
-      <link>https://Rclurn.github.io/categories/%E7%AE%97%E6%B3%95/</link>
-      <pubDate>Sat, 06 Jan 2024 19:35:52 +0800</pubDate>
-      <author>liu-huo@live.com (摸铁校尉🥉)</author>
-      <guid>https://Rclurn.github.io/categories/%E7%AE%97%E6%B3%95/</guid>
       <description></description>
     </item>
     
