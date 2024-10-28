@@ -22,7 +22,7 @@
     <meta name="description" content="记录生活点点点点点点点滴">
   
 
-  <meta name="generator" content="Hugo 0.105.0">
+  <meta name="generator" content="Hugo 0.91.2" />
   
   
   
@@ -72,7 +72,7 @@
           
           <a class="list-item soft-size--small soft-style--hover soft-style--active" href="/paper" title="">📝Paper</a>
           
-          <a class="list-item soft-size--small soft-style--hover soft-style--active" href="/algorithm" title="">👹Algorithm</a>
+          <a class="list-item soft-size--small soft-style--hover soft-style--active" href="/swift" title="">👹Swift</a>
           
           <a class="list-item soft-size--small soft-style--hover soft-style--active" href="/about" title="">🤡About</a>
           
@@ -125,110 +125,110 @@
 </p>
 <h2 id="embedding">Embedding</h2>
 <h3 id="三角位置编码">三角位置编码</h3>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">PositionEmbedding</span>(nn<span style="color:#f92672">.</span>Module):
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> __init__(self, dim, base<span style="color:#f92672">=</span><span style="color:#ae81ff">10000</span>, max_seq_len<span style="color:#f92672">=</span><span style="color:#ae81ff">512</span>):
-</span></span><span style="display:flex;"><span>        super()<span style="color:#f92672">.</span>__init__()
-</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>dim <span style="color:#f92672">=</span> dim
-</span></span><span style="display:flex;"><span>        pe <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>zeros(max_seq_len, dim)
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> pos <span style="color:#f92672">in</span> range(max_seq_len):
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">0</span>, dim, <span style="color:#ae81ff">2</span>):
-</span></span><span style="display:flex;"><span>                pe[pos][i] <span style="color:#f92672">=</span> math<span style="color:#f92672">.</span>sin(pos <span style="color:#f92672">/</span> (base <span style="color:#f92672">**</span> (<span style="color:#ae81ff">2</span> <span style="color:#f92672">*</span> i <span style="color:#f92672">/</span> self<span style="color:#f92672">.</span>dim)))
-</span></span><span style="display:flex;"><span>                pe[pos][i <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>] <span style="color:#f92672">=</span> math<span style="color:#f92672">.</span>cos(pos <span style="color:#f92672">/</span> (base <span style="color:#f92672">**</span> (<span style="color:#ae81ff">2</span> <span style="color:#f92672">*</span> (i <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>) <span style="color:#f92672">/</span> self<span style="color:#f92672">.</span>dim)))
-</span></span><span style="display:flex;"><span>        pe <span style="color:#f92672">=</span> pe<span style="color:#f92672">.</span>unsqueeze(dim<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>)
-</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>register_buffer(<span style="color:#e6db74">&#39;pe&#39;</span>, pe)
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">forward</span>(self, x):
-</span></span><span style="display:flex;"><span>        x <span style="color:#f92672">=</span> x <span style="color:#f92672">*</span> math<span style="color:#f92672">.</span>sqrt(self<span style="color:#f92672">.</span>dim) <span style="color:#f92672">+</span> self<span style="color:#f92672">.</span>pe[:, :s<span style="color:#f92672">.</span>shape[<span style="color:#ae81ff">1</span>], :]<span style="color:#f92672">.</span>to(x<span style="color:#f92672">.</span>device)
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> x
-</span></span></code></pre></div><h3 id="旋转位置编码">旋转位置编码</h3>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">RotaryEmbedding</span>(nn<span style="color:#f92672">.</span>Module):
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> __init__(self, dim, base<span style="color:#f92672">=</span><span style="color:#ae81ff">10000</span>):
-</span></span><span style="display:flex;"><span>        super()<span style="color:#f92672">.</span>__init__()
-</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>dim <span style="color:#f92672">=</span> dim
-</span></span><span style="display:flex;"><span>        inv_freq <span style="color:#f92672">=</span> <span style="color:#ae81ff">1.0</span> <span style="color:#f92672">/</span> (base <span style="color:#f92672">**</span> (torch<span style="color:#f92672">.</span>range(<span style="color:#ae81ff">0</span>, dim, <span style="color:#ae81ff">2</span>) <span style="color:#f92672">/</span> dim))
-</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>register_buffer(<span style="color:#e6db74">&#39;inv_freq&#39;</span>, inv_freq, persistent<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>)
-</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">@torch</span><span style="color:#f92672">.</span>no_grad()
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">forward</span>(self, x, position_ids):
-</span></span><span style="display:flex;"><span>        expanded_inv_freq <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>inv_freq[<span style="color:#66d9ef">None</span>, :, <span style="color:#66d9ef">None</span>]<span style="color:#f92672">.</span>expand(position_ids<span style="color:#f92672">.</span>shape[<span style="color:#ae81ff">0</span>], <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>)
-</span></span><span style="display:flex;"><span>        expanded_position <span style="color:#f92672">=</span> position_ids[:, <span style="color:#66d9ef">None</span>, :]
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">with</span> torch<span style="color:#f92672">.</span>autocast():
-</span></span><span style="display:flex;"><span>            freqs <span style="color:#f92672">=</span> (expanded_inv_freq <span style="color:#f92672">@</span> expanded_position)<span style="color:#f92672">.</span>transpose(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>)
-</span></span><span style="display:flex;"><span>            emb <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>concat([freqs, freqs], dim<span style="color:#f92672">=-</span><span style="color:#ae81ff">1</span>)
-</span></span><span style="display:flex;"><span>            cos <span style="color:#f92672">=</span> emb<span style="color:#f92672">.</span>cos()
-</span></span><span style="display:flex;"><span>            sin <span style="color:#f92672">=</span> emb<span style="color:#f92672">.</span>sin()
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> cos, sin
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">rotate_half</span>(x):
-</span></span><span style="display:flex;"><span>    x1 <span style="color:#f92672">=</span> x[<span style="color:#f92672">...</span>, :x<span style="color:#f92672">.</span>shape[<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>] <span style="color:#f92672">//</span> <span style="color:#ae81ff">2</span>]
-</span></span><span style="display:flex;"><span>    x2 <span style="color:#f92672">=</span> x[<span style="color:#f92672">...</span>, x<span style="color:#f92672">.</span>shape[<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>] <span style="color:#f92672">//</span> <span style="color:#ae81ff">2</span>:]
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> torch<span style="color:#f92672">.</span>concat([<span style="color:#f92672">-</span>x2, x1], dim<span style="color:#f92672">=-</span><span style="color:#ae81ff">1</span>)
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">apply_rotate_to_emb</span>(q, k, cos, sin, unsqueezed_dim<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>):
-</span></span><span style="display:flex;"><span>    cos <span style="color:#f92672">=</span> cos<span style="color:#f92672">.</span>unsqueeze(unsqueezed_dim)
-</span></span><span style="display:flex;"><span>    sin <span style="color:#f92672">=</span> sin<span style="color:#f92672">.</span>unsqueeze(unsqueezed_dim)
-</span></span><span style="display:flex;"><span>    embed_q <span style="color:#f92672">=</span> (q <span style="color:#f92672">*</span> cos) <span style="color:#f92672">+</span> (rotate_half(q) <span style="color:#f92672">*</span> sin)
-</span></span><span style="display:flex;"><span>    embed_k <span style="color:#f92672">=</span> (k <span style="color:#f92672">*</span> sin) <span style="color:#f92672">+</span> (rotate_half(k) <span style="color:#f92672">*</span> cos)
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> embed_q, embed_k
-</span></span></code></pre></div><h2 id="attention">Attention</h2>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">make_custom_mask</span>(attention_mask):
-</span></span><span style="display:flex;"><span>    bs, seq_len <span style="color:#f92672">=</span> attention_mask<span style="color:#f92672">.</span>size()
-</span></span><span style="display:flex;"><span>    mask <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>zeros(bs, seq_len, seq_len)
-</span></span><span style="display:flex;"><span>    mask <span style="color:#f92672">=</span> mask <span style="color:#f92672">+</span> attention_mask[:, <span style="color:#66d9ef">None</span>, :]
-</span></span><span style="display:flex;"><span>    mask <span style="color:#f92672">=</span> (<span style="color:#ae81ff">1</span> <span style="color:#f92672">-</span> mask) <span style="color:#f92672">*</span> torch<span style="color:#f92672">.</span>finfo(torch<span style="color:#f92672">.</span>float16)<span style="color:#f92672">.</span>min
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> mask[:, <span style="color:#66d9ef">None</span>, :, :]
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">make_casual_mask</span>(attention_mask):
-</span></span><span style="display:flex;"><span>    bs, seq_len <span style="color:#f92672">=</span> attention_mask<span style="color:#f92672">.</span>size()
-</span></span><span style="display:flex;"><span>    mask <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>full((seq_len, seq_len), torch<span style="color:#f92672">.</span>finfo(torch<span style="color:#f92672">.</span>float16)<span style="color:#f92672">.</span>min)
-</span></span><span style="display:flex;"><span>    mask_cond <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>arange(seq_len)
-</span></span><span style="display:flex;"><span>    mask<span style="color:#f92672">.</span>masked_fill_(mask_cond <span style="color:#f92672">&lt;</span> (mask_cond <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>)<span style="color:#f92672">.</span>view(seq_len, <span style="color:#ae81ff">1</span>), <span style="color:#ae81ff">0</span>)
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> mask[<span style="color:#66d9ef">None</span>, <span style="color:#66d9ef">None</span>, :, :]<span style="color:#f92672">.</span>expand(bs, <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>, seq_len, seq_len)
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">MultiHeadAttention</span>(nn<span style="color:#f92672">.</span>Module):
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> __init__(self, config):
-</span></span><span style="display:flex;"><span>        super()<span style="color:#f92672">.</span>__init__()
-</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>config <span style="color:#f92672">=</span> config
-</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>Wq <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Linear(config<span style="color:#f92672">.</span>hidden_size, config<span style="color:#f92672">.</span>head_num <span style="color:#f92672">*</span> config<span style="color:#f92672">.</span>head_size)
-</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>Wk <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Linear(config<span style="color:#f92672">.</span>hidden_size, config<span style="color:#f92672">.</span>kv_head <span style="color:#f92672">*</span> config<span style="color:#f92672">.</span>head_size)
-</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>Wv <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Linear(config<span style="color:#f92672">.</span>hidden_size, config<span style="color:#f92672">.</span>kv_head <span style="color:#f92672">*</span> config<span style="color:#f92672">.</span>head_size)
-</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>Wo <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Linear(config<span style="color:#f92672">.</span>head_num <span style="color:#f92672">*</span> config<span style="color:#f92672">.</span>head_size, config<span style="color:#f92672">.</span>hidden_size)
-</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>attn_drop <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Dropout(config<span style="color:#f92672">.</span>attn_drop_prob)
-</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>state_drop <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Dropout(config<span style="color:#f92672">.</span>state_drop_prob)
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">forward</span>(self, hidden_states, attention_mask):
-</span></span><span style="display:flex;"><span>        bs, seq_len, hidden_size <span style="color:#f92672">=</span> hidden_states<span style="color:#f92672">.</span>size()
-</span></span><span style="display:flex;"><span>        Q <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>Wq(hidden_states)<span style="color:#f92672">.</span>view(bs, seq_len, self<span style="color:#f92672">.</span>config<span style="color:#f92672">.</span>head_num, self<span style="color:#f92672">.</span>config<span style="color:#f92672">.</span>head_size)<span style="color:#f92672">.</span>permute(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">3</span>)
-</span></span><span style="display:flex;"><span>        K <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>Wk(hidden_states)<span style="color:#f92672">.</span>view(bs, seq_len, self<span style="color:#f92672">.</span>config<span style="color:#f92672">.</span>kv_head, self<span style="color:#f92672">.</span>config<span style="color:#f92672">.</span>head_size)<span style="color:#f92672">.</span>permute(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">3</span>)
-</span></span><span style="display:flex;"><span>        V <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>Wv(hidden_states)<span style="color:#f92672">.</span>view(bs, seq_len, self<span style="color:#f92672">.</span>config<span style="color:#f92672">.</span>kv_head, self<span style="color:#f92672">.</span>config<span style="color:#f92672">.</span>head_size)<span style="color:#f92672">.</span>permute(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">3</span>)
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> self<span style="color:#f92672">.</span>config<span style="color:#f92672">.</span>kv_group <span style="color:#f92672">!=</span> <span style="color:#ae81ff">1</span>:
-</span></span><span style="display:flex;"><span>            K <span style="color:#f92672">=</span> K[:, :, <span style="color:#66d9ef">None</span>, :, :]<span style="color:#f92672">.</span>expand(bs, self<span style="color:#f92672">.</span>config<span style="color:#f92672">.</span>kv_head, self<span style="color:#f92672">.</span>config<span style="color:#f92672">.</span>kv_group, seq_len, self<span style="color:#f92672">.</span>config<span style="color:#f92672">.</span>head_size)<span style="color:#f92672">.</span>reshape(bs, self<span style="color:#f92672">.</span>config<span style="color:#f92672">.</span>head_num, seq_len, hidden<span style="color:#f92672">-</span>size)
-</span></span><span style="display:flex;"><span>            V <span style="color:#f92672">=</span> V[:, :, <span style="color:#66d9ef">None</span>, :, :]<span style="color:#f92672">.</span>expand(bs, self<span style="color:#f92672">.</span>config<span style="color:#f92672">.</span>kv_head, self<span style="color:#f92672">.</span>config<span style="color:#f92672">.</span>kv_group, seq_len, self<span style="color:#f92672">.</span>config<span style="color:#f92672">.</span>head_size)<span style="color:#f92672">.</span>reshape(bs, self<span style="color:#f92672">.</span>config<span style="color:#f92672">.</span>head_num, seq_len, hidden<span style="color:#f92672">-</span>size)
-</span></span><span style="display:flex;"><span>        attention_score <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>matmul(Q, K<span style="color:#f92672">.</span>transpose(<span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>)) <span style="color:#f92672">/</span> math<span style="color:#f92672">.</span>sqrt(hidden_size)
-</span></span><span style="display:flex;"><span>        attention_score <span style="color:#f92672">=</span> attention_score <span style="color:#f92672">+</span> make_custom_mask(attention_mask)
-</span></span><span style="display:flex;"><span>        attention_probs <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>attn_drop(F<span style="color:#f92672">.</span>softmax(attention_score, dim<span style="color:#f92672">=-</span><span style="color:#ae81ff">1</span>))
-</span></span><span style="display:flex;"><span>        O <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>matmul(attention_probs, V)<span style="color:#f92672">.</span>permute(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">3</span>)<span style="color:#f92672">.</span>contiguous<span style="color:#f92672">.</span>view(bs, seq_len, hidden_size)
-</span></span><span style="display:flex;"><span>        O <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>state_drop(self<span style="color:#f92672">.</span>Wo(O))
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> O
-</span></span></code></pre></div><h2 id="norm">Norm</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">PositionEmbedding</span>(nn<span style="color:#f92672">.</span>Module):
+    <span style="color:#66d9ef">def</span> __init__(self, dim, base<span style="color:#f92672">=</span><span style="color:#ae81ff">10000</span>, max_seq_len<span style="color:#f92672">=</span><span style="color:#ae81ff">512</span>):
+        super()<span style="color:#f92672">.</span>__init__()
+        self<span style="color:#f92672">.</span>dim <span style="color:#f92672">=</span> dim
+        pe <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>zeros(max_seq_len, dim)
+        <span style="color:#66d9ef">for</span> pos <span style="color:#f92672">in</span> range(max_seq_len):
+            <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">0</span>, dim, <span style="color:#ae81ff">2</span>):
+                pe[pos][i] <span style="color:#f92672">=</span> math<span style="color:#f92672">.</span>sin(pos <span style="color:#f92672">/</span> (base <span style="color:#f92672">**</span> (<span style="color:#ae81ff">2</span> <span style="color:#f92672">*</span> i <span style="color:#f92672">/</span> self<span style="color:#f92672">.</span>dim)))
+                pe[pos][i <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>] <span style="color:#f92672">=</span> math<span style="color:#f92672">.</span>cos(pos <span style="color:#f92672">/</span> (base <span style="color:#f92672">**</span> (<span style="color:#ae81ff">2</span> <span style="color:#f92672">*</span> (i <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>) <span style="color:#f92672">/</span> self<span style="color:#f92672">.</span>dim)))
+        pe <span style="color:#f92672">=</span> pe<span style="color:#f92672">.</span>unsqueeze(dim<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>)
+        self<span style="color:#f92672">.</span>register_buffer(<span style="color:#e6db74">&#39;pe&#39;</span>, pe)
+    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">forward</span>(self, x):
+        x <span style="color:#f92672">=</span> x <span style="color:#f92672">*</span> math<span style="color:#f92672">.</span>sqrt(self<span style="color:#f92672">.</span>dim) <span style="color:#f92672">+</span> self<span style="color:#f92672">.</span>pe[:, :s<span style="color:#f92672">.</span>shape[<span style="color:#ae81ff">1</span>], :]<span style="color:#f92672">.</span>to(x<span style="color:#f92672">.</span>device)
+        <span style="color:#66d9ef">return</span> x
+</code></pre></div><h3 id="旋转位置编码">旋转位置编码</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">RotaryEmbedding</span>(nn<span style="color:#f92672">.</span>Module):
+    <span style="color:#66d9ef">def</span> __init__(self, dim, base<span style="color:#f92672">=</span><span style="color:#ae81ff">10000</span>):
+        super()<span style="color:#f92672">.</span>__init__()
+        self<span style="color:#f92672">.</span>dim <span style="color:#f92672">=</span> dim
+        inv_freq <span style="color:#f92672">=</span> <span style="color:#ae81ff">1.0</span> <span style="color:#f92672">/</span> (base <span style="color:#f92672">**</span> (torch<span style="color:#f92672">.</span>range(<span style="color:#ae81ff">0</span>, dim, <span style="color:#ae81ff">2</span>) <span style="color:#f92672">/</span> dim))
+        self<span style="color:#f92672">.</span>register_buffer(<span style="color:#e6db74">&#39;inv_freq&#39;</span>, inv_freq, persistent<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>)
+    <span style="color:#a6e22e">@torch</span><span style="color:#f92672">.</span>no_grad()
+    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">forward</span>(self, x, position_ids):
+        expanded_inv_freq <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>inv_freq[<span style="color:#66d9ef">None</span>, :, <span style="color:#66d9ef">None</span>]<span style="color:#f92672">.</span>expand(position_ids<span style="color:#f92672">.</span>shape[<span style="color:#ae81ff">0</span>], <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>)
+        expanded_position <span style="color:#f92672">=</span> position_ids[:, <span style="color:#66d9ef">None</span>, :]
+        <span style="color:#66d9ef">with</span> torch<span style="color:#f92672">.</span>autocast():
+            freqs <span style="color:#f92672">=</span> (expanded_inv_freq <span style="color:#f92672">@</span> expanded_position)<span style="color:#f92672">.</span>transpose(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>)
+            emb <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>concat([freqs, freqs], dim<span style="color:#f92672">=-</span><span style="color:#ae81ff">1</span>)
+            cos <span style="color:#f92672">=</span> emb<span style="color:#f92672">.</span>cos()
+            sin <span style="color:#f92672">=</span> emb<span style="color:#f92672">.</span>sin()
+        <span style="color:#66d9ef">return</span> cos, sin
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">rotate_half</span>(x):
+    x1 <span style="color:#f92672">=</span> x[<span style="color:#f92672">...</span>, :x<span style="color:#f92672">.</span>shape[<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>] <span style="color:#f92672">//</span> <span style="color:#ae81ff">2</span>]
+    x2 <span style="color:#f92672">=</span> x[<span style="color:#f92672">...</span>, x<span style="color:#f92672">.</span>shape[<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>] <span style="color:#f92672">//</span> <span style="color:#ae81ff">2</span>:]
+    <span style="color:#66d9ef">return</span> torch<span style="color:#f92672">.</span>concat([<span style="color:#f92672">-</span>x2, x1], dim<span style="color:#f92672">=-</span><span style="color:#ae81ff">1</span>)
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">apply_rotate_to_emb</span>(q, k, cos, sin, unsqueezed_dim<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>):
+    cos <span style="color:#f92672">=</span> cos<span style="color:#f92672">.</span>unsqueeze(unsqueezed_dim)
+    sin <span style="color:#f92672">=</span> sin<span style="color:#f92672">.</span>unsqueeze(unsqueezed_dim)
+    embed_q <span style="color:#f92672">=</span> (q <span style="color:#f92672">*</span> cos) <span style="color:#f92672">+</span> (rotate_half(q) <span style="color:#f92672">*</span> sin)
+    embed_k <span style="color:#f92672">=</span> (k <span style="color:#f92672">*</span> sin) <span style="color:#f92672">+</span> (rotate_half(k) <span style="color:#f92672">*</span> cos)
+    <span style="color:#66d9ef">return</span> embed_q, embed_k
+</code></pre></div><h2 id="attention">Attention</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">make_custom_mask</span>(attention_mask):
+    bs, seq_len <span style="color:#f92672">=</span> attention_mask<span style="color:#f92672">.</span>size()
+    mask <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>zeros(bs, seq_len, seq_len)
+    mask <span style="color:#f92672">=</span> mask <span style="color:#f92672">+</span> attention_mask[:, <span style="color:#66d9ef">None</span>, :]
+    mask <span style="color:#f92672">=</span> (<span style="color:#ae81ff">1</span> <span style="color:#f92672">-</span> mask) <span style="color:#f92672">*</span> torch<span style="color:#f92672">.</span>finfo(torch<span style="color:#f92672">.</span>float16)<span style="color:#f92672">.</span>min
+    <span style="color:#66d9ef">return</span> mask[:, <span style="color:#66d9ef">None</span>, :, :]
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">make_casual_mask</span>(attention_mask):
+    bs, seq_len <span style="color:#f92672">=</span> attention_mask<span style="color:#f92672">.</span>size()
+    mask <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>full((seq_len, seq_len), torch<span style="color:#f92672">.</span>finfo(torch<span style="color:#f92672">.</span>float16)<span style="color:#f92672">.</span>min)
+    mask_cond <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>arange(seq_len)
+    mask<span style="color:#f92672">.</span>masked_fill_(mask_cond <span style="color:#f92672">&lt;</span> (mask_cond <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>)<span style="color:#f92672">.</span>view(seq_len, <span style="color:#ae81ff">1</span>), <span style="color:#ae81ff">0</span>)
+    <span style="color:#66d9ef">return</span> mask[<span style="color:#66d9ef">None</span>, <span style="color:#66d9ef">None</span>, :, :]<span style="color:#f92672">.</span>expand(bs, <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>, seq_len, seq_len)
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">MultiHeadAttention</span>(nn<span style="color:#f92672">.</span>Module):
+    <span style="color:#66d9ef">def</span> __init__(self, config):
+        super()<span style="color:#f92672">.</span>__init__()
+        self<span style="color:#f92672">.</span>config <span style="color:#f92672">=</span> config
+        self<span style="color:#f92672">.</span>Wq <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Linear(config<span style="color:#f92672">.</span>hidden_size, config<span style="color:#f92672">.</span>head_num <span style="color:#f92672">*</span> config<span style="color:#f92672">.</span>head_size)
+        self<span style="color:#f92672">.</span>Wk <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Linear(config<span style="color:#f92672">.</span>hidden_size, config<span style="color:#f92672">.</span>kv_head <span style="color:#f92672">*</span> config<span style="color:#f92672">.</span>head_size)
+        self<span style="color:#f92672">.</span>Wv <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Linear(config<span style="color:#f92672">.</span>hidden_size, config<span style="color:#f92672">.</span>kv_head <span style="color:#f92672">*</span> config<span style="color:#f92672">.</span>head_size)
+        self<span style="color:#f92672">.</span>Wo <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Linear(config<span style="color:#f92672">.</span>head_num <span style="color:#f92672">*</span> config<span style="color:#f92672">.</span>head_size, config<span style="color:#f92672">.</span>hidden_size)
+        self<span style="color:#f92672">.</span>attn_drop <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Dropout(config<span style="color:#f92672">.</span>attn_drop_prob)
+        self<span style="color:#f92672">.</span>state_drop <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Dropout(config<span style="color:#f92672">.</span>state_drop_prob)
+    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">forward</span>(self, hidden_states, attention_mask):
+        bs, seq_len, hidden_size <span style="color:#f92672">=</span> hidden_states<span style="color:#f92672">.</span>size()
+        Q <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>Wq(hidden_states)<span style="color:#f92672">.</span>view(bs, seq_len, self<span style="color:#f92672">.</span>config<span style="color:#f92672">.</span>head_num, self<span style="color:#f92672">.</span>config<span style="color:#f92672">.</span>head_size)<span style="color:#f92672">.</span>permute(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">3</span>)
+        K <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>Wk(hidden_states)<span style="color:#f92672">.</span>view(bs, seq_len, self<span style="color:#f92672">.</span>config<span style="color:#f92672">.</span>kv_head, self<span style="color:#f92672">.</span>config<span style="color:#f92672">.</span>head_size)<span style="color:#f92672">.</span>permute(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">3</span>)
+        V <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>Wv(hidden_states)<span style="color:#f92672">.</span>view(bs, seq_len, self<span style="color:#f92672">.</span>config<span style="color:#f92672">.</span>kv_head, self<span style="color:#f92672">.</span>config<span style="color:#f92672">.</span>head_size)<span style="color:#f92672">.</span>permute(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">3</span>)
+        <span style="color:#66d9ef">if</span> self<span style="color:#f92672">.</span>config<span style="color:#f92672">.</span>kv_group <span style="color:#f92672">!=</span> <span style="color:#ae81ff">1</span>:
+            K <span style="color:#f92672">=</span> K[:, :, <span style="color:#66d9ef">None</span>, :, :]<span style="color:#f92672">.</span>expand(bs, self<span style="color:#f92672">.</span>config<span style="color:#f92672">.</span>kv_head, self<span style="color:#f92672">.</span>config<span style="color:#f92672">.</span>kv_group, seq_len, self<span style="color:#f92672">.</span>config<span style="color:#f92672">.</span>head_size)<span style="color:#f92672">.</span>reshape(bs, self<span style="color:#f92672">.</span>config<span style="color:#f92672">.</span>head_num, seq_len, hidden<span style="color:#f92672">-</span>size)
+            V <span style="color:#f92672">=</span> V[:, :, <span style="color:#66d9ef">None</span>, :, :]<span style="color:#f92672">.</span>expand(bs, self<span style="color:#f92672">.</span>config<span style="color:#f92672">.</span>kv_head, self<span style="color:#f92672">.</span>config<span style="color:#f92672">.</span>kv_group, seq_len, self<span style="color:#f92672">.</span>config<span style="color:#f92672">.</span>head_size)<span style="color:#f92672">.</span>reshape(bs, self<span style="color:#f92672">.</span>config<span style="color:#f92672">.</span>head_num, seq_len, hidden<span style="color:#f92672">-</span>size)
+        attention_score <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>matmul(Q, K<span style="color:#f92672">.</span>transpose(<span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>)) <span style="color:#f92672">/</span> math<span style="color:#f92672">.</span>sqrt(hidden_size)
+        attention_score <span style="color:#f92672">=</span> attention_score <span style="color:#f92672">+</span> make_custom_mask(attention_mask)
+        attention_probs <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>attn_drop(F<span style="color:#f92672">.</span>softmax(attention_score, dim<span style="color:#f92672">=-</span><span style="color:#ae81ff">1</span>))
+        O <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>matmul(attention_probs, V)<span style="color:#f92672">.</span>permute(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">3</span>)<span style="color:#f92672">.</span>contiguous<span style="color:#f92672">.</span>view(bs, seq_len, hidden_size)
+        O <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>state_drop(self<span style="color:#f92672">.</span>Wo(O))
+        <span style="color:#66d9ef">return</span> O
+</code></pre></div><h2 id="norm">Norm</h2>
 <p>
   <p><img src="https://s2.loli.net/2024/09/25/vcnGe6IAybBiz7g.png" alt="" loading="lazy" /></p>
 </p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">LayerNorm</span>(nn<span style="color:#f92672">.</span>Module):
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> __init__(self, hidden_size, eps<span style="color:#f92672">=</span><span style="color:#ae81ff">1e-6</span>):
-</span></span><span style="display:flex;"><span>        super()<span style="color:#f92672">.</span>__init__()
-</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>eps <span style="color:#f92672">=</span> eps
-</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>gamma <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Parameter(torch<span style="color:#f92672">.</span>ones(hidden_size))
-</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>beta <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Parameter(torch<span style="color:#f92672">.</span>zeros(hidden_size))
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">forward</span>(self, x):
-</span></span><span style="display:flex;"><span>        mean <span style="color:#f92672">=</span> x<span style="color:#f92672">.</span>mean(dim<span style="color:#f92672">=-</span><span style="color:#ae81ff">1</span>, keepdim<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
-</span></span><span style="display:flex;"><span>        var <span style="color:#f92672">=</span> x<span style="color:#f92672">.</span>var(dim<span style="color:#f92672">=-</span><span style="color:#ae81ff">1</span>, keepdim<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
-</span></span><span style="display:flex;"><span>        normlized_x <span style="color:#f92672">=</span> (x <span style="color:#f92672">-</span> mean) <span style="color:#f92672">/</span> (var <span style="color:#f92672">+</span> self<span style="color:#f92672">.</span>eps)
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> self<span style="color:#f92672">.</span>gamma <span style="color:#f92672">*</span> norlized_x <span style="color:#f92672">+</span> self<span style="color:#f92672">.</span>beta
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># RmsNorm通过移除均值中心化操作，减少了计算开销，提高了运行效率</span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">RmsNorm</span>(nn<span style="color:#f92672">.</span>Module):
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> __init__(self, hidden_size, eps<span style="color:#f92672">=</span><span style="color:#ae81ff">1e-6</span>):
-</span></span><span style="display:flex;"><span>        super()<span style="color:#f92672">.</span>__init__()
-</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>eps <span style="color:#f92672">=</span> eps
-</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>weight <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Parameter(torch<span style="color:#f92672">.</span>ones(hidden_size))
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">forward</span>(self, x):
-</span></span><span style="display:flex;"><span>        root_mean <span style="color:#f92672">=</span> x<span style="color:#f92672">.</span>pow(<span style="color:#ae81ff">2</span>)<span style="color:#f92672">.</span>mean(dim<span style="color:#f92672">=-</span><span style="color:#ae81ff">1</span>, keepdim<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
-</span></span><span style="display:flex;"><span>        x <span style="color:#f92672">=</span> x <span style="color:#f92672">*</span> torch<span style="color:#f92672">.</span>rsqrt(root_mean <span style="color:#f92672">+</span> self<span style="color:#f92672">.</span>eps)
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> x <span style="color:#f92672">*</span> self<span style="color:#f92672">.</span>weight
-</span></span></code></pre></div>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">LayerNorm</span>(nn<span style="color:#f92672">.</span>Module):
+    <span style="color:#66d9ef">def</span> __init__(self, hidden_size, eps<span style="color:#f92672">=</span><span style="color:#ae81ff">1e-6</span>):
+        super()<span style="color:#f92672">.</span>__init__()
+        self<span style="color:#f92672">.</span>eps <span style="color:#f92672">=</span> eps
+        self<span style="color:#f92672">.</span>gamma <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Parameter(torch<span style="color:#f92672">.</span>ones(hidden_size))
+        self<span style="color:#f92672">.</span>beta <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Parameter(torch<span style="color:#f92672">.</span>zeros(hidden_size))
+    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">forward</span>(self, x):
+        mean <span style="color:#f92672">=</span> x<span style="color:#f92672">.</span>mean(dim<span style="color:#f92672">=-</span><span style="color:#ae81ff">1</span>, keepdim<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
+        var <span style="color:#f92672">=</span> x<span style="color:#f92672">.</span>var(dim<span style="color:#f92672">=-</span><span style="color:#ae81ff">1</span>, keepdim<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
+        normlized_x <span style="color:#f92672">=</span> (x <span style="color:#f92672">-</span> mean) <span style="color:#f92672">/</span> (var <span style="color:#f92672">+</span> self<span style="color:#f92672">.</span>eps)
+        <span style="color:#66d9ef">return</span> self<span style="color:#f92672">.</span>gamma <span style="color:#f92672">*</span> norlized_x <span style="color:#f92672">+</span> self<span style="color:#f92672">.</span>beta
+<span style="color:#75715e"># RmsNorm通过移除均值中心化操作，减少了计算开销，提高了运行效率</span>
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">RmsNorm</span>(nn<span style="color:#f92672">.</span>Module):
+    <span style="color:#66d9ef">def</span> __init__(self, hidden_size, eps<span style="color:#f92672">=</span><span style="color:#ae81ff">1e-6</span>):
+        super()<span style="color:#f92672">.</span>__init__()
+        self<span style="color:#f92672">.</span>eps <span style="color:#f92672">=</span> eps
+        self<span style="color:#f92672">.</span>weight <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Parameter(torch<span style="color:#f92672">.</span>ones(hidden_size))
+    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">forward</span>(self, x):
+        root_mean <span style="color:#f92672">=</span> x<span style="color:#f92672">.</span>pow(<span style="color:#ae81ff">2</span>)<span style="color:#f92672">.</span>mean(dim<span style="color:#f92672">=-</span><span style="color:#ae81ff">1</span>, keepdim<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
+        x <span style="color:#f92672">=</span> x <span style="color:#f92672">*</span> torch<span style="color:#f92672">.</span>rsqrt(root_mean <span style="color:#f92672">+</span> self<span style="color:#f92672">.</span>eps)
+        <span style="color:#66d9ef">return</span> x <span style="color:#f92672">*</span> self<span style="color:#f92672">.</span>weight
+</code></pre></div>
           </div>
         </div>
                  
@@ -315,6 +315,8 @@
     <ul class="post-list">
       
       
+        <li class="post-item"><a href="/paper/%E4%BD%8D%E7%BD%AE%E7%BC%96%E7%A0%81/">位置编码</a></li>
+      
         <li class="post-item"><a href="/paper/deepseek-v2/">DeepSeek V2</a></li>
       
         <li class="post-item"><a href="/paper/baichuan-2/">Baichuan 2</a></li>
@@ -324,8 +326,6 @@
         <li class="post-item"><a href="/paper/baai-general-embeddings/">BAAI General Embeddings</a></li>
       
         <li class="post-item"><a href="/paper/direct-preference-optimization/">Direct Preference Optimization</a></li>
-      
-        <li class="post-item"><a href="/paper/proximal-policy-optimization/">Proximal Policy Optimization</a></li>
       
     </ul>
   </div>
@@ -353,7 +353,7 @@
       
         <li>
           <a href="https://Rclurn.github.io/categories/development/">Development</a>
-          <span>4</span>
+          <span>5</span>
         </li>
       
         <li>

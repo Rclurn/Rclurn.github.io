@@ -22,7 +22,7 @@
     <meta name="description" content="记录生活点点点点点点点滴">
   
 
-  <meta name="generator" content="Hugo 0.105.0">
+  <meta name="generator" content="Hugo 0.91.2" />
   
   
   
@@ -72,7 +72,7 @@
           
           <a class="list-item soft-size--small soft-style--hover soft-style--active" href="/paper" title="">📝Paper</a>
           
-          <a class="list-item soft-size--small soft-style--hover soft-style--active" href="/algorithm" title="">👹Algorithm</a>
+          <a class="list-item soft-size--small soft-style--hover soft-style--active" href="/swift" title="">👹Swift</a>
           
           <a class="list-item soft-size--small soft-style--hover soft-style--active" href="/about" title="">🤡About</a>
           
@@ -122,14 +122,23 @@
 <h2 id="概述">概述</h2>
 <p>在PPO中主要存在四个模型：Actor、Ref、Reward和Critic。Actor和Ref来源于同一个模型，一般用SFT后的模型进行初始化，只有Actor模型在后续需要更新参数；Reward和Critic来源于同一个模型，若资源充足，可以改造SFT模型（最后接入一个打分线性层，保证reward、critic模型与Actor模型知识上的一致性），否则可以用一些小模型来代替，同样，只有Critic模型需要更新参数。</p>
 <h2 id="总体流程">总体流程</h2>
-<h3 id="1-经验采样">1. 经验采样：</h3>
+<h3 id="1-奖励模型">1. 奖励模型</h3>
+<p>奖励模型的损失函数主要由两部分组成：
+$$L({\psi})=-{\lambda}E_{(x,y_w,y_l){\sim}D_{rm}}[log{\sigma}(r(x,y_w) - r(x,y_l))] + {\beta_{rm}}E_{(x,y_w){\sim}D_{rm}}[log(r^{'}(x, y_w))]$$</p>
+<ol>
+<li>拉开首选样本与非首选样本奖励值之间差距的BT损失</li>
+<li>模仿学习损失，防止奖励模型陷入“钻牛角尖”困境，同时保持奖励模型的本质还是一个语言模型（保持奖励模型的生成能力，在后续critic模型中的精细化奖励更准确，同时保证了其上下文理解能力）</li>
+</ol>
+<p>在奖励机制上，加入token level kl-penalty（传统的RL在agent每采取一个action后就会得到一个action reward，类比到文本生成任务中，每新生成一个token就等于做出了一次action，但是实际上我们无法每生成一个token就打出一个分数，只能在生成完一个句子后打出一个对于整体的分数，这样对于一个长序列来说，我们很难估计之前每一步的得分，为了避免稀疏奖励同时限制policy模型朝着“相对合理的方向”进化，计算每个生成token与参考模型之间的kl来作为单个token得reward分数）。
+$$r_{total}(x,y_i) = r(x, y_i) - {\eta}KL({\pi_{\theta}^{RL}}(y_i|x), {\pi^{SFT}}(y_i|x))$$</p>
+<h3 id="2-经验采样">2. 经验采样</h3>
 <ol>
 <li>输入特定的prompt到actor模型中，获得输出的token_ids，与prompt的ids一起组合为seq；</li>
 <li>将seq输入actor和ref模型中，获得当前seq的actor与ref模型中对应位置取某个词的概率分布；</li>
 <li>将seq输入reward模型中，获得reward模型对于当前actor生成的seq的一个整体打分reward_score；</li>
 <li>将seq输入critic模型中，获得对seq中每个位置的一个打分values；</li>
 </ol>
-<h3 id="2-rlhf阶段">2. RLHF阶段</h3>
+<h3 id="3-rlhf阶段">3. RLHF阶段</h3>
 <ol>
 <li>为了保证actor模型在学习时不是学习到了一条捷径，利用kl散度来约束ref模型与actor模型之间的分布；</li>
 <li>利用values和reward_score计算广义优势估计值advantages和回报值return；</li>
@@ -202,8 +211,9 @@
     <li><a href="#概述">概述</a></li>
     <li><a href="#总体流程">总体流程</a>
       <ul>
-        <li><a href="#1-经验采样">1. 经验采样：</a></li>
-        <li><a href="#2-rlhf阶段">2. RLHF阶段</a></li>
+        <li><a href="#1-奖励模型">1. 奖励模型</a></li>
+        <li><a href="#2-经验采样">2. 经验采样</a></li>
+        <li><a href="#3-rlhf阶段">3. RLHF阶段</a></li>
       </ul>
     </li>
     <li><a href="#策略梯度">策略梯度</a></li>
@@ -273,7 +283,7 @@
       
         <li>
           <a href="https://Rclurn.github.io/categories/development/">Development</a>
-          <span>4</span>
+          <span>5</span>
         </li>
       
         <li>

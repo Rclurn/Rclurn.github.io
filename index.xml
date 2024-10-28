@@ -9,7 +9,16 @@
     <managingEditor>liu-huo@live.com (摸铁校尉🥉)</managingEditor>
     <webMaster>liu-huo@live.com (摸铁校尉🥉)</webMaster>
     <copyright>© 2021 &lt;a href=&#34;https://github.com/miiiku/hugo-theme-kagome&#34;&gt;kagome&lt;/a&gt;.</copyright>
-    <lastBuildDate>Wed, 25 Sep 2024 18:07:35 +0800</lastBuildDate><atom:link href="https://Rclurn.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 26 Oct 2024 13:53:10 +0800</lastBuildDate><atom:link href="https://Rclurn.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>位置编码</title>
+      <link>https://Rclurn.github.io/paper/%E4%BD%8D%E7%BD%AE%E7%BC%96%E7%A0%81/</link>
+      <pubDate>Sat, 26 Oct 2024 13:53:10 +0800</pubDate>
+      <author>liu-huo@live.com (摸铁校尉🥉)</author>
+      <guid>https://Rclurn.github.io/paper/%E4%BD%8D%E7%BD%AE%E7%BC%96%E7%A0%81/</guid>
+      <description>Preview 本篇文章主要记录了对于位置编码的理解，希望读者在读完这篇文章后能够回答或者思考如下几个问题： 为什么需要位置编码？ 理想的位置编码应该具有什么</description>
+    </item>
+    
     <item>
       <title>DeepSeek V2</title>
       <link>https://Rclurn.github.io/paper/deepseek-v2/</link>
@@ -88,7 +97,7 @@
       <pubDate>Sat, 21 Sep 2024 16:37:17 +0800</pubDate>
       <author>liu-huo@live.com (摸铁校尉🥉)</author>
       <guid>https://Rclurn.github.io/algorithm/parameter-efficient-fine-tuning/</guid>
-      <description>大模型高效微调技术 总览 Prefix Tuning 🚀 人工设计的prompt模版可能并不是最优的，自动化搜索模版成本也比较高； 传统微调范式对每个任务都需要存储一份微调</description>
+      <description>大模型高效微调技术 总览 Prefix Tuning🚀 人工设计的prompt模版可能并不是最优的，自动化搜索模版成本也比较高； 传统微调范式对每个任务都需要存</description>
     </item>
     
     <item>
@@ -178,7 +187,7 @@
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       <author>liu-huo@live.com (摸铁校尉🥉)</author>
       <guid>https://Rclurn.github.io/git/%E5%88%9D%E8%AF%86git/</guid>
-      <description>Git最小配置 ![image-20240317145041215](/Users/rnake/Library/Application Support/typora-user-images/image-20240317145041215.png) git config --global user.name &amp;#39;your name&amp;#39; # 每一次的变更会带上该项目的user name git config --global user.email &amp;#39;your email&amp;#39; # 如果评审人员发现有问题可以通过该email与你获取联系 参数</description>
+      <description>Git最小配置 ![image-20240317145041215](/Users/rnake/Library/Application Support/typora-user-images/image-20240317145041215.png) git config --global user.name &#39;your name&#39; # 每一次的变更会带上该项目的user name git config --global user.email &#39;your email&#39; # 如果评审人员发现有问题可以通过该email与你获取联系 参数</description>
     </item>
     
   </channel>

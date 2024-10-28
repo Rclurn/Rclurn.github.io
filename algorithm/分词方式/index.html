@@ -22,7 +22,7 @@
     <meta name="description" content="记录生活点点点点点点点滴">
   
 
-  <meta name="generator" content="Hugo 0.105.0">
+  <meta name="generator" content="Hugo 0.91.2" />
   
   
   
@@ -72,7 +72,7 @@
           
           <a class="list-item soft-size--small soft-style--hover soft-style--active" href="/paper" title="">📝Paper</a>
           
-          <a class="list-item soft-size--small soft-style--hover soft-style--active" href="/algorithm" title="">👹Algorithm</a>
+          <a class="list-item soft-size--small soft-style--hover soft-style--active" href="/swift" title="">👹Swift</a>
           
           <a class="list-item soft-size--small soft-style--hover soft-style--active" href="/about" title="">🤡About</a>
           
@@ -117,25 +117,26 @@
         <div class="article-content">
           <div class="markdown-body content-padding-large soft-size--large soft-style--box">
             <p>BPE算法的简单实现</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">from</span> collections <span style="color:#f92672">import</span> defaultdict
-</span></span><span style="display:flex;"><span>corpus <span style="color:#f92672">=</span> [
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;This is the Hugging Face Course.&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;This chapter is about tokenization.&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;This section shows several tokenizer algorithms.&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;Hopefully, you will be able to understand how they are trained and generate tokens.&#34;</span>
-</span></span><span style="display:flex;"><span>]
-</span></span><span style="display:flex;"><span>word_freqs <span style="color:#f92672">=</span> difaultdict(int)
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> text <span style="color:#f92672">in</span> corpus:
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> word <span style="color:#f92672">in</span> text<span style="color:#f92672">.</span>split():
-</span></span><span style="display:flex;"><span>        word_freqs[word] <span style="color:#f92672">+=</span> <span style="color:#ae81ff">1</span>
-</span></span><span style="display:flex;"><span>vocab <span style="color:#f92672">=</span> []
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> word <span style="color:#f92672">in</span> word_freqs<span style="color:#f92672">.</span>keys():
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> letter <span style="color:#f92672">in</span> word:
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> letter <span style="color:#f92672">not</span> <span style="color:#f92672">in</span> vocab:
-</span></span><span style="display:flex;"><span>            vocab<span style="color:#f92672">.</span>append(letter)
-</span></span><span style="display:flex;"><span>vocab<span style="color:#f92672">.</span>sort() 
-</span></span><span style="display:flex;"><span>splits <span style="color:#f92672">=</span> {word: [c <span style="color:#66d9ef">for</span> c <span style="color:#f92672">in</span> word] <span style="color:#66d9ef">for</span> word <span style="color:#f92672">in</span> word_freqs<span style="color:#f92672">.</span>keys()}
-</span></span></code></pre></div>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> collections <span style="color:#f92672">import</span> defaultdict
+corpus <span style="color:#f92672">=</span> [
+    <span style="color:#e6db74">&#34;This is the Hugging Face Course.&#34;</span>,
+    <span style="color:#e6db74">&#34;This chapter is about tokenization.&#34;</span>,
+    <span style="color:#e6db74">&#34;This section shows several tokenizer algorithms.&#34;</span>,
+    <span style="color:#e6db74">&#34;Hopefully, you will be able to understand how they are trained and generate tokens.&#34;</span>
+]
+word_freqs <span style="color:#f92672">=</span> difaultdict(int)
+<span style="color:#66d9ef">for</span> text <span style="color:#f92672">in</span> corpus:
+    <span style="color:#66d9ef">for</span> word <span style="color:#f92672">in</span> text<span style="color:#f92672">.</span>split():
+        word_freqs[word] <span style="color:#f92672">+=</span> <span style="color:#ae81ff">1</span>
+vocab <span style="color:#f92672">=</span> []
+<span style="color:#66d9ef">for</span> word <span style="color:#f92672">in</span> word_freqs<span style="color:#f92672">.</span>keys():
+    <span style="color:#66d9ef">for</span> letter <span style="color:#f92672">in</span> word:
+        <span style="color:#66d9ef">if</span> letter <span style="color:#f92672">not</span> <span style="color:#f92672">in</span> vocab:
+            vocab<span style="color:#f92672">.</span>append(letter)
+vocab<span style="color:#f92672">.</span>sort() 
+splits <span style="color:#f92672">=</span> {word: [c <span style="color:#66d9ef">for</span> c <span style="color:#f92672">in</span> word] <span style="color:#66d9ef">for</span> word <span style="color:#f92672">in</span> word_freqs<span style="color:#f92672">.</span>keys()}
+
+</code></pre></div>
           </div>
         </div>
                  
@@ -199,6 +200,8 @@
     <ul class="post-list">
       
       
+        <li class="post-item"><a href="/paper/%E4%BD%8D%E7%BD%AE%E7%BC%96%E7%A0%81/">位置编码</a></li>
+      
         <li class="post-item"><a href="/paper/deepseek-v2/">DeepSeek V2</a></li>
       
         <li class="post-item"><a href="/paper/baichuan-2/">Baichuan 2</a></li>
@@ -208,8 +211,6 @@
         <li class="post-item"><a href="/algorithm/transformer/">Transformer</a></li>
       
         <li class="post-item"><a href="/paper/baai-general-embeddings/">BAAI General Embeddings</a></li>
-      
-        <li class="post-item"><a href="/paper/direct-preference-optimization/">Direct Preference Optimization</a></li>
       
     </ul>
   </div>
@@ -237,7 +238,7 @@
       
         <li>
           <a href="https://Rclurn.github.io/categories/development/">Development</a>
-          <span>4</span>
+          <span>5</span>
         </li>
       
         <li>

@@ -9,7 +9,16 @@
     <managingEditor>liu-huo@live.com (摸铁校尉🥉)</managingEditor>
     <webMaster>liu-huo@live.com (摸铁校尉🥉)</webMaster>
     <copyright>© 2021 &lt;a href=&#34;https://github.com/miiiku/hugo-theme-kagome&#34;&gt;kagome&lt;/a&gt;.</copyright>
-    <lastBuildDate>Wed, 25 Sep 2024 18:07:35 +0800</lastBuildDate><atom:link href="https://Rclurn.github.io/paper/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 26 Oct 2024 13:53:10 +0800</lastBuildDate><atom:link href="https://Rclurn.github.io/paper/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>位置编码</title>
+      <link>https://Rclurn.github.io/paper/%E4%BD%8D%E7%BD%AE%E7%BC%96%E7%A0%81/</link>
+      <pubDate>Sat, 26 Oct 2024 13:53:10 +0800</pubDate>
+      <author>liu-huo@live.com (摸铁校尉🥉)</author>
+      <guid>https://Rclurn.github.io/paper/%E4%BD%8D%E7%BD%AE%E7%BC%96%E7%A0%81/</guid>
+      <description>Preview 本篇文章主要记录了对于位置编码的理解，希望读者在读完这篇文章后能够回答或者思考如下几个问题： 为什么需要位置编码？ 理想的位置编码应该具有什么</description>
+    </item>
+    
     <item>
       <title>DeepSeek V2</title>
       <link>https://Rclurn.github.io/paper/deepseek-v2/</link>

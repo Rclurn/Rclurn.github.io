@@ -34,7 +34,7 @@
       <pubDate>Sat, 21 Sep 2024 16:37:17 +0800</pubDate>
       <author>liu-huo@live.com (摸铁校尉🥉)</author>
       <guid>https://Rclurn.github.io/algorithm/parameter-efficient-fine-tuning/</guid>
-      <description>大模型高效微调技术 总览 Prefix Tuning 🚀 人工设计的prompt模版可能并不是最优的，自动化搜索模版成本也比较高； 传统微调范式对每个任务都需要存储一份微调</description>
+      <description>大模型高效微调技术 总览 Prefix Tuning🚀 人工设计的prompt模版可能并不是最优的，自动化搜索模版成本也比较高； 传统微调范式对每个任务都需要存</description>
     </item>
     
     <item>

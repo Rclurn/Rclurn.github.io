@@ -22,7 +22,7 @@
     <meta name="description" content="记录生活点点点点点点点滴">
   
 
-  <meta name="generator" content="Hugo 0.105.0">
+  <meta name="generator" content="Hugo 0.91.2" />
   
   
   
@@ -72,7 +72,7 @@
           
           <a class="list-item soft-size--small soft-style--hover soft-style--active" href="/paper" title="">📝Paper</a>
           
-          <a class="list-item soft-size--small soft-style--hover soft-style--active" href="/algorithm" title="">👹Algorithm</a>
+          <a class="list-item soft-size--small soft-style--hover soft-style--active" href="/swift" title="">👹Swift</a>
           
           <a class="list-item soft-size--small soft-style--hover soft-style--active" href="/about" title="">🤡About</a>
           
@@ -118,18 +118,18 @@
           <div class="markdown-body content-padding-large soft-size--large soft-style--box">
             <h2 id="bceloss二分类交叉熵损失">BCELoss(二分类交叉熵损失)</h2>
 <p>Pytorch 中通过<code>torch.nn.BCELoss</code>类实现，也可以直接调用<code>torch.nn.functional.binary_cross_entropy</code>函数，具体的实现代码如下所示：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">BCELoss</span>(_WeightedLoss):
-</span></span><span style="display:flex;"><span>    __constants__ <span style="color:#f92672">=</span> [<span style="color:#e6db74">&#39;reduction&#39;</span>, <span style="color:#e6db74">&#39;weight&#39;</span>]
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># weight:即w权重，当正负样本不均衡时可以尝试调试该值</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># size_average:已经弃用</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># reduce:已经弃用</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># reduction:三种取值[&#39;mean&#39;, &#39;sum&#39;, &#39;none&#39;]，默认为&#39;mean&#39;，不同的取值对应的loss有所不同</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> __init__(self, weight: Optional[Tensor] <span style="color:#f92672">=</span> <span style="color:#66d9ef">None</span>, size_average<span style="color:#f92672">=</span><span style="color:#66d9ef">None</span>, reduce<span style="color:#f92672">=</span><span style="color:#66d9ef">None</span>, reduction: str <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;mean&#39;</span>) <span style="color:#f92672">-&gt;</span> <span style="color:#66d9ef">None</span>:
-</span></span><span style="display:flex;"><span>        super(BCELoss, self)<span style="color:#f92672">.</span>__init__(weight, size_average, reduce, reduction)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">forward</span>(self, input: Tensor, target: Tensor) <span style="color:#f92672">-&gt;</span> Tensor:
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> F<span style="color:#f92672">.</span>binary_cross_entropy(input, target, weight<span style="color:#f92672">=</span>self<span style="color:#f92672">.</span>weight, reduction<span style="color:#f92672">=</span>self<span style="color:#f92672">.</span>reduction)
-</span></span></code></pre></div><p>当<code>reduction='none'</code>时，BCELoss 的返回值是一个矩阵，具体公式如下：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">BCELoss</span>(_WeightedLoss):
+    __constants__ <span style="color:#f92672">=</span> [<span style="color:#e6db74">&#39;reduction&#39;</span>, <span style="color:#e6db74">&#39;weight&#39;</span>]
+    <span style="color:#75715e"># weight:即w权重，当正负样本不均衡时可以尝试调试该值</span>
+    <span style="color:#75715e"># size_average:已经弃用</span>
+    <span style="color:#75715e"># reduce:已经弃用</span>
+    <span style="color:#75715e"># reduction:三种取值[&#39;mean&#39;, &#39;sum&#39;, &#39;none&#39;]，默认为&#39;mean&#39;，不同的取值对应的loss有所不同</span>
+    <span style="color:#66d9ef">def</span> __init__(self, weight: Optional[Tensor] <span style="color:#f92672">=</span> <span style="color:#66d9ef">None</span>, size_average<span style="color:#f92672">=</span><span style="color:#66d9ef">None</span>, reduce<span style="color:#f92672">=</span><span style="color:#66d9ef">None</span>, reduction: str <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;mean&#39;</span>) <span style="color:#f92672">-&gt;</span> <span style="color:#66d9ef">None</span>:
+        super(BCELoss, self)<span style="color:#f92672">.</span>__init__(weight, size_average, reduce, reduction)
+
+    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">forward</span>(self, input: Tensor, target: Tensor) <span style="color:#f92672">-&gt;</span> Tensor:
+        <span style="color:#66d9ef">return</span> F<span style="color:#f92672">.</span>binary_cross_entropy(input, target, weight<span style="color:#f92672">=</span>self<span style="color:#f92672">.</span>weight, reduction<span style="color:#f92672">=</span>self<span style="color:#f92672">.</span>reduction)
+</code></pre></div><p>当<code>reduction='none'</code>时，BCELoss 的返回值是一个矩阵，具体公式如下：</p>
 <p>$$
 l(x, y)=L={l_1,&hellip;,l_N}^T\text{ 其中}l_i=-w_i[y_i⋅log\hat{y_i}+(1-y_i)⋅log(1-\hat{y_i})]
 $$</p>
@@ -144,15 +144,15 @@ $$</p>
 <p>
   <p><img src="https://s3.bmp.ovh/imgs/2022/09/06/7392e9f85957d9f0.png" alt="" loading="lazy" /></p>
 </p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># 代码手动计算loss</span>
-</span></span><span style="display:flex;"><span>pred_targets <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>tensor([[<span style="color:#ae81ff">0.3958</span>, <span style="color:#ae81ff">0.9219</span>, <span style="color:#ae81ff">0.7588</span>], [<span style="color:#ae81ff">0.3811</span>, <span style="color:#ae81ff">0.0262</span>, <span style="color:#ae81ff">0.3594</span>]])
-</span></span><span style="display:flex;"><span>targets <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>tensor([[<span style="color:#ae81ff">0.</span>, <span style="color:#ae81ff">0.</span>, <span style="color:#ae81ff">1.</span>], [<span style="color:#ae81ff">1.</span>, <span style="color:#ae81ff">0.</span>, <span style="color:#ae81ff">0.</span>]])
-</span></span><span style="display:flex;"><span>loss <span style="color:#f92672">=</span> <span style="color:#f92672">-</span>(targets<span style="color:#f92672">*</span>torch<span style="color:#f92672">.</span>log(pred_targets) <span style="color:#f92672">+</span> (<span style="color:#ae81ff">1</span><span style="color:#f92672">-</span>targets)<span style="color:#f92672">*</span>torch<span style="color:#f92672">.</span>log(<span style="color:#ae81ff">1</span><span style="color:#f92672">-</span>pred_targets))
-</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">&#39;代码手动计算loss</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#39;</span>, loss)
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># 通过BCELoss类计算loss</span>
-</span></span><span style="display:flex;"><span>loss <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>BCELoss(reduction<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;none&#39;</span>)
-</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">&#39;BCELoss类计算loss</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#39;</span>, loss(pred_targets, targets))
-</span></span></code></pre></div><p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 代码手动计算loss</span>
+pred_targets <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>tensor([[<span style="color:#ae81ff">0.3958</span>, <span style="color:#ae81ff">0.9219</span>, <span style="color:#ae81ff">0.7588</span>], [<span style="color:#ae81ff">0.3811</span>, <span style="color:#ae81ff">0.0262</span>, <span style="color:#ae81ff">0.3594</span>]])
+targets <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>tensor([[<span style="color:#ae81ff">0.</span>, <span style="color:#ae81ff">0.</span>, <span style="color:#ae81ff">1.</span>], [<span style="color:#ae81ff">1.</span>, <span style="color:#ae81ff">0.</span>, <span style="color:#ae81ff">0.</span>]])
+loss <span style="color:#f92672">=</span> <span style="color:#f92672">-</span>(targets<span style="color:#f92672">*</span>torch<span style="color:#f92672">.</span>log(pred_targets) <span style="color:#f92672">+</span> (<span style="color:#ae81ff">1</span><span style="color:#f92672">-</span>targets)<span style="color:#f92672">*</span>torch<span style="color:#f92672">.</span>log(<span style="color:#ae81ff">1</span><span style="color:#f92672">-</span>pred_targets))
+print(<span style="color:#e6db74">&#39;代码手动计算loss</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#39;</span>, loss)
+<span style="color:#75715e"># 通过BCELoss类计算loss</span>
+loss <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>BCELoss(reduction<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;none&#39;</span>)
+print(<span style="color:#e6db74">&#39;BCELoss类计算loss</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#39;</span>, loss(pred_targets, targets))
+</code></pre></div><p>
   <p><img src="https://s3.bmp.ovh/imgs/2022/09/06/1694a39e11a6b407.png" alt="" loading="lazy" /></p>
 </p>
 <p>可以看到，最后二者的结果是一致的，相信通过这里的手算数据，你应该对 cross entropy loss 有了更深的理解吧！</p>
@@ -261,7 +261,7 @@ $$</p>
       
         <li>
           <a href="https://Rclurn.github.io/categories/development/">Development</a>
-          <span>4</span>
+          <span>5</span>
         </li>
       
         <li>
