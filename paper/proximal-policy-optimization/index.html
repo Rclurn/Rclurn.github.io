@@ -22,7 +22,7 @@
     <meta name="description" content="记录生活点点点点点点点滴">
   
 
-  <meta name="generator" content="Hugo 0.91.2" />
+  <meta name="generator" content="Hugo 0.105.0">
   
   
   
@@ -124,7 +124,7 @@
 <h2 id="总体流程">总体流程</h2>
 <h3 id="1-奖励模型">1. 奖励模型</h3>
 <p>奖励模型的损失函数主要由两部分组成：
-$$L({\psi})=-{\lambda}E_{(x,y_w,y_l){\sim}D_{rm}}[log{\sigma}(r(x,y_w) - r(x,y_l))] + {\beta_{rm}}E_{(x,y_w){\sim}D_{rm}}[log(r^{'}(x, y_w))]$$</p>
+$$L({\psi})=-{\lambda}E_{(x,y_w,y_l){\sim}D_{rm}}[log{\sigma}(r(x,y_w) - r(x,y_l))] + {\beta_{rm}}E_{(x,y_w){\sim}D_{rm}}[log(r^{&rsquo;}(x, y_w))]$$</p>
 <ol>
 <li>拉开首选样本与非首选样本奖励值之间差距的BT损失</li>
 <li>模仿学习损失，防止奖励模型陷入“钻牛角尖”困境，同时保持奖励模型的本质还是一个语言模型（保持奖励模型的生成能力，在后续critic模型中的精细化奖励更准确，同时保证了其上下文理解能力）</li>

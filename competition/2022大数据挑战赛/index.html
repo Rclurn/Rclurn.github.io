@@ -22,7 +22,7 @@
     <meta name="description" content="记录生活点点点点点点点滴">
   
 
-  <meta name="generator" content="Hugo 0.91.2" />
+  <meta name="generator" content="Hugo 0.105.0">
   
   
   
@@ -136,82 +136,82 @@
 <h3 id="预训练任务">预训练任务</h3>
 <h4 id="itcimage-text-contrastive-learning">ITC(Image-Text Contrastive Learning)</h4>
 <p><a href="">ALBEF</a>借鉴了<a href="">MoCo</a>的动量蒸馏方法，维护了两个队列来存储单模态编码器的最新M个图像文本表示并将其作为当前batch图文对的负样本，为了保证队列中编码的一致性( 防止模型寻找到捷径：同一时刻的编码器编码的图文更相似)，队列中所存储的图文表征均采用动量模型生成。动量模型主要有两个作用：1、作为教师模型生成伪目标来指导原始模型进行训练；2、类似于MoCo，利用队列中的大量负样本实现对比学习。</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">with</span> torch<span style="color:#f92672">.</span>no_grad():
-    self<span style="color:#f92672">.</span>_momentum_update() <span style="color:#75715e"># 依据编码器模型更新动量模型的参数</span>
-    image_embeds_m <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>visual_encoder_m(image) <span style="color:#75715e"># 获得图片的动量embedding表征</span>
-    image_feat_m <span style="color:#f92672">=</span> F<span style="color:#f92672">.</span>normalize(self<span style="color:#f92672">.</span>vision_proj_m(image_embeds_m[:,<span style="color:#ae81ff">0</span>,:]),dim<span style="color:#f92672">=-</span><span style="color:#ae81ff">1</span>)  
-    <span style="color:#75715e"># 将当前batch的图片表征与队列中的其他所有图片表征进行拼接 [hidden_dim: batch_size + queue_size]</span>
-    image_feat_all <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>cat([image_feat_m<span style="color:#f92672">.</span>t(),self<span style="color:#f92672">.</span>image_queue<span style="color:#f92672">.</span>clone()<span style="color:#f92672">.</span>detach()],dim<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)                   
-    text_output_m <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>text_encoder_m<span style="color:#f92672">.</span>bert(text<span style="color:#f92672">.</span>input_ids, attention_mask <span style="color:#f92672">=</span> text<span style="color:#f92672">.</span>attention_mask,    
-                                             return_dict <span style="color:#f92672">=</span> <span style="color:#66d9ef">True</span>, mode <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;text&#39;</span>)    
-    text_feat_m <span style="color:#f92672">=</span> F<span style="color:#f92672">.</span>normalize(self<span style="color:#f92672">.</span>text_proj_m(text_output_m<span style="color:#f92672">.</span>last_hidden_state[:,<span style="color:#ae81ff">0</span>,:]),dim<span style="color:#f92672">=-</span><span style="color:#ae81ff">1</span>) 
-    <span style="color:#75715e"># 将当前batch的文本表征与队列中的其他所有文本表征进行拼接 [hidden_dim: batch_size + queue_size]</span>
-    text_feat_all <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>cat([text_feat_m<span style="color:#f92672">.</span>t(),self<span style="color:#f92672">.</span>text_queue<span style="color:#f92672">.</span>clone()<span style="color:#f92672">.</span>detach()],dim<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
-    <span style="color:#75715e"># 维度 [batch: batch_size + queue_size]</span>
-    sim_i2t_m <span style="color:#f92672">=</span> image_feat_m <span style="color:#f92672">@</span> text_feat_all <span style="color:#f92672">/</span> self<span style="color:#f92672">.</span>temp <span style="color:#75715e"># 计算当前batch的图片动量表征与队列所有文本动量表征的相似度</span>
-    sim_t2i_m <span style="color:#f92672">=</span> text_feat_m <span style="color:#f92672">@</span> image_feat_all <span style="color:#f92672">/</span> self<span style="color:#f92672">.</span>temp <span style="color:#75715e"># 计算当前batch的文本动量表征与队列所有图片动量表征的相似度</span>
-    sim_targets <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>zeros(sim_i2t_m<span style="color:#f92672">.</span>size())<span style="color:#f92672">.</span>to(image<span style="color:#f92672">.</span>device)
-    sim_targets<span style="color:#f92672">.</span>fill_diagonal_(<span style="color:#ae81ff">1</span>) <span style="color:#75715e"># 构造标签，主对角线为1，其余为0         </span>
-    sim_i2t_targets <span style="color:#f92672">=</span> alpha <span style="color:#f92672">*</span> F<span style="color:#f92672">.</span>softmax(sim_i2t_m, dim<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>) <span style="color:#f92672">+</span> (<span style="color:#ae81ff">1</span> <span style="color:#f92672">-</span> alpha) <span style="color:#f92672">*</span> sim_targets
-    sim_t2i_targets <span style="color:#f92672">=</span> alpha <span style="color:#f92672">*</span> F<span style="color:#f92672">.</span>softmax(sim_t2i_m, dim<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>) <span style="color:#f92672">+</span> (<span style="color:#ae81ff">1</span> <span style="color:#f92672">-</span> alpha) <span style="color:#f92672">*</span> sim_targets        
-sim_i2t <span style="color:#f92672">=</span> image_feat <span style="color:#f92672">@</span> text_feat_all <span style="color:#f92672">/</span> self<span style="color:#f92672">.</span>temp 
-sim_t2i <span style="color:#f92672">=</span> text_feat <span style="color:#f92672">@</span> image_feat_all <span style="color:#f92672">/</span> self<span style="color:#f92672">.</span>temp 
-loss_i2t <span style="color:#f92672">=</span> <span style="color:#f92672">-</span>torch<span style="color:#f92672">.</span>sum(F<span style="color:#f92672">.</span>log_softmax(sim_i2t, dim<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)<span style="color:#f92672">*</span>sim_i2t_targets,dim<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)<span style="color:#f92672">.</span>mean()
-loss_t2i <span style="color:#f92672">=</span> <span style="color:#f92672">-</span>torch<span style="color:#f92672">.</span>sum(F<span style="color:#f92672">.</span>log_softmax(sim_t2i, dim<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)<span style="color:#f92672">*</span>sim_t2i_targets,dim<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)<span style="color:#f92672">.</span>mean() 
-loss_ita <span style="color:#f92672">=</span> (loss_i2t<span style="color:#f92672">+</span>loss_t2i)<span style="color:#f92672">/</span><span style="color:#ae81ff">2</span>
-self<span style="color:#f92672">.</span>_dequeue_and_enqueue(image_feat_m, text_feat_m)
-</code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-tex" data-lang="tex">1、为什么要视频作为Q、文本作为K、V进行Cross Attention？
-我们人为文本Title表达的意思可能更趋近于视频发布者想要表达的思想，而视频只是一个辅助作用，所以这样使用。当然，在实验的过程中，我们也尝试了反过来进行输入，但是效果并没有前者好。
-</code></pre></div><h4 id="itmimage-text-match">ITM(Image-Text Match)</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">with</span> torch<span style="color:#f92672">.</span>no_grad():
+</span></span><span style="display:flex;"><span>    self<span style="color:#f92672">.</span>_momentum_update() <span style="color:#75715e"># 依据编码器模型更新动量模型的参数</span>
+</span></span><span style="display:flex;"><span>    image_embeds_m <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>visual_encoder_m(image) <span style="color:#75715e"># 获得图片的动量embedding表征</span>
+</span></span><span style="display:flex;"><span>    image_feat_m <span style="color:#f92672">=</span> F<span style="color:#f92672">.</span>normalize(self<span style="color:#f92672">.</span>vision_proj_m(image_embeds_m[:,<span style="color:#ae81ff">0</span>,:]),dim<span style="color:#f92672">=-</span><span style="color:#ae81ff">1</span>)  
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># 将当前batch的图片表征与队列中的其他所有图片表征进行拼接 [hidden_dim: batch_size + queue_size]</span>
+</span></span><span style="display:flex;"><span>    image_feat_all <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>cat([image_feat_m<span style="color:#f92672">.</span>t(),self<span style="color:#f92672">.</span>image_queue<span style="color:#f92672">.</span>clone()<span style="color:#f92672">.</span>detach()],dim<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)                   
+</span></span><span style="display:flex;"><span>    text_output_m <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>text_encoder_m<span style="color:#f92672">.</span>bert(text<span style="color:#f92672">.</span>input_ids, attention_mask <span style="color:#f92672">=</span> text<span style="color:#f92672">.</span>attention_mask,    
+</span></span><span style="display:flex;"><span>                                             return_dict <span style="color:#f92672">=</span> <span style="color:#66d9ef">True</span>, mode <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;text&#39;</span>)    
+</span></span><span style="display:flex;"><span>    text_feat_m <span style="color:#f92672">=</span> F<span style="color:#f92672">.</span>normalize(self<span style="color:#f92672">.</span>text_proj_m(text_output_m<span style="color:#f92672">.</span>last_hidden_state[:,<span style="color:#ae81ff">0</span>,:]),dim<span style="color:#f92672">=-</span><span style="color:#ae81ff">1</span>) 
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># 将当前batch的文本表征与队列中的其他所有文本表征进行拼接 [hidden_dim: batch_size + queue_size]</span>
+</span></span><span style="display:flex;"><span>    text_feat_all <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>cat([text_feat_m<span style="color:#f92672">.</span>t(),self<span style="color:#f92672">.</span>text_queue<span style="color:#f92672">.</span>clone()<span style="color:#f92672">.</span>detach()],dim<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># 维度 [batch: batch_size + queue_size]</span>
+</span></span><span style="display:flex;"><span>    sim_i2t_m <span style="color:#f92672">=</span> image_feat_m <span style="color:#f92672">@</span> text_feat_all <span style="color:#f92672">/</span> self<span style="color:#f92672">.</span>temp <span style="color:#75715e"># 计算当前batch的图片动量表征与队列所有文本动量表征的相似度</span>
+</span></span><span style="display:flex;"><span>    sim_t2i_m <span style="color:#f92672">=</span> text_feat_m <span style="color:#f92672">@</span> image_feat_all <span style="color:#f92672">/</span> self<span style="color:#f92672">.</span>temp <span style="color:#75715e"># 计算当前batch的文本动量表征与队列所有图片动量表征的相似度</span>
+</span></span><span style="display:flex;"><span>    sim_targets <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>zeros(sim_i2t_m<span style="color:#f92672">.</span>size())<span style="color:#f92672">.</span>to(image<span style="color:#f92672">.</span>device)
+</span></span><span style="display:flex;"><span>    sim_targets<span style="color:#f92672">.</span>fill_diagonal_(<span style="color:#ae81ff">1</span>) <span style="color:#75715e"># 构造标签，主对角线为1，其余为0         </span>
+</span></span><span style="display:flex;"><span>    sim_i2t_targets <span style="color:#f92672">=</span> alpha <span style="color:#f92672">*</span> F<span style="color:#f92672">.</span>softmax(sim_i2t_m, dim<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>) <span style="color:#f92672">+</span> (<span style="color:#ae81ff">1</span> <span style="color:#f92672">-</span> alpha) <span style="color:#f92672">*</span> sim_targets
+</span></span><span style="display:flex;"><span>    sim_t2i_targets <span style="color:#f92672">=</span> alpha <span style="color:#f92672">*</span> F<span style="color:#f92672">.</span>softmax(sim_t2i_m, dim<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>) <span style="color:#f92672">+</span> (<span style="color:#ae81ff">1</span> <span style="color:#f92672">-</span> alpha) <span style="color:#f92672">*</span> sim_targets        
+</span></span><span style="display:flex;"><span>sim_i2t <span style="color:#f92672">=</span> image_feat <span style="color:#f92672">@</span> text_feat_all <span style="color:#f92672">/</span> self<span style="color:#f92672">.</span>temp 
+</span></span><span style="display:flex;"><span>sim_t2i <span style="color:#f92672">=</span> text_feat <span style="color:#f92672">@</span> image_feat_all <span style="color:#f92672">/</span> self<span style="color:#f92672">.</span>temp 
+</span></span><span style="display:flex;"><span>loss_i2t <span style="color:#f92672">=</span> <span style="color:#f92672">-</span>torch<span style="color:#f92672">.</span>sum(F<span style="color:#f92672">.</span>log_softmax(sim_i2t, dim<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)<span style="color:#f92672">*</span>sim_i2t_targets,dim<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)<span style="color:#f92672">.</span>mean()
+</span></span><span style="display:flex;"><span>loss_t2i <span style="color:#f92672">=</span> <span style="color:#f92672">-</span>torch<span style="color:#f92672">.</span>sum(F<span style="color:#f92672">.</span>log_softmax(sim_t2i, dim<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)<span style="color:#f92672">*</span>sim_t2i_targets,dim<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)<span style="color:#f92672">.</span>mean() 
+</span></span><span style="display:flex;"><span>loss_ita <span style="color:#f92672">=</span> (loss_i2t<span style="color:#f92672">+</span>loss_t2i)<span style="color:#f92672">/</span><span style="color:#ae81ff">2</span>
+</span></span><span style="display:flex;"><span>self<span style="color:#f92672">.</span>_dequeue_and_enqueue(image_feat_m, text_feat_m)
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-tex" data-lang="tex"><span style="display:flex;"><span>1、为什么要视频作为Q、文本作为K、V进行Cross Attention？
+</span></span><span style="display:flex;"><span>我们人为文本Title表达的意思可能更趋近于视频发布者想要表达的思想，而视频只是一个辅助作用，所以这样使用。当然，在实验的过程中，我们也尝试了反过来进行输入，但是效果并没有前者好。
+</span></span></code></pre></div><h4 id="itmimage-text-match">ITM(Image-Text Match)</h4>
 <p><a href="">ITM</a>任务主要用来判断一张图片和一段文本是否匹配，在<a href="">ALBEF</a>中，为了增大<a href="">ITM</a>任务的任务难度，选择图文较相似的负样本来进行图文匹配任务，具体负样本的选择依赖于<a href="">ITC</a>任务，在ITC任务中，我们得到了一个当前batch的图文相似度矩阵，选择所有负样本中与正样本相似度最高的那个样本来作为<a href="">ITM</a>任务的负样本进行二分类任务。</p>
 <p>通过bert的的后6层获取图文的正样本表征</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">output_pos <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>text_encoder<span style="color:#f92672">.</span>bert(encoder_embeds <span style="color:#f92672">=</span> text_embeds, attention_mask <span style="color:#f92672">=</span> text<span style="color:#f92672">.</span>attention_mask,
-                                    encoder_hidden_states <span style="color:#f92672">=</span> image_embeds, 
-                                    encoder_attention_mask <span style="color:#f92672">=</span> image_atts,      
-                                    return_dict <span style="color:#f92672">=</span> <span style="color:#66d9ef">True</span>, mode <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;fusion&#39;</span>)    
-</code></pre></div><p>通过<a href="">ITC</a>任务的相似度矩阵选择负样本，将相似度矩阵的对角线值填充为0(正样本，概率最高)，然后通过torch.multinomial()函数获得相似度矩阵中值最大的一个样本对应的索引。</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">with</span> torch<span style="color:#f92672">.</span>no_grad():
-    bs <span style="color:#f92672">=</span> image<span style="color:#f92672">.</span>size(<span style="color:#ae81ff">0</span>)          
-    weights_i2t <span style="color:#f92672">=</span> F<span style="color:#f92672">.</span>softmax(sim_i2t[:,:bs],dim<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
-    weights_t2i <span style="color:#f92672">=</span> F<span style="color:#f92672">.</span>softmax(sim_t2i[:,:bs],dim<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
-
-    weights_i2t<span style="color:#f92672">.</span>fill_diagonal_(<span style="color:#ae81ff">0</span>)
-    weights_t2i<span style="color:#f92672">.</span>fill_diagonal_(<span style="color:#ae81ff">0</span>)
-
-<span style="color:#75715e"># select a negative image for each text</span>
-image_embeds_neg <span style="color:#f92672">=</span> []    
-<span style="color:#66d9ef">for</span> b <span style="color:#f92672">in</span> range(bs):
-    neg_idx <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>multinomial(weights_t2i[b], <span style="color:#ae81ff">1</span>)<span style="color:#f92672">.</span>item()
-    image_embeds_neg<span style="color:#f92672">.</span>append(image_embeds[neg_idx])
-    image_embeds_neg <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>stack(image_embeds_neg,dim<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>)   
-<span style="color:#75715e"># select a negative text for each image</span>
-text_embeds_neg <span style="color:#f92672">=</span> []
-text_atts_neg <span style="color:#f92672">=</span> []
-<span style="color:#66d9ef">for</span> b <span style="color:#f92672">in</span> range(bs):
-    neg_idx <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>multinomial(weights_i2t[b], <span style="color:#ae81ff">1</span>)<span style="color:#f92672">.</span>item()
-    text_embeds_neg<span style="color:#f92672">.</span>append(text_embeds[neg_idx])
-    text_atts_neg<span style="color:#f92672">.</span>append(text<span style="color:#f92672">.</span>attention_mask[neg_idx])
-    text_embeds_neg <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>stack(text_embeds_neg,dim<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>)   
-    text_atts_neg <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>stack(text_atts_neg,dim<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>)
-</code></pre></div><p>然后按照<code>pos_text</code>在前<code>neg_text</code>在后的形式拼接text，按照<code>neg_img</code>在前<code>pos_img</code>在后的方式拼接image，这样在进行cross attention后，输出的所有表征都将是负样本表征</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-py" data-lang="py">text_embeds_all <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>cat([text_embeds, text_embeds_neg],dim<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>)     
-text_atts_all <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>cat([text<span style="color:#f92672">.</span>attention_mask, text_atts_neg],dim<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>)     
-
-image_embeds_all <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>cat([image_embeds_neg,image_embeds],dim<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>)
-image_atts_all <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>cat([image_atts,image_atts],dim<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>)
-
-output_neg <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>text_encoder<span style="color:#f92672">.</span>bert(encoder_embeds <span style="color:#f92672">=</span> text_embeds_all, attention_mask <span style="color:#f92672">=</span> text_atts_all,
-                                    encoder_hidden_states <span style="color:#f92672">=</span> image_embeds_all,
-                                    encoder_attention_mask <span style="color:#f92672">=</span> image_atts_all,      
-                                    return_dict <span style="color:#f92672">=</span> <span style="color:#66d9ef">True</span>, mode <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;fusion&#39;</span>)
-</code></pre></div><p>最后将所有输出进行拼接并构造标签进行二分类任务</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-py" data-lang="py">vl_embeddings <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>cat([output_pos<span style="color:#f92672">.</span>last_hidden_state[:,<span style="color:#ae81ff">0</span>,:], output_neg<span style="color:#f92672">.</span>last_hidden_state[:,<span style="color:#ae81ff">0</span>,:]],dim<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>)
-vl_output <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>itm_head(vl_embeddings)            
-
-itm_labels <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>cat([torch<span style="color:#f92672">.</span>ones(bs,dtype<span style="color:#f92672">=</span>torch<span style="color:#f92672">.</span>long),torch<span style="color:#f92672">.</span>zeros(<span style="color:#ae81ff">2</span><span style="color:#f92672">*</span>bs,dtype<span style="color:#f92672">=</span>torch<span style="color:#f92672">.</span>long)],
-                       dim<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>)<span style="color:#f92672">.</span>to(image<span style="color:#f92672">.</span>device)
-loss_itm <span style="color:#f92672">=</span> F<span style="color:#f92672">.</span>cross_entropy(vl_output, itm_labels)  
-</code></pre></div>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>output_pos <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>text_encoder<span style="color:#f92672">.</span>bert(encoder_embeds <span style="color:#f92672">=</span> text_embeds, attention_mask <span style="color:#f92672">=</span> text<span style="color:#f92672">.</span>attention_mask,
+</span></span><span style="display:flex;"><span>                                    encoder_hidden_states <span style="color:#f92672">=</span> image_embeds, 
+</span></span><span style="display:flex;"><span>                                    encoder_attention_mask <span style="color:#f92672">=</span> image_atts,      
+</span></span><span style="display:flex;"><span>                                    return_dict <span style="color:#f92672">=</span> <span style="color:#66d9ef">True</span>, mode <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;fusion&#39;</span>)    
+</span></span></code></pre></div><p>通过<a href="">ITC</a>任务的相似度矩阵选择负样本，将相似度矩阵的对角线值填充为0(正样本，概率最高)，然后通过torch.multinomial()函数获得相似度矩阵中值最大的一个样本对应的索引。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">with</span> torch<span style="color:#f92672">.</span>no_grad():
+</span></span><span style="display:flex;"><span>    bs <span style="color:#f92672">=</span> image<span style="color:#f92672">.</span>size(<span style="color:#ae81ff">0</span>)          
+</span></span><span style="display:flex;"><span>    weights_i2t <span style="color:#f92672">=</span> F<span style="color:#f92672">.</span>softmax(sim_i2t[:,:bs],dim<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>    weights_t2i <span style="color:#f92672">=</span> F<span style="color:#f92672">.</span>softmax(sim_t2i[:,:bs],dim<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    weights_i2t<span style="color:#f92672">.</span>fill_diagonal_(<span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>    weights_t2i<span style="color:#f92672">.</span>fill_diagonal_(<span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># select a negative image for each text</span>
+</span></span><span style="display:flex;"><span>image_embeds_neg <span style="color:#f92672">=</span> []    
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> b <span style="color:#f92672">in</span> range(bs):
+</span></span><span style="display:flex;"><span>    neg_idx <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>multinomial(weights_t2i[b], <span style="color:#ae81ff">1</span>)<span style="color:#f92672">.</span>item()
+</span></span><span style="display:flex;"><span>    image_embeds_neg<span style="color:#f92672">.</span>append(image_embeds[neg_idx])
+</span></span><span style="display:flex;"><span>    image_embeds_neg <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>stack(image_embeds_neg,dim<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>)   
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># select a negative text for each image</span>
+</span></span><span style="display:flex;"><span>text_embeds_neg <span style="color:#f92672">=</span> []
+</span></span><span style="display:flex;"><span>text_atts_neg <span style="color:#f92672">=</span> []
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> b <span style="color:#f92672">in</span> range(bs):
+</span></span><span style="display:flex;"><span>    neg_idx <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>multinomial(weights_i2t[b], <span style="color:#ae81ff">1</span>)<span style="color:#f92672">.</span>item()
+</span></span><span style="display:flex;"><span>    text_embeds_neg<span style="color:#f92672">.</span>append(text_embeds[neg_idx])
+</span></span><span style="display:flex;"><span>    text_atts_neg<span style="color:#f92672">.</span>append(text<span style="color:#f92672">.</span>attention_mask[neg_idx])
+</span></span><span style="display:flex;"><span>    text_embeds_neg <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>stack(text_embeds_neg,dim<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>)   
+</span></span><span style="display:flex;"><span>    text_atts_neg <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>stack(text_atts_neg,dim<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>)
+</span></span></code></pre></div><p>然后按照<code>pos_text</code>在前<code>neg_text</code>在后的形式拼接text，按照<code>neg_img</code>在前<code>pos_img</code>在后的方式拼接image，这样在进行cross attention后，输出的所有表征都将是负样本表征</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>text_embeds_all <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>cat([text_embeds, text_embeds_neg],dim<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>)     
+</span></span><span style="display:flex;"><span>text_atts_all <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>cat([text<span style="color:#f92672">.</span>attention_mask, text_atts_neg],dim<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>)     
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>image_embeds_all <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>cat([image_embeds_neg,image_embeds],dim<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>image_atts_all <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>cat([image_atts,image_atts],dim<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>output_neg <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>text_encoder<span style="color:#f92672">.</span>bert(encoder_embeds <span style="color:#f92672">=</span> text_embeds_all, attention_mask <span style="color:#f92672">=</span> text_atts_all,
+</span></span><span style="display:flex;"><span>                                    encoder_hidden_states <span style="color:#f92672">=</span> image_embeds_all,
+</span></span><span style="display:flex;"><span>                                    encoder_attention_mask <span style="color:#f92672">=</span> image_atts_all,      
+</span></span><span style="display:flex;"><span>                                    return_dict <span style="color:#f92672">=</span> <span style="color:#66d9ef">True</span>, mode <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;fusion&#39;</span>)
+</span></span></code></pre></div><p>最后将所有输出进行拼接并构造标签进行二分类任务</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>vl_embeddings <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>cat([output_pos<span style="color:#f92672">.</span>last_hidden_state[:,<span style="color:#ae81ff">0</span>,:], output_neg<span style="color:#f92672">.</span>last_hidden_state[:,<span style="color:#ae81ff">0</span>,:]],dim<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>vl_output <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>itm_head(vl_embeddings)            
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>itm_labels <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>cat([torch<span style="color:#f92672">.</span>ones(bs,dtype<span style="color:#f92672">=</span>torch<span style="color:#f92672">.</span>long),torch<span style="color:#f92672">.</span>zeros(<span style="color:#ae81ff">2</span><span style="color:#f92672">*</span>bs,dtype<span style="color:#f92672">=</span>torch<span style="color:#f92672">.</span>long)],
+</span></span><span style="display:flex;"><span>                       dim<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>)<span style="color:#f92672">.</span>to(image<span style="color:#f92672">.</span>device)
+</span></span><span style="display:flex;"><span>loss_itm <span style="color:#f92672">=</span> F<span style="color:#f92672">.</span>cross_entropy(vl_output, itm_labels)  
+</span></span></code></pre></div>
           </div>
         </div>
                  
