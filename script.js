@@ -25,15 +25,6 @@ function langColor(name) {
   return `hsl(${Math.abs(h) % 360}, 55%, 50%)`;
 }
 
-// ── Placeholder gradient (used when no README image) ──
-function placeholderGradient(name) {
-  let h = 0;
-  for (let i = 0; i < name.length; i++) h = name.charCodeAt(i) + ((h << 5) - h);
-  const h1 = Math.abs(h) % 360;
-  const h2 = (h1 + 50) % 360;
-  return `linear-gradient(135deg, hsl(${h1},55%,42%), hsl(${h2},55%,32%))`;
-}
-
 // ── README image extraction ────────────────────────────
 // Looks for the first PNG in a README (markdown or HTML img syntax)
 function extractFirstPng(content, repo, branch) {
@@ -77,79 +68,75 @@ function makeSkeleton() {
   const el = document.createElement('div');
   el.className = 'card skeleton';
   el.innerHTML = `
-    <div class="card-image"></div>
-    <div class="card-info">
-      <div class="skeleton-line" style="width:65%"></div>
-      <div class="skeleton-line" style="width:90%"></div>
-      <div class="skeleton-line short"></div>
+    <div class="card-inner">
+      <div class="card-cover"></div>
+      <div class="card-text">
+        <div class="skeleton-line" style="width:60%"></div>
+        <div class="skeleton-line" style="width:85%"></div>
+      </div>
     </div>`;
   return el;
 }
 
 // ── Real card ──────────────────────────────────────────
 function makeCard(repo, imageUrl, index) {
-  const card = document.createElement('div');
+  const card = document.createElement('a');
+  card.href = repo.html_url;
+  card.target = '_blank';
+  card.rel = 'noopener noreferrer';
   card.className = 'card';
   card.style.animationDelay = `${index * 0.06}s`;
 
-  // Clickable image area
-  const img = document.createElement('a');
-  img.href = repo.html_url;
-  img.target = '_blank';
-  img.rel = 'noopener noreferrer';
-  img.className = 'card-image';
-  img.setAttribute('aria-label', repo.name);
+  const inner = document.createElement('div');
+  inner.className = 'card-inner';
 
+  // Cover (CSS gradient via nth-child; override with image if available)
+  const cover = document.createElement('div');
+  cover.className = 'card-cover';
   if (imageUrl) {
-    img.style.backgroundImage = `url(${imageUrl})`;
-  } else {
-    img.style.background = placeholderGradient(repo.name);
+    cover.style.backgroundImage = `url(${imageUrl})`;
   }
 
-  // Info section
-  const info = document.createElement('div');
-  info.className = 'card-info';
+  // Text overlay
+  const text = document.createElement('div');
+  text.className = 'card-text';
 
-  const title = document.createElement('div');
-  title.className = 'card-title';
+  const title = document.createElement('h4');
+  title.className = 'card-text--title';
   title.textContent = repo.name;
-  info.appendChild(title);
+  text.appendChild(title);
 
   if (repo.description) {
-    const desc = document.createElement('div');
-    desc.className = 'card-desc';
+    const desc = document.createElement('p');
+    desc.className = 'card-text--row';
     desc.textContent = repo.description;
-    info.appendChild(desc);
+    text.appendChild(desc);
   }
 
-  // Meta row
-  const meta = document.createElement('div');
-  meta.className = 'card-meta';
+  // Tags: language + stars
+  const hasTags = repo.language || repo.stargazers_count > 0;
+  if (hasTags) {
+    const tags = document.createElement('ul');
+    tags.className = 'card-text--tag';
 
-  if (repo.stargazers_count > 0) {
-    const stars = document.createElement('span');
-    stars.className = 'meta-item';
-    stars.innerHTML = `
-      <svg width="13" height="13" viewBox="0 0 16 16" fill="currentColor">
-        <path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416
-          1.279l-3.046 2.97.719 4.192a.751.751 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75
-          0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75
-          0 0 1 8 .25Z"/>
-      </svg>${fmtStars(repo.stargazers_count)}`;
-    meta.appendChild(stars);
+    if (repo.language) {
+      const li = document.createElement('li');
+      li.innerHTML = `<span class="lang-dot" style="background:${langColor(repo.language)}"></span>${repo.language}`;
+      tags.appendChild(li);
+    }
+
+    if (repo.stargazers_count > 0) {
+      const li = document.createElement('li');
+      li.textContent = `★ ${fmtStars(repo.stargazers_count)}`;
+      tags.appendChild(li);
+    }
+
+    text.appendChild(tags);
   }
 
-  if (repo.language) {
-    const lang = document.createElement('span');
-    lang.className = 'meta-item';
-    lang.innerHTML = `<span class="lang-dot" style="background:${langColor(repo.language)}"></span>${repo.language}`;
-    meta.appendChild(lang);
-  }
-
-  if (meta.children.length > 0) info.appendChild(meta);
-
-  card.appendChild(img);
-  card.appendChild(info);
+  inner.appendChild(cover);
+  inner.appendChild(text);
+  card.appendChild(inner);
   return card;
 }
 
